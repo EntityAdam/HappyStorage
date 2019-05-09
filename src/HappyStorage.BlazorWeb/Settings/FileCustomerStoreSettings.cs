@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace HappyStorage.Web.Settings
+namespace HappyStorage.BlazorWeb.Settings
 {
     public class FileCustomerStoreSettings : IFileCustomerStoreSettings
     {
