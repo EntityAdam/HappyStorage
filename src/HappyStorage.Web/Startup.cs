@@ -2,6 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HappyStorage.Core;
+using HappyStorage.FileStorage;
+using HappyStorage.MemoryStorage;
+using HappyStorage.SqlStorage;
+using HappyStorage.Web.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +34,13 @@ namespace HappyStorage.Web
                 options.CheckConsentNeeded = context => true;
             });
 
+            services.AddTransient<IFacade, Facade>();
+            services.AddTransient<IUnitStore, SqlUnitStore>();
+            services.AddTransient<ISqlUnitStoreSettings, SqlUnitStoreSettings>();
+            services.AddTransient<ICustomerStore, FileCustomerStore>();
+            services.AddTransient<IFileCustomerStoreSettings, FileCustomerStoreSettings>();
+            services.AddSingleton<ITenancyStore, MemoryTenancyStore>();
+            services.AddTransient<IDateService, DateService>();
 
             services.AddRazorPages()
                 .AddNewtonsoftJson();

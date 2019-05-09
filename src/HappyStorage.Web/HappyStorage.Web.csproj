@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -7,6 +7,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview5-19227-01" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\HappyStorage.Core\HappyStorage.Core.csproj" />
+    <ProjectReference Include="..\HappyStorage.FileStorage\HappyStorage.FileStorage.csproj" />
+    <ProjectReference Include="..\HappyStorage.MemoryStorage\HappyStorage.MemoryStorage.csproj" />
+    <ProjectReference Include="..\HappyStorage.SqlStorage\HappyStorage.SqlStorage.csproj" />
   </ItemGroup>
 
 </Project>
