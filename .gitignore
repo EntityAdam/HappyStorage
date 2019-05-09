@@ -1,0 +1,9 @@
+.vs/
+.vscode/
+bin/
+obj/
+packages/
+*.suo
+*.user
+
+~$*.pptx
