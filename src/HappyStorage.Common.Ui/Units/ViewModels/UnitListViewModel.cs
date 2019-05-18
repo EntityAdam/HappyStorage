@@ -20,6 +20,13 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
             Units.ListChanged += Units_ListChanged;
         }
 
+        private UnitListFilter filter;
+        public UnitListFilter Filter 
+        { 
+            get => filter;
+            set => SetField(ref filter, value); //TODO: Do we need to update the binding list?
+        }
+
         private void Units_ListChanged(object sender, ListChangedEventArgs e)
         {
             OnPropertyChanged(nameof(Units));
@@ -50,5 +57,10 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
         public bool CanExecuteNext() => (Pager != null) ? Pager.CanExecuteNext : false;
 
         public bool CanExecuteBack() => (Pager != null) ? Pager.CanExecuteBack : false;
+
+        public void ApplyFilter(bool? isVehicleAccessible, bool? isClimateControlled, int? minimumCubicFeet)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
