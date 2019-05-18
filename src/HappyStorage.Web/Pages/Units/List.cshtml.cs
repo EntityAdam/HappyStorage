@@ -8,7 +8,7 @@ namespace HappyStorage.Ui.Pages.Unit
     {
         public ListModel(IUnitListViewModel viewModel)
         {
-            this.ViewModel = viewModel;
+            ViewModel = viewModel;
         }
 
         public IUnitListViewModel ViewModel { get; private set; }
@@ -19,9 +19,19 @@ namespace HappyStorage.Ui.Pages.Unit
             return Page();
         }
 
-        public IActionResult OnPost([FromForm] bool? isVehicleAccessible, [FromForm] bool? isClimateControlled, [FromForm] int? minimumCubicFeet)
+
+        [BindProperty(Name = "ViewModel.Filter.IsClimateControlled")]
+        public bool? ClimateControlled { get; set; }
+
+        [BindProperty(Name = "ViewModel.Filter.IsVehicleAccessible")]
+        public bool? VehicleAccessible { get; set; }
+
+        [BindProperty(Name = "ViewModel.Filter.MinimumCubicFeet")]
+        public int? MinimumCubicFeet { get; set; }
+
+        public IActionResult OnPost()
         {
-            ViewModel.ApplyFilter(isVehicleAccessible, isClimateControlled, minimumCubicFeet);
+            ViewModel.ApplyFilter(VehicleAccessible, ClimateControlled, MinimumCubicFeet);
             return Page();
         }
     }
