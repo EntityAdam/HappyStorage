@@ -1,5 +1,4 @@
 ﻿using HappyStorage.Core;
-using System;
 
 namespace HappyStorage.Common.Ui.Units.ViewModels
 {
