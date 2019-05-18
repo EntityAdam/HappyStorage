@@ -1,0 +1,41 @@
+﻿@page "/Customers"
+@model HappyStorage.Web.Pages.Customer.ListModel
+@{
+    ViewData["Title"] = "Customers";
+}
+
+<h1>Customers</h1>
+<div>
+    <a asp-page="/Customers/Create" class="btn btn-primary">New Customer</a>
+</div>
+
+<br />
+
+@if (@Model.ViewModel.Customers.Any())
+{
+    <br />
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"><label asp-for="@Model.ViewModel.Customers[0].CustomerNumber"></label></th>
+                    <th scope="col"><label asp-for="@Model.ViewModel.Customers[0].FullName"></label></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+
+            @foreach (var customer in Model.ViewModel.Customers)
+            {
+                <tr>
+                    <th scope="row">@customer.CustomerNumber</th>
+                    <td>@customer.FullName</td>
+                    <td>
+                        <a asp-page="/Tenant/ListUnits" asp-route-customerNumber="@customer.CustomerNumber" class="btn btn-sm btn-primary">Manage Units</a>
+                        <a asp-page="/Tenant/Payment" asp-route-customerNumber="@customer.CustomerNumber" class="btn btn-sm btn-info">Make a Payment</a>
+                        <a asp-page="/Customer/Delete" asp-route-customerNumber="@customer.CustomerNumber" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}

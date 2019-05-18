@@ -1,0 +1,37 @@
+﻿@page
+@model HappyStorage.Web.Pages.Customer.CreateModel
+@{
+    ViewData["Title"] = "Add New Customer";
+}
+
+<h1>Add New Customer</h1>
+
+<div asp-validation-summary="All"></div>
+
+<form asp-page="Create" method="post">
+    <div class="form-group">
+        <h3>Name</h3>
+        <label asp-for="@Model.ViewModel.NewCustomer.FirstName"></label>
+        <input class="form-control" asp-for="@Model.ViewModel.NewCustomer.FirstName" type="text" placeholder="First Name" />
+
+        <label asp-for="@Model.ViewModel.NewCustomer.LastName"></label>
+        <input class="form-control" asp-for="@Model.ViewModel.NewCustomer.LastName" type="text" placeholder="Last Name" />
+    </div>
+    <div class="form-group">
+        <h3>Address</h3>
+        <label asp-for="@Model.ViewModel.NewCustomer.Street"></label>
+        <input class="form-control" asp-for="@Model.ViewModel.NewCustomer.Street" type="text" placeholder="1 Copley Parkway" />
+
+        <label asp-for="@Model.ViewModel.NewCustomer.City"></label>
+        <input class="form-control" asp-for="@Model.ViewModel.NewCustomer.City" type="text" placeholder="Morrisville" />
+
+        <label asp-for="@Model.ViewModel.NewCustomer.State"></label>
+        <input class="form-control" asp-for="@Model.ViewModel.NewCustomer.State" type="text" placeholder="NC" />
+
+        <label asp-for="@Model.ViewModel.NewCustomer.PostalCode"></label>
+        <input class="form-control" asp-for="@Model.ViewModel.NewCustomer.PostalCode" type="number" placeholder="27560" />
+    </div>
+    <br />
+    <button class="btn btn-primary" type="submit">Submit</button>
+    <button class="btn">Cancel</button>
+</form>

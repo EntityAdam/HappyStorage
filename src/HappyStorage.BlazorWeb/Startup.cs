@@ -9,6 +9,7 @@ using HappyStorage.BlazorWeb.Settings;
 using HappyStorage.FileStorage;
 using HappyStorage.MemoryStorage;
 using HappyStorage.BlazorWeb.Services;
+using HappyStorage.Common.Ui.Extensions;
 
 namespace HappyStorage.BlazorWeb
 {
@@ -27,6 +28,9 @@ namespace HappyStorage.BlazorWeb
             services.AddTransient<IFileCustomerStoreSettings, FileCustomerStoreSettings>();
             services.AddSingleton<ITenancyStore, MemoryTenancyStore>();
             services.AddTransient<IDateService, DateService>();
+
+            services.AddHappyStorageCommonUi();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

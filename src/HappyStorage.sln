@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28902.138
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyStorage.BlazorWeb", "HappyStorage.BlazorWeb\HappyStorage.BlazorWeb.csproj", "{A5FD2A4A-4605-4F2F-8BE8-A2AB1C0924B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyStorage.BlazorWeb", "HappyStorage.BlazorWeb\HappyStorage.BlazorWeb.csproj", "{A5FD2A4A-4605-4F2F-8BE8-A2AB1C0924B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyStorage.Web", "HappyStorage.Web\HappyStorage.Web.csproj", "{A7D8977D-AA1C-4B91-8377-85AECFB47280}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyStorage.Web", "HappyStorage.Web\HappyStorage.Web.csproj", "{A7D8977D-AA1C-4B91-8377-85AECFB47280}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyStorage.Core", "HappyStorage.Core\HappyStorage.Core.csproj", "{C858A076-22F7-49A8-A7F0-061561D83426}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyStorage.SqlStorage", "HappyStorage.SqlStorage\HappyStorage.SqlStorage.csproj", "{C2EF14F4-D4A6-4402-84B5-06418BC67C51}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyStorage.UnitTests", "HappyStorage.UnitTests\HappyStorage.UnitTests.csproj", "{457D90C2-2172-46BD-93D8-1C73FAAD2233}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyStorage.Common.Ui", "HappyStorage.Common.Ui\HappyStorage.Common.Ui.csproj", "{419E17FD-FB8B-42A6-8D4D-EB3D1FB48A25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{457D90C2-2172-46BD-93D8-1C73FAAD2233}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{457D90C2-2172-46BD-93D8-1C73FAAD2233}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{457D90C2-2172-46BD-93D8-1C73FAAD2233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{419E17FD-FB8B-42A6-8D4D-EB3D1FB48A25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{419E17FD-FB8B-42A6-8D4D-EB3D1FB48A25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{419E17FD-FB8B-42A6-8D4D-EB3D1FB48A25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{419E17FD-FB8B-42A6-8D4D-EB3D1FB48A25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HappyStorage.Common.Ui\HappyStorage.Common.Ui.csproj" />
     <ProjectReference Include="..\HappyStorage.Core\HappyStorage.Core.csproj" />
   </ItemGroup>
 

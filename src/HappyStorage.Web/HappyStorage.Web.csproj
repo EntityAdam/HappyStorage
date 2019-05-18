@@ -11,10 +11,16 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\HappyStorage.Common.Ui\HappyStorage.Common.Ui.csproj" />
     <ProjectReference Include="..\HappyStorage.Core\HappyStorage.Core.csproj" />
     <ProjectReference Include="..\HappyStorage.FileStorage\HappyStorage.FileStorage.csproj" />
     <ProjectReference Include="..\HappyStorage.MemoryStorage\HappyStorage.MemoryStorage.csproj" />
     <ProjectReference Include="..\HappyStorage.SqlStorage\HappyStorage.SqlStorage.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Pages\Customers\" />
   </ItemGroup>
 
 </Project>
