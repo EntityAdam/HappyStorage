@@ -1,5 +1,6 @@
 ﻿namespace HappyStorage.Common.Ui.Units.ViewModels
 {
+    //TODO: Move to models
     public class UnitListFilter
     {
         public bool? IsClimateControlled { get; set; }

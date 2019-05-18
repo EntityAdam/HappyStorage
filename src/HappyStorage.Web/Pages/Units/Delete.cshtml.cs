@@ -1,4 +1,4 @@
-﻿using HappyStorage.Ui.Common.ViewModels;
+﻿using HappyStorage.Common.Ui.Units.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -6,12 +6,14 @@ namespace HappyStorage.Web.Pages.Unit
 {
     public class DeleteModel : PageModel
     {
-        private readonly IDecommissionUnitViewModel _viewModel;
-
-        public DeleteModel(IUnitViewModel viewModel)
+        public DeleteModel(IUnitDecommissionViewModel viewModel)
         {
-            _viewModel = viewModel;
+            ViewModel = viewModel;
         }
+
+        public IUnitDecommissionViewModel ViewModel { get; private set; }
+
+        public string UnitNumber { get; set; }
 
         // => /unit/delete/unit-01
         public void OnGet([FromRoute] string unitNumber)
@@ -25,7 +27,7 @@ namespace HappyStorage.Web.Pages.Unit
             {
                 return Page();
             }
-            _viewModel.Decommission(unitNumber);
+            ViewModel.Decommission(unitNumber);
             return RedirectToPage("List");
         }
     }
