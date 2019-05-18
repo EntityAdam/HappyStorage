@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using HappyStorage.Ui.Common.ViewModels;
+﻿using HappyStorage.Common.Ui.Units.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -10,13 +6,13 @@ namespace HappyStorage.Web.Pages.Unit
 {
     public class ReserveModel : PageModel
     {
-        private readonly IUnitViewModel _viewModel;
-
-        public ReserveModel(IUnitViewModel viewModel)
+        public ReserveModel(IUnitReserveViewModel viewModel)
         {
-            _viewModel = viewModel;
+            ViewModel = viewModel;
         }
-        
+
+        public IUnitReserveViewModel ViewModel { get; private set; }
+
         public string UnitNumber { get; private set; }
 
         public void OnGet([FromRoute] string unitNumber)
@@ -24,9 +20,10 @@ namespace HappyStorage.Web.Pages.Unit
             UnitNumber = unitNumber;
         }
 
+        //TODO: Need to rework this flow
         public IActionResult OnPost([FromForm] string unitNumber, [FromForm] string customerPicker)
         {
-            _viewModel.ReserveUnit(unitNumber, customerPicker);
+            ViewModel.ReserveUnit(unitNumber, customerPicker);
             return RedirectToPage("/Unit/List");
         }
     }
