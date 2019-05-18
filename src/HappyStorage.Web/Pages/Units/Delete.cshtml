@@ -1,0 +1,13 @@
+﻿@page "{unitNumber}"
+@model HappyStorage.Web.Pages.Unit.DeleteModel
+@{
+    ViewData["Title"] = "Decommission Unit";
+}
+
+<h1>Are you sure you want to decommission this unit?</h1>
+
+<form method ="post">
+    <input type="text" hidden="hidden" asp-for="@Model.UnitNumber" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-page="/Customer/List" class="btn btn-light">Go Back</a>
+</form>

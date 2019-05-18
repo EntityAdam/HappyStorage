@@ -1,4 +1,5 @@
 ﻿using HappyStorage.Core;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace HappyStorage.Common.Ui.Customers
@@ -8,6 +9,7 @@ namespace HappyStorage.Common.Ui.Customers
         private const int defaultPageSize = 10;
 
         private readonly IFacade facade;
+
         private Pager<CustomerLookup> Pager { get; set; }
         
         public CustomerListViewModel(IFacade facade)
@@ -26,8 +28,23 @@ namespace HappyStorage.Common.Ui.Customers
         public void Load()
         {
             var customers = facade.ListCustomers();
-            Pager = new Pager<CustomerLookup>(customers, 10);
-            var page = Pager.Next();
+            Pager = new Pager<CustomerLookup>(customers, defaultPageSize);
+            Update(Pager.Next());
+        }
+
+        public void Next()
+        {
+            Update(Pager.Next());
+        }
+
+        public void Prev()
+        {
+            Update(Pager.Prev());
+        }
+
+        private void Update(IEnumerable<CustomerLookup> page)
+        {
+            Customers.Clear();
             foreach (var c in page)
             {
                 Customers.Add(new CustomerLookupModel()
@@ -36,36 +53,6 @@ namespace HappyStorage.Common.Ui.Customers
                     FullName = c.FullName
                 });
             }
-        }
-
-        public void Next()
-        {
-            var customers = new BindingList<CustomerLookupModel>();
-            var page = Pager.Next();
-            foreach (var c in page)
-            {
-                customers.Add(new CustomerLookupModel()
-                {
-                    CustomerNumber = c.CustomerNumber,
-                    FullName = c.FullName
-                });
-            }
-            Customers = customers;
-        }
-
-        public void Prev()
-        {
-            var customers = new BindingList<CustomerLookupModel>();
-            var page = Pager.Prev();
-            foreach (var c in page)
-            {
-                customers.Add(new CustomerLookupModel()
-                {
-                    CustomerNumber = c.CustomerNumber,
-                    FullName = c.FullName
-                });
-            }
-            Customers = customers;
         }
 
         public bool CanExecuteNext() => (Pager != null) ? Pager.CanExecuteNext : false;

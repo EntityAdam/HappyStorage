@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="Pages\Customers\" />
+    <Folder Include="Pages\Units\" />
   </ItemGroup>
 
 </Project>

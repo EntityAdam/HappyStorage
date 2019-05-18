@@ -1,0 +1,38 @@
+﻿@page
+@model HappyStorage.Ui.Pages.Unit.CreateModel
+@{
+    ViewData["Title"] = "Commission New Unit";
+}
+
+<h1>Commission New Unit</h1>
+
+<form class="form-group" asp-page="Create" method="post">
+    <label asp-for="@Model.NewUnit.UnitNumber"></label>
+    <input class="form-control" asp-for="@Model.NewUnit.UnitNumber" type="text" placeholder="Unit Number" />
+
+    <label asp-for="@Model.NewUnit.PricePerMonth"></label>
+    <input class="form-control" asp-for="@Model.NewUnit.PricePerMonth" type="number" />
+    <br />
+    <div>
+        <h3>Dimensions</h3>
+        <label asp-for="@Model.NewUnit.Length"></label>
+        <input class="form-control" asp-for="@Model.NewUnit.Length" type="number" />
+
+        <label asp-for="@Model.NewUnit.Width"></label>
+        <input class="form-control" asp-for="@Model.NewUnit.Width" type="number" />
+
+        <label asp-for="@Model.NewUnit.Height"></label>
+        <input class="form-control" asp-for="@Model.NewUnit.Height" type="number" />
+    </div>
+    <br />
+    <div>
+        <h3>Options</h3>
+        <label asp-for="@Model.NewUnit.IsClimateControlled"></label>
+        <input class="form-check" asp-for="@Model.NewUnit.IsClimateControlled" type="checkbox" />
+
+        <label asp-for="@Model.NewUnit.IsVehicleAccessible"></label>
+        <input class="form-check" asp-for="@Model.NewUnit.IsVehicleAccessible" type="checkbox" />
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+    <button class="btn">Cancel</button>
+</form>
