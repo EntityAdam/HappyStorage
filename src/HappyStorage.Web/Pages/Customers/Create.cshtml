@@ -12,25 +12,24 @@
     <div class="form-group">
         <h3>Name</h3>
         <label asp-for="@Model.ViewModel.NewCustomer.FirstName"></label>
-        <!--!Important! data-val="true" triggers the serialization in place of asp-for-->
-        <input class="form-control" name="NewCustomer.FirstName" data-val="true" type="text" placeholder="First Name" />
+        <input class="form-control" asp-for="@Model.ViewModel.NewCustomer.FirstName" type="text" placeholder="First Name" />
 
         <label asp-for="@Model.ViewModel.NewCustomer.LastName"></label>
-        <input class="form-control" name="NewCustomer.LastName" data-val="true" type="text" placeholder="Last Name" />
+        <input class="form-control" asp-for="@Model.ViewModel.NewCustomer.LastName" type="text" placeholder="Last Name" />
     </div>
     <div class="form-group">
         <h3>Address</h3>
         <label asp-for="@Model.ViewModel.NewCustomer.Street"></label>
-        <input class="form-control" name="NewCustomer.Street" data-val="true" type="text" placeholder="1 Copley Parkway" />
+        <input class="form-control" asp-for="@Model.ViewModel.NewCustomer.Street" type="text" placeholder="1 Copley Parkway" />
 
         <label asp-for="@Model.ViewModel.NewCustomer.City"></label>
-        <input class="form-control" name="NewCustomer.City" data-val="true" type="text" placeholder="Morrisville" />
+        <input class="form-control" asp-for="@Model.ViewModel.NewCustomer.City" type="text" placeholder="Morrisville" />
 
         <label asp-for="@Model.ViewModel.NewCustomer.State"></label>
-        <input class="form-control" name="NewCustomer.State" data-val="true" type="text" placeholder="NC" />
+        <input class="form-control" asp-for="@Model.ViewModel.NewCustomer.State" type="text" placeholder="NC" />
 
         <label asp-for="@Model.ViewModel.NewCustomer.PostalCode"></label>
-        <input class="form-control" name="NewCustomer.PostalCode" data-val="true" type="number" placeholder="27560" />
+        <input class="form-control" asp-for="@Model.ViewModel.NewCustomer.PostalCode" type="number" placeholder="27560" />
     </div>
     <br />
     <button class="btn btn-primary" type="submit">Submit</button>

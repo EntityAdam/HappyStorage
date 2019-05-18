@@ -18,7 +18,8 @@ namespace HappyStorage.Web.Pages.Customer
             return Page();
         }
 
-        public IActionResult OnPost([FromForm] NewCustomerModel newCustomer)
+        
+        public IActionResult OnPost([FromForm(Name = "ViewModel.NewCustomer")] NewCustomerModel newCustomer)
         {
             if (!ModelState.IsValid)
             {
