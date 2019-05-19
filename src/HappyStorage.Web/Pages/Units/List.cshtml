@@ -58,8 +58,8 @@
                     <th scope="row">@unit.UnitNumber</th>
                     <td>@unit.PricePerMonth</td>
                     <td>
-                        <a asp-page="/Reserve/Create" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-sm btn-primary">Reserve</a>
-                        <a asp-page="/Unit/Delete" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-sm btn-danger">Delete</a>
+                        <a asp-page="/Units/Reserve" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-sm btn-primary">Reserve</a>
+                        <a asp-page="/Units/Release" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-sm btn-danger">Delete</a>
                     </td>
                 </tr>
             }

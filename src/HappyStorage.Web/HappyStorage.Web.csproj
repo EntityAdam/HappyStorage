@@ -18,10 +18,4 @@
     <ProjectReference Include="..\HappyStorage.SqlStorage\HappyStorage.SqlStorage.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Pages\Customers\" />
-    <Folder Include="Pages\Units\" />
-  </ItemGroup>
-
 </Project>

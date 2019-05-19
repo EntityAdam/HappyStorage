@@ -8,11 +8,11 @@
 
 <div asp-validation-summary="All"></div>
 
-<form asp-page="Create" method="post">
+<form asp-page="Create" method="post" class="form-group">
     <div class="form-group">
         <h3>Name</h3>
         <label asp-for="@Model.ViewModel.NewCustomer.FirstName"></label>
-        <input class="form-control" asp-for="@Model.ViewModel.NewCustomer.FirstName" type="text" placeholder="First Name" />
+        <input asp-for="@Model.ViewModel.NewCustomer.FirstName" type="text" class="form-control" placeholder="First Name" />
 
         <label asp-for="@Model.ViewModel.NewCustomer.LastName"></label>
         <input class="form-control" asp-for="@Model.ViewModel.NewCustomer.LastName" type="text" placeholder="Last Name" />

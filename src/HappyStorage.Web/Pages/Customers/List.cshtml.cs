@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using HappyStorage.Common.Ui.Customers;
-using HappyStorage.Core;
+﻿using HappyStorage.Common.Ui.Customers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

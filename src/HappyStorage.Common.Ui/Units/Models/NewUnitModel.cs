@@ -3,18 +3,18 @@
     public class NewUnitModel
     {
         //TODO: DataAnnotations
-        public string UnitNumber { get; internal set; }
+        public string UnitNumber { get; set; }
      
-        public int Length { get; internal set; }
+        public int Length { get; set; }
         
-        public int Width { get; internal set; }
+        public int Width { get; set; }
 
-        public int Height { get; internal set; }
+        public int Height { get; set; }
 
-        public bool IsClimateControlled { get; internal set; }
+        public bool IsClimateControlled { get; set; }
         
-        public bool IsVehicleAccessible { get; internal set; }
+        public bool IsVehicleAccessible { get; set; }
         
-        public decimal PricePerMonth { get; internal set; }
+        public decimal PricePerMonth { get; set; }
     }
 }

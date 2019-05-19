@@ -20,7 +20,7 @@ namespace HappyStorage.Ui.Pages.Unit
             return Page();
         }
 
-        public IActionResult OnPost([FromForm] NewUnitModel newUnit)
+        public IActionResult OnPost([FromForm(Name = "ViewModel.NewUnit")] NewUnitModel newUnit)
         {
             if (!ModelState.IsValid)
             {

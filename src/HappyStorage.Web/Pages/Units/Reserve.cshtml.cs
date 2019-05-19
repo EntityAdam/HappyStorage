@@ -24,7 +24,7 @@ namespace HappyStorage.Web.Pages.Unit
         public IActionResult OnPost([FromForm] string unitNumber, [FromForm] string customerPicker)
         {
             ViewModel.ReserveUnit(unitNumber, customerPicker);
-            return RedirectToPage("/Unit/List");
+            return RedirectToPage("/Units/List");
         }
     }
 }

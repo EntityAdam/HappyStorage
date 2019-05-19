@@ -25,6 +25,7 @@ namespace HappyStorage.Web.Pages.Customer
             {
                 return Page();
             }
+
             ViewModel.Create(newCustomer);
             return RedirectToPage("List");
         }
