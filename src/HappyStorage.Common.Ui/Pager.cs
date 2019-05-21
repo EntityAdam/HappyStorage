@@ -32,6 +32,6 @@ namespace HappyStorage.Common.Ui
 
         public bool CanExecuteNext => (((page+1) * pageSize) < totalItems);
 
-        public bool CanExecuteBack => page > 0;
+        public bool CanExecutePrev => page > 0;
     }
 }

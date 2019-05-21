@@ -56,7 +56,7 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
 
         public bool CanExecuteNext() => (Pager != null) ? Pager.CanExecuteNext : false;
 
-        public bool CanExecuteBack() => (Pager != null) ? Pager.CanExecuteBack : false;
+        public bool CanExecuteBack() => (Pager != null) ? Pager.CanExecutePrev : false;
 
         public void ApplyFilter(bool? isVehicleAccessible, bool? isClimateControlled, int? minimumCubicFeet)
         {

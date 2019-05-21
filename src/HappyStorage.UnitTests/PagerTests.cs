@@ -16,23 +16,23 @@ namespace HappyStorage.UnitTests
             
             var pager = new Pager<int>(small, 5);
             Assert.True(pager.CanExecuteNext);
-            Assert.False(pager.CanExecuteBack);
+            Assert.False(pager.CanExecutePrev);
 
             var page0 = pager.Next();
 
             Assert.Equal(5, page0.Count());
             Assert.False(pager.CanExecuteNext);
-            Assert.False(pager.CanExecuteBack);
+            Assert.False(pager.CanExecutePrev);
 
             var page1 = pager.Next();
             Assert.Empty(page1);
             Assert.False(pager.CanExecuteNext);
-            Assert.True(pager.CanExecuteBack);
+            Assert.True(pager.CanExecutePrev);
 
             var page0x = pager.Prev();
             Assert.Equal(5, page0x.Count());
             Assert.False(pager.CanExecuteNext);
-            Assert.False(pager.CanExecuteBack);
+            Assert.False(pager.CanExecutePrev);
         }
 
         [Fact]
@@ -42,23 +42,23 @@ namespace HappyStorage.UnitTests
 
             var pager = new Pager<int>(small, 10);
             Assert.True(pager.CanExecuteNext);
-            Assert.False(pager.CanExecuteBack);
+            Assert.False(pager.CanExecutePrev);
 
             var page0 = pager.Next();
 
             Assert.Equal(10, page0.Count());
             Assert.True(pager.CanExecuteNext);
-            Assert.False(pager.CanExecuteBack);
+            Assert.False(pager.CanExecutePrev);
 
             var page1 = pager.Next();
             Assert.Equal(2, page1.Count());
             Assert.False(pager.CanExecuteNext);
-            Assert.True(pager.CanExecuteBack);
+            Assert.True(pager.CanExecutePrev);
 
             var page0x = pager.Prev();
             Assert.Equal(10, page0x.Count());
             Assert.True(pager.CanExecuteNext);
-            Assert.False(pager.CanExecuteBack);
+            Assert.False(pager.CanExecutePrev);
         }
     }
 

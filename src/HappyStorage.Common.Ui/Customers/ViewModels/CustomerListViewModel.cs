@@ -1,4 +1,5 @@
 ﻿using HappyStorage.Core;
+using Prism.Commands;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -11,14 +12,27 @@ namespace HappyStorage.Common.Ui.Customers
         private readonly IFacade facade;
 
         private Pager<CustomerLookup> Pager { get; set; }
-        
+
         public CustomerListViewModel(IFacade facade)
         {
-            Customers.ListChanged += Customers_ListChanged;
+            //Don't need to listen to events, because we're not updating the DOM
+            //Customers.ListChanged += Customers_ListChanged;
             this.facade = facade;
+            
+            NextCommand = new DelegateCommand(
+                () => Next(),
+                () => Pager.CanExecuteNext
+            );
+            PrevCommand = new DelegateCommand(
+                () => Prev(),
+                () => Pager.CanExecutePrev
+            );
         }
 
-        public BindingList<CustomerLookupModel> Customers { get; set; } = new BindingList<CustomerLookupModel>();
+        public DelegateCommand NextCommand { get; set; }
+        public DelegateCommand PrevCommand { get; set; }
+
+        public IList<CustomerLookupModel> Customers { get; set; } = new List<CustomerLookupModel>();
 
         private void Customers_ListChanged(object sender, ListChangedEventArgs e)
         {
@@ -29,20 +43,29 @@ namespace HappyStorage.Common.Ui.Customers
         {
             var customers = facade.ListCustomers();
             Pager = new Pager<CustomerLookup>(customers, defaultPageSize);
-            Update(Pager.Next());
+            UpdateList(Pager.Next());
+            UpdateCommands();
+        }
+
+        private void UpdateCommands()
+        {
+            NextCommand.RaiseCanExecuteChanged();
+            PrevCommand.RaiseCanExecuteChanged();
         }
 
         public void Next()
         {
-            Update(Pager.Next());
+            UpdateList(Pager.Next());
+            UpdateCommands();
         }
 
         public void Prev()
         {
-            Update(Pager.Prev());
+            UpdateList(Pager.Prev());
+            UpdateCommands();
         }
 
-        private void Update(IEnumerable<CustomerLookup> page)
+        private void UpdateList(IEnumerable<CustomerLookup> page)
         {
             Customers.Clear();
             foreach (var c in page)
@@ -54,9 +77,5 @@ namespace HappyStorage.Common.Ui.Customers
                 });
             }
         }
-
-        public bool CanExecuteNext() => (Pager != null) ? Pager.CanExecuteNext : false;
-
-        public bool CanExecuteBack() => (Pager != null) ? Pager.CanExecuteBack : false;
     }
 }

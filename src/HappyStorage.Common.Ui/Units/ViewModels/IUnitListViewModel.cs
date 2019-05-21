@@ -14,6 +14,7 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
         bool CanExecuteNext();
         
         void Load();
+
         void ApplyFilter(bool? isVehicleAccessible, bool? isClimateControlled, int? minimumCubicFeet);
     }
 }

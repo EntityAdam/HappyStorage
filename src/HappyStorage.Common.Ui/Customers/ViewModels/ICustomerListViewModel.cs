@@ -1,14 +1,15 @@
-﻿using System.ComponentModel;
+﻿using Prism.Commands;
+using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace HappyStorage.Common.Ui.Customers
 {
     public interface ICustomerListViewModel
     {
-        BindingList<CustomerLookupModel> Customers { get; set; }
+
+        DelegateCommand NextCommand { get; }
+        DelegateCommand PrevCommand { get; }
+        IList<CustomerLookupModel> Customers { get; set; }
         void Load();
-        void Next();
-        void Prev();
-        bool CanExecuteNext();
-        bool CanExecuteBack();
     }
 }

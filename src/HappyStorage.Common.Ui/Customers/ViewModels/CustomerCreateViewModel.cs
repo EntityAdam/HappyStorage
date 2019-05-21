@@ -1,5 +1,6 @@
 ﻿using HappyStorage.Core;
 using System;
+using System.Windows.Input;
 
 namespace HappyStorage.Common.Ui.Customers
 {
@@ -13,6 +14,8 @@ namespace HappyStorage.Common.Ui.Customers
         }
 
         public NewCustomerModel NewCustomer { get; set; }
+        public ICommand NextCommand { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ICommand PrevCommand { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public void Create(NewCustomerModel newCustomer)
         {

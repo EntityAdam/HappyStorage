@@ -1,4 +1,15 @@
 ﻿@page
 @model HappyStorage.Web.Pages.Units.ReleaseModel
 @{
+    ViewData["Title"] = "Release Unit";
 }
+
+<h1>Are you sure you want to release this unit?</h1>
+
+@*<form method="post">
+    <input type="text" hidden="hidden" asp-for="@Model.ViewModel.CustomerNumber" />
+    <input type="text" hidden="hidden" asp-for="@Model.ViewModel.UnitNumber" />
+    <button type="submit" class="btn btn-danger">Confirm</button>
+    <a class="btn btn-light" asp-page="/Tenant/ListUnits" asp-route-customerNumber="@Model.ViewModel.CustomerNumber">Cancel</a>
+</form>*@
+
