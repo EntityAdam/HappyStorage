@@ -9,13 +9,18 @@ namespace HappyStorage.Ui.Pages.Unit
         public ListModel(IUnitListViewModel viewModel)
         {
             ViewModel = viewModel;
+            ViewModel.Load();
         }
 
         public IUnitListViewModel ViewModel { get; private set; }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet([FromQuery] int? pageNum)
         {
-            ViewModel.Load();
+
+            if (pageNum != null)
+            {
+                ViewModel.JumpToPage(pageNum);
+            }
             return Page();
         }
 
@@ -29,9 +34,9 @@ namespace HappyStorage.Ui.Pages.Unit
         [BindProperty(Name = "ViewModel.Filter.MinimumCubicFeet")]
         public int? MinimumCubicFeet { get; set; }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost([FromForm(Name = "ViewModel.Filter")] UnitListFilter filter)
         {
-            ViewModel.ApplyFilter(VehicleAccessible, ClimateControlled, MinimumCubicFeet);
+            ViewModel.ApplyFilter(filter);
             return Page();
         }
     }

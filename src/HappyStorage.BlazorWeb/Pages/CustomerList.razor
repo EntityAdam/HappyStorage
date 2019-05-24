@@ -1,4 +1,5 @@
 ﻿@page "/customers"
+@using HappyStorage.BlazorWeb.Components;
 @inject HappyStorage.Common.Ui.Customers.ICustomerListViewModel viewModel;
 @inject Microsoft.AspNetCore.Components.IUriHelper UriHelper;
 
@@ -47,7 +48,7 @@
 
 @functions {
 
-    protected override async Task OnInitAsync()
+    protected override void OnInit()
     {
 
         viewModel.Load();

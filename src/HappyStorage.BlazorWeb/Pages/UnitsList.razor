@@ -1,0 +1,74 @@
+﻿@page "/units"
+@inject HappyStorage.Common.Ui.Units.ViewModels.IUnitListViewModel viewModel;
+@inject Microsoft.AspNetCore.Components.IUriHelper UriHelper;
+
+
+<h1>Units</h1>
+<div>
+    <button class="btn btn-primary" onclick="@CreateUnit">Commission Unit</button>
+</div>
+
+<HappyStorage.BlazorWeb.Components.UnitFilter OnClick="@ApplyFilter" />
+
+@if (@viewModel.Units.Any())
+{
+    <br />
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"><label asp-for="@viewModel.Units[0].UnitNumber"></label></th>
+                    <th scope="col"><label asp-for="@viewModel.Units[0].PricePerMonth"></label></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+
+            @foreach (var unit in viewModel.Units)
+            {
+                <tr>
+                    <th scope="row">@unit.UnitNumber</th>
+                    <td>@unit.PricePerMonth</td>
+                    <td>
+                        <a asp-page="/Units/Reserve" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-sm btn-primary">Reserve</a>
+                        <a asp-page="/Units/Release" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        @if (@viewModel.HasPrevPage)
+        {
+            <button class="btn btn-primary" onclick="@PrevPage">Prev</button>
+        }
+        @if (@viewModel.HasNextPage)
+        {
+            <button class="btn btn-primary" onclick="@NextPage">Next</button>
+        }
+    </div>
+}
+
+@functions {
+    protected override void OnInit()
+    {
+        viewModel.Load();
+    }
+
+    protected void CreateUnit()
+    {
+        UriHelper.NavigateTo("/units/create");
+    }
+
+    protected void NextPage()
+    {
+        viewModel.NextPageCommand.Execute();
+    }
+
+    protected void PrevPage()
+    {
+        viewModel.PrevPageCommand.Execute();
+    }
+
+    protected void ApplyFilter(UIMouseEventArgs e)
+    {
+        Console.WriteLine("Do Stuff");
+    }
+}

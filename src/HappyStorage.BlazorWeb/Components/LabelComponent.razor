@@ -1,0 +1,19 @@
+﻿@using HappyStorage.BlazorWeb.Helpers;
+@using System.Reflection;
+
+<label class="@(@class)">@displayAttributeName</label>
+
+@functions {
+    private string displayAttributeName = "";
+
+    [Parameter]
+    private PropertyInfo labelFor { get; set; }
+
+    [Parameter]
+    private string @class { get; set; }
+
+    protected override void OnInit()
+    {
+        displayAttributeName = BlazorHelper.GetDisplayName(labelFor);
+    }
+}

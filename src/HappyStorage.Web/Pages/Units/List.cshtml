@@ -6,7 +6,7 @@
 
 <h1>Available Units</h1>
 <div>
-    <a asp-page="/Unit/Create" class="btn btn-primary">Commission New Unit</a>
+    <a asp-page="/Units/Create" class="btn btn-primary">Commission New Unit</a>
 </div>
 
 <br />
@@ -64,5 +64,13 @@
                 </tr>
             }
         </table>
+        @if (@Model.ViewModel.HasPrevPage)
+        {
+            <a class="btn btn-primary" asp-page="List" asp-route-pageNum="@(@Model.ViewModel.CurrentPage-1)">Prev</a>
+        }
+        @if (@Model.ViewModel.HasNextPage)
+        {
+            <a class="btn btn-primary" asp-page="List" asp-route-pageNum="@(@Model.ViewModel.CurrentPage+1)">Next</a>
+        }
     </div>
 }
