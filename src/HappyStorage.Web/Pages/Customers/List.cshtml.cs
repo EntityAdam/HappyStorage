@@ -9,13 +9,17 @@ namespace HappyStorage.Web.Pages.Customer
         public ListModel(ICustomerListViewModel viewModel)
         {
             ViewModel = viewModel;
+            ViewModel.Load();
         }
 
         public ICustomerListViewModel ViewModel { get; private set; }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet([FromQuery] int? pageNum)
         {
-            ViewModel.Load();
+            if (pageNum != null)
+            {
+                ViewModel.JumpToPage(pageNum);
+            }
             return Page();
         }
     }

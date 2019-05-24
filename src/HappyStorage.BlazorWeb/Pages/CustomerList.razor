@@ -33,11 +33,11 @@
                 </tr>
             }
         </table>
-        @if (viewModel.PrevCommand.CanExecute())
+        @if (viewModel.HasPrevPage)
         {
             <button class="btn btn-primary" onclick="@PrevPage">Prev</button>
         }
-        @if (viewModel.NextCommand.CanExecute())
+        @if (viewModel.HasNextPage)
         {
             <button class="btn btn-primary" onclick="@NextPage">Next</button>
         }
@@ -47,9 +47,9 @@
 
 @functions {
 
-
     protected override async Task OnInitAsync()
     {
+
         viewModel.Load();
     }
 
@@ -60,11 +60,11 @@
 
     protected void NextPage()
     {
-        viewModel.NextCommand.Execute();
+        viewModel.NextPageCommand.Execute();
     }
 
     protected void PrevPage()
     {
-        viewModel.PrevCommand.Execute();
+        viewModel.PrevPageCommand.Execute();
     }
 }

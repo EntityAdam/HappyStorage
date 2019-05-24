@@ -7,7 +7,7 @@ namespace HappyStorage.Common.Ui.Customers
 {
     public class CustomerListViewModel : BindableBase, ICustomerListViewModel
     {
-        private const int defaultPageSize = 10;
+        private const int defaultPageSize = 4;
 
         private readonly IFacade facade;
 
@@ -15,24 +15,29 @@ namespace HappyStorage.Common.Ui.Customers
 
         public CustomerListViewModel(IFacade facade)
         {
-            //Don't need to listen to events, because we're not updating the DOM
-            //Customers.ListChanged += Customers_ListChanged;
+            Customers.ListChanged += Customers_ListChanged;
             this.facade = facade;
             
-            NextCommand = new DelegateCommand(
+            NextPageCommand = new DelegateCommand(
                 () => Next(),
-                () => Pager.CanExecuteNext
-            );
-            PrevCommand = new DelegateCommand(
+                () => (Pager != null) ? Pager.CanExecuteNext : false
+            );;
+            PrevPageCommand = new DelegateCommand(
                 () => Prev(),
-                () => Pager.CanExecutePrev
+                () => (Pager != null) ? Pager.CanExecutePrev : false
             );
         }
 
-        public DelegateCommand NextCommand { get; set; }
-        public DelegateCommand PrevCommand { get; set; }
+        public DelegateCommand NextPageCommand { get; set; }
+        public DelegateCommand PrevPageCommand { get; set; }
 
-        public IList<CustomerLookupModel> Customers { get; set; } = new List<CustomerLookupModel>();
+        public int CurrentPage => (Pager != null) ? Pager.CurrentPage : 0;
+
+        public BindingList<CustomerLookupModel> Customers { get; set; } = new BindingList<CustomerLookupModel>();
+
+        //Suggested by LoisHendricks. Felt cute, might delete later.
+        public bool HasPrevPage => PrevPageCommand.CanExecute();
+        public bool HasNextPage => NextPageCommand.CanExecute();
 
         private void Customers_ListChanged(object sender, ListChangedEventArgs e)
         {
@@ -43,26 +48,17 @@ namespace HappyStorage.Common.Ui.Customers
         {
             var customers = facade.ListCustomers();
             Pager = new Pager<CustomerLookup>(customers, defaultPageSize);
-            UpdateList(Pager.Next());
-            UpdateCommands();
-        }
-
-        private void UpdateCommands()
-        {
-            NextCommand.RaiseCanExecuteChanged();
-            PrevCommand.RaiseCanExecuteChanged();
+            UpdateList(Pager.FirstPage());
         }
 
         public void Next()
         {
             UpdateList(Pager.Next());
-            UpdateCommands();
         }
 
         public void Prev()
         {
             UpdateList(Pager.Prev());
-            UpdateCommands();
         }
 
         private void UpdateList(IEnumerable<CustomerLookup> page)
@@ -75,6 +71,17 @@ namespace HappyStorage.Common.Ui.Customers
                     CustomerNumber = c.CustomerNumber,
                     FullName = c.FullName
                 });
+            }
+        }
+
+        public void JumpToPage(int? page)
+        {
+            if (page != null) { 
+                UpdateList(Pager.TryJumpToPage((int)page));
+            }
+            else
+            {
+                UpdateList(Pager.FirstPage());
             }
         }
     }

@@ -1,15 +1,17 @@
 ﻿using Prism.Commands;
-using System.Collections.Generic;
-using System.Windows.Input;
+using System.ComponentModel;
 
 namespace HappyStorage.Common.Ui.Customers
 {
     public interface ICustomerListViewModel
     {
-
-        DelegateCommand NextCommand { get; }
-        DelegateCommand PrevCommand { get; }
-        IList<CustomerLookupModel> Customers { get; set; }
+        BindingList<CustomerLookupModel> Customers { get; set; }
+        DelegateCommand NextPageCommand { get; }
+        DelegateCommand PrevPageCommand { get; }
+        int CurrentPage { get; }
+        bool HasNextPage { get; }
+        bool HasPrevPage { get; }
         void Load();
+        void JumpToPage(int? page);
     }
 }

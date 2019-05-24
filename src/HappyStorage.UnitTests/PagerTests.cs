@@ -60,6 +60,31 @@ namespace HappyStorage.UnitTests
             Assert.True(pager.CanExecuteNext);
             Assert.False(pager.CanExecutePrev);
         }
+
+        [Fact]
+        public void PagerJumpToSpecificPage()
+        {
+            var big = PagerTestsHelper.GetList(23);
+            var pager = new Pager<int>(big, 5);
+
+            Assert.Equal(5, pager.FirstPage().Count());
+            Assert.Equal(0, pager.CurrentPage);
+
+            Assert.Equal(3, pager.LastPage().Count());
+            Assert.Equal(4, pager.CurrentPage);
+
+            var page = pager.TryJumpToPage(2);
+            Assert.Equal(2, pager.CurrentPage);
+            Assert.Equal(5, page.Count());
+
+            var page2 = pager.TryJumpToPage(4);
+            Assert.Equal(4, pager.CurrentPage);
+            Assert.Equal(3, page2.Count());
+
+            var page3 = pager.TryJumpToPage(int.MaxValue);
+            Assert.Equal(-1, pager.CurrentPage);
+            Assert.Empty(page3);
+        }
     }
 
     public static class PagerTestsHelper
