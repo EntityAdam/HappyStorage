@@ -7,14 +7,22 @@
     private string displayAttributeName = "";
 
     [Parameter]
-    private PropertyInfo labelFor { get; set; }
+    private object viewModel { get; set; }
+
+    [Parameter]
+    private string property { get; set; }
+
+    [Parameter]
+    private string test { get; set; }
 
     [Parameter]
     private string @class { get; set; }
 
     protected override void OnInit()
     {
-        var attribute = labelFor.GetCustomAttributes(typeof(DisplayAttribute), true).Cast<DisplayAttribute>().Single();
-        displayAttributeName = attribute.ShortName ?? attribute.Name ?? labelFor.Name;
+        var typeInfo = viewModel.GetType().GetTypeInfo();
+        var prop = typeInfo.GetProperty(property);
+        var attribute = prop.GetCustomAttributes(typeof(DisplayAttribute), true).Cast<DisplayAttribute>().Single();
+        displayAttributeName = attribute.ShortName ?? attribute.Name ?? prop.Name;
     }
 }

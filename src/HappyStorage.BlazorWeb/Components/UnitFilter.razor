@@ -6,18 +6,18 @@
     <div class="form-row">
         <div class="form-check form-check-inline mb-2 col-md-3">
             <input asp-for="@viewModel.IsClimateControlled" class="form-check-input" type="checkbox" />
-            <LabelComponent class="form-check-label" labelFor="@viewModel.GetType().GetProperty("IsClimateControlled")" />
+            <LabelComponent class="form-check-label" viewModel="@viewModel" property="@nameof(viewModel.IsClimateControlled)" />
         </div>
     </div>
     <div class="form-row">
         <div class="form-check form-check-inline mb-2 col-md-3">
             <input asp-for="@viewModel.IsVehicleAccessible" class="form-check-input" type="checkbox" />
-            <LabelComponent class="form-check-label" labelFor="@viewModel.GetType().GetProperty("IsVehicleAccessible")" />
+            <LabelComponent class="form-check-label" viewModel="@viewModel" property="@nameof(viewModel.IsVehicleAccessible)" />
         </div>
     </div>
     <div class="form-row">
         <div class="mb-2 col-md-2">
-            <LabelComponent labelFor="@viewModel.GetType().GetProperty("MinimumCubicFeet")" />
+            <LabelComponent viewModel="@viewModel" property="@nameof(viewModel.MinimumCubicFeet)" />
             <input asp-for="@viewModel.MinimumCubicFeet" class="form-control" type="number" />
         </div>
     </div>
