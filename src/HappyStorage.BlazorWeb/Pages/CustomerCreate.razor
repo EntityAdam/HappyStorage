@@ -1,5 +1,6 @@
 ﻿@page "/customer/create";
 @using HappyStorage.Common.Ui.Customers;
+@using HappyStorage.BlazorWeb.Components;
 @inject Microsoft.AspNetCore.Components.IUriHelper UriHelper
 @inject HappyStorage.Common.Ui.Customers.ICustomerCreateViewModel viewModel;
 
@@ -10,25 +11,25 @@
     <ValidationSummary />
     <div class="form-group">
         <h3>Name</h3>
-        <label>First Name</label>
+        <LabelComponent viewModel="@newCustomer" property="@nameof(newCustomer.FirstName)"/>
         <input class="form-control" bind="@newCustomer.FirstName" type="text" placeholder="First Name" />
 
-        <label>Last Name</label>
+        <LabelComponent viewModel="@newCustomer" property="@nameof(newCustomer.LastName)" />
         <input class="form-control" bind="@newCustomer.LastName" type="text" placeholder="First Name" />
     </div>
     <div class="form-group">
         <h3>Address</h3>
 
-        <label>Street</label>
+        <LabelComponent viewModel="@newCustomer" property="@nameof(newCustomer.Street)" />
         <input class="form-control" bind="@newCustomer.Street" type="text" placeholder="1 Copley Parkway" />
 
-        <label>City</label>
+        <LabelComponent viewModel="@newCustomer" property="@nameof(newCustomer.City)" />
         <input class="form-control" bind="@newCustomer.City" type="text" placeholder="Morrisville" />
 
-        <label>State</label>
+        <LabelComponent viewModel="@newCustomer" property="@nameof(newCustomer.State)" />
         <input class="form-control" bind="@newCustomer.State" type="text" placeholder="NC" />
 
-        <label>Zip</label>
+        <LabelComponent viewModel="@newCustomer" property="@nameof(newCustomer.PostalCode)" />
         <input class="form-control" bind="@newCustomer.PostalCode" type="number" placeholder="27560" />
     </div>
     <br />
