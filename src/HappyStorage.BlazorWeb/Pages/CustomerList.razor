@@ -15,8 +15,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col"><label asp-for="@viewModel.Customers[0].CustomerNumber"></label></th>
-                    <th scope="col"><label asp-for="@viewModel.Customers[0].FullName"></label></th>
+                    <th scope="col"><LabelComponent labelFor="@(() => viewModel.Customers[0].CustomerNumber)" /></th>
+                    <th scope="col"><LabelComponent labelFor="@(() => viewModel.Customers[0].FullName)" /></th>
                     <th scope="col"></th>
                 </tr>
             </thead>

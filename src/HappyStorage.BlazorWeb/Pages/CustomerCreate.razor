@@ -11,25 +11,25 @@
     <ValidationSummary />
     <div class="form-group">
         <h3>Name</h3>
-        <LabelComponent viewModel="@newCustomer" property="@nameof(newCustomer.FirstName)"/>
+        <LabelComponent labelFor="@(() => newCustomer.FirstName)"/>
         <input class="form-control" bind="@newCustomer.FirstName" type="text" placeholder="First Name" />
 
-        <LabelComponent viewModel="@newCustomer" property="@nameof(newCustomer.LastName)" />
+        <LabelComponent labelFor="(() => newCustomer.LastName)" />
         <input class="form-control" bind="@newCustomer.LastName" type="text" placeholder="First Name" />
     </div>
     <div class="form-group">
         <h3>Address</h3>
 
-        <LabelComponent viewModel="@newCustomer" property="@nameof(newCustomer.Street)" />
+        <LabelComponent labelFor="@(() => newCustomer.Street)" />
         <input class="form-control" bind="@newCustomer.Street" type="text" placeholder="1 Copley Parkway" />
 
-        <LabelComponent viewModel="@newCustomer" property="@nameof(newCustomer.City)" />
+        <LabelComponent labelFor="@(() => newCustomer.City)" />
         <input class="form-control" bind="@newCustomer.City" type="text" placeholder="Morrisville" />
 
-        <LabelComponent viewModel="@newCustomer" property="@nameof(newCustomer.State)" />
+        <LabelComponent labelFor="@(() => newCustomer.State)" />
         <input class="form-control" bind="@newCustomer.State" type="text" placeholder="NC" />
 
-        <LabelComponent viewModel="@newCustomer" property="@nameof(newCustomer.PostalCode)" />
+        <LabelComponent labelFor="@(() => newCustomer.PostalCode)" />
         <input class="form-control" bind="@newCustomer.PostalCode" type="number" placeholder="27560" />
     </div>
     <br />

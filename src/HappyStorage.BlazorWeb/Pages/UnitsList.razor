@@ -1,4 +1,5 @@
 ﻿@page "/units"
+@using HappyStorage.BlazorWeb.Components;
 @inject HappyStorage.Common.Ui.Units.ViewModels.IUnitListViewModel viewModel;
 @inject Microsoft.AspNetCore.Components.IUriHelper UriHelper;
 
@@ -8,7 +9,7 @@
     <button class="btn btn-primary" onclick="@CreateUnit">Commission Unit</button>
 </div>
 
-<HappyStorage.BlazorWeb.Components.UnitFilter OnClick="@ApplyFilter" />
+<UnitFilter Filter="@viewModel.Filter" OnClickFilter="@ApplyFilter" />
 
 @if (@viewModel.Units.Any())
 {
@@ -17,8 +18,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col"><label asp-for="@viewModel.Units[0].UnitNumber"></label></th>
-                    <th scope="col"><label asp-for="@viewModel.Units[0].PricePerMonth"></label></th>
+                    <th scope="col"><LabelComponent labelFor="@(() => viewModel.Units[0].UnitNumber)" /></th>
+                    <th scope="col"><LabelComponent labelFor="@(() => viewModel.Units[0].PricePerMonth)" /></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -69,6 +70,6 @@
 
     protected void ApplyFilter(UIMouseEventArgs e)
     {
-        Console.WriteLine("Do Stuff");
+        //TODO: Apply Filter
     }
 }

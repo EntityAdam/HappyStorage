@@ -1,10 +1,11 @@
 ﻿@using System.Reflection;
 @using System.ComponentModel.DataAnnotations;
+@using System.Linq.Expressions;
 
 <label class="@(@class)">@displayAttributeName</label>
 
 @functions {
-    private string displayAttributeName = "";
+    private string displayAttributeName;
 
     [Parameter]
     private object viewModel { get; set; }
@@ -13,16 +14,18 @@
     private string property { get; set; }
 
     [Parameter]
-    private string test { get; set; }
+    private Expression<Func<object>> labelFor { get; set; }
 
     [Parameter]
     private string @class { get; set; }
 
     protected override void OnInit()
     {
-        var typeInfo = viewModel.GetType().GetTypeInfo();
-        var prop = typeInfo.GetProperty(property);
-        var attribute = prop.GetCustomAttributes(typeof(DisplayAttribute), true).Cast<DisplayAttribute>().Single();
-        displayAttributeName = attribute.ShortName ?? attribute.Name ?? prop.Name;
+        var member = labelFor.Body as MemberExpression;
+        var unary = labelFor.Body as UnaryExpression;
+        var memberExp = member ?? (unary != null ? unary.Operand as MemberExpression : null);
+        PropertyInfo propInfo = memberExp.Member as PropertyInfo;
+        var attribute = propInfo.GetCustomAttributes(typeof(DisplayAttribute), true).Cast<DisplayAttribute>().SingleOrDefault();
+        displayAttributeName = attribute?.ShortName ?? attribute?.Name ?? propInfo.Name;
     }
 }

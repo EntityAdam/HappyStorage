@@ -1,24 +1,23 @@
-﻿@using HappyStorage.Common.Ui.Units.ViewModels;
-@inject HappyStorage.Common.Ui.Units.ViewModels.IUnitFilterViewModel viewModel
+﻿@using HappyStorage.Common.Ui.Units.Models;
 
 <div class="bg-light">
     <h4>Filter</h4>
     <div class="form-row">
         <div class="form-check form-check-inline mb-2 col-md-3">
-            <input bind="@viewModel.IsClimateControlled" class="form-check-input" type="checkbox" />
-            <LabelComponent class="form-check-label" viewModel="@viewModel" property="@nameof(viewModel.IsClimateControlled)" />
+            <input bind="@Filter.IsClimateControlled" class="form-check-input" type="checkbox" />
+            <LabelComponent class="form-check-label" labelFor="@(() => Filter.IsClimateControlled)" />
         </div>
     </div>
     <div class="form-row">
         <div class="form-check form-check-inline mb-2 col-md-3">
-            <input bind="@viewModel.IsVehicleAccessible" class="form-check-input" type="checkbox" />
-            <LabelComponent class="form-check-label" viewModel="@viewModel" property="@nameof(viewModel.IsVehicleAccessible)" />
+            <input bind="@Filter.IsVehicleAccessible" class="form-check-input" type="checkbox" />
+            <LabelComponent class="form-check-label" labelFor="@(() => Filter.IsVehicleAccessible)" />
         </div>
     </div>
     <div class="form-row">
         <div class="mb-2 col-md-2">
-            <LabelComponent viewModel="@viewModel" property="@nameof(viewModel.MinimumCubicFeet)" />
-            <input bind="@viewModel.MinimumCubicFeet" class="form-control" type="number" />
+            <LabelComponent labelFor="@(() => Filter.MinimumCubicFeet)" />
+            <input bind="@Filter.MinimumCubicFeet" class="form-control" type="number" />
         </div>
     </div>
     <div class="form-row">
@@ -27,13 +26,9 @@
 </div>
 
 @functions {
-    private IUnitFilterViewModel vm { get; set; }
-
     [Parameter]
     private EventCallback<UIMouseEventArgs> OnClickFilter { get; set; }
 
-    protected override void OnInit()
-    {
-        vm = viewModel;
-    }    
+    [Parameter]
+    private UnitListFilter Filter { get; set; }
 }

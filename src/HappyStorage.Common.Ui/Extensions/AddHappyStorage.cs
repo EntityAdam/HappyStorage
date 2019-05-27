@@ -14,8 +14,7 @@ namespace HappyStorage.Common.Ui.Extensions
                 .AddTransient<ICreateUnitViewModel, CreateUnitViewModel>()
                 .AddTransient<IUnitDecommissionViewModel, UnitDecommissionViewModel>()
                 .AddTransient<IUnitReserveViewModel, UnitReserveViewModel>()
-                .AddTransient<IUnitListViewModel, UnitListViewModel>()
-                .AddTransient<IUnitFilterViewModel, UnitFilterViewModel>();
+                .AddTransient<IUnitListViewModel, UnitListViewModel>();
         }
     }
 }

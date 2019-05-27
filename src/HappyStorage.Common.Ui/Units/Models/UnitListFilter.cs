@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HappyStorage.Common.Ui.Units.ViewModels
+namespace HappyStorage.Common.Ui.Units.Models
 {
     //TODO: Move to models
     public class UnitListFilter
