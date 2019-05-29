@@ -18,5 +18,6 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
         UnitListFilter Filter { get; set; }
         void Load();
         void ApplyFilter(UnitListFilter filter);
+        void ApplyFilter();
     }
 }

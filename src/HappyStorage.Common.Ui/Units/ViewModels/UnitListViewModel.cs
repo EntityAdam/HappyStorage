@@ -2,7 +2,6 @@
 using HappyStorage.Common.Ui.Units.Models;
 using HappyStorage.Core;
 using Prism.Commands;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -68,7 +67,7 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
             set
             {
                 SetField(ref filter, value);
-                ApplyFilter(value);
+                ApplyFilter();
             }
         }
 
@@ -87,18 +86,12 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
 
         public void ApplyFilter(UnitListFilter filter)
         {
-            var filteredUnits = facade.FindAvailableUnits(filter.IsClimateControlled, filter.IsVehicleAccessible, filter.MinimumCubicFeet);
-            UpdateList(filteredUnits);
+            this.Filter = filter;
         }
 
         public bool CanExecuteNext() => (Pager != null) ? Pager.CanExecuteNext : false;
 
         public bool CanExecuteBack() => (Pager != null) ? Pager.CanExecutePrev : false;
-
-        public void ApplyFilter(bool? isVehicleAccessible, bool? isClimateControlled, int? minimumCubicFeet)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public void JumpToPage(int? pageNum)
         {
@@ -110,6 +103,12 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
             {
                 UpdateList(Pager.FirstPage());
             }
+        }
+
+        public void ApplyFilter()
+        {
+            var filteredUnits = facade.FindAvailableUnits(filter.IsClimateControlled, filter.IsVehicleAccessible, filter.MinimumCubicFeet);
+            UpdateList(filteredUnits);
         }
     }
 }
