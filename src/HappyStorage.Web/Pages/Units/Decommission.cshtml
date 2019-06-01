@@ -6,7 +6,7 @@
 
 <h1>Are you sure you want to decommission this unit?</h1>
 
-<form method ="post">
+<form method="post">
     <input type="text" hidden="hidden" asp-for="@Model.ViewModel.UnitNumber" />
     <button type="submit" class="btn btn-danger">Delete</button>
     <a asp-page="/Units/List" class="btn btn-light">Go Back</a>
