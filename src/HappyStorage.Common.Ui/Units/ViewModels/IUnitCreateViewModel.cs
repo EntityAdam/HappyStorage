@@ -2,7 +2,7 @@
 
 namespace HappyStorage.Common.Ui.Units.ViewModels
 {
-    public interface ICreateUnitViewModel
+    public interface IUnitCreateViewModel
     {
         NewUnitModel NewUnit { get; set; }
 

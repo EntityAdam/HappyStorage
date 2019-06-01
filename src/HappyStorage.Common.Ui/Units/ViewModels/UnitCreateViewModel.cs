@@ -3,12 +3,11 @@ using HappyStorage.Core;
 
 namespace HappyStorage.Common.Ui.Units.ViewModels
 {
-    //TODO: Rename to UnitCreateViewModel
-    public class CreateUnitViewModel : ICreateUnitViewModel
+    public class UnitCreateViewModel : IUnitCreateViewModel
     {
         private readonly IFacade facade;
 
-        public CreateUnitViewModel(IFacade facade)
+        public UnitCreateViewModel(IFacade facade)
         {
             this.facade = facade;
         }

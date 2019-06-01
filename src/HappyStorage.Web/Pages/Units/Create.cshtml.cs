@@ -8,12 +8,12 @@ namespace HappyStorage.Ui.Pages.Unit
 
     public class CreateModel : PageModel
     {
-        public CreateModel(ICreateUnitViewModel viewModel)
+        public CreateModel(IUnitCreateViewModel viewModel)
         {
             ViewModel = viewModel;
         }
 
-        public ICreateUnitViewModel ViewModel { get; private set; }
+        public IUnitCreateViewModel ViewModel { get; private set; }
 
         public IActionResult OnGet()
         {
