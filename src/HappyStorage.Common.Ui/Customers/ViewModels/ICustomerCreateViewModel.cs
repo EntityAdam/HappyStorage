@@ -7,6 +7,7 @@ namespace HappyStorage.Common.Ui.Customers
         ICommand NextCommand { get; set; }
         ICommand PrevCommand { get; set; }
         NewCustomerModel NewCustomer { get; set; }
+        void Create();
         void Create(NewCustomerModel newCustomer);
     }
 }

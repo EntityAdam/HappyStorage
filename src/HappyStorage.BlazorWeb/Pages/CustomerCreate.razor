@@ -1,51 +1,51 @@
-﻿@page "/customer/create";
-@using HappyStorage.Common.Ui.Customers;
-@using HappyStorage.BlazorWeb.Components;
+﻿@page "/customer/create"
+@using HappyStorage.Common.Ui.Customers
+@using HappyStorage.BlazorWeb.Components
 @inject Microsoft.AspNetCore.Components.IUriHelper UriHelper
-@inject HappyStorage.Common.Ui.Customers.ICustomerCreateViewModel viewModel;
+@inject HappyStorage.Common.Ui.Customers.ICustomerCreateViewModel viewModel
 
 <h1>Create Customer</h1>
 
-<EditForm Model="@newCustomer" OnValidSubmit="@HandleValidSubmit">
+<EditForm Model="@viewModel.NewCustomer" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="form-group">
         <h3>Name</h3>
-        <LabelComponent labelFor="@(() => newCustomer.FirstName)"/>
-        <input class="form-control" bind="@newCustomer.FirstName" type="text" placeholder="First Name" />
+        <LabelComponent labelFor="@(() => viewModel.NewCustomer.FirstName)" />
+        <InputText class="form-control" bind-Value="@viewModel.NewCustomer.FirstName" />
 
-        <LabelComponent labelFor="(() => newCustomer.LastName)" />
-        <input class="form-control" bind="@newCustomer.LastName" type="text" placeholder="First Name" />
+        <LabelComponent labelFor="(() => viewModel.NewCustomer.LastName)" />
+        <InputText class="form-control" bind-Value="@viewModel.NewCustomer.LastName" />
     </div>
     <div class="form-group">
         <h3>Address</h3>
 
-        <LabelComponent labelFor="@(() => newCustomer.Street)" />
-        <input class="form-control" bind="@newCustomer.Street" type="text" placeholder="1 Copley Parkway" />
+        <LabelComponent labelFor="@(() => viewModel.NewCustomer.Street)" />
+        <InputText class="form-control" bind-Value="@viewModel.NewCustomer.Street" />
 
-        <LabelComponent labelFor="@(() => newCustomer.City)" />
-        <input class="form-control" bind="@newCustomer.City" type="text" placeholder="Morrisville" />
+        <LabelComponent labelFor="@(() => viewModel.NewCustomer.City)" />
+        <InputText class="form-control" bind-Value="@viewModel.NewCustomer.City" />
 
-        <LabelComponent labelFor="@(() => newCustomer.State)" />
-        <input class="form-control" bind="@newCustomer.State" type="text" placeholder="NC" />
+        <LabelComponent labelFor="@(() => viewModel.NewCustomer.State)" />
+        <InputText class="form-control" bind-Value="@viewModel.NewCustomer.State" />
 
-        <LabelComponent labelFor="@(() => newCustomer.PostalCode)" />
-        <input class="form-control" bind="@newCustomer.PostalCode" type="number" placeholder="27560" />
+        <LabelComponent labelFor="@(() => viewModel.NewCustomer.PostalCode)" />
+        <InputText class="form-control" bind-Value="@viewModel.NewCustomer.PostalCode" />
     </div>
     <br />
     <button class="btn btn-primary" type="submit">Submit</button>
-    <button class="btn">Cancel</button>
-
-    <button type="submit">Submit</button>
+    <button class="btn" type="button" onclick="@ReturnToList">Cancel</button>
 </EditForm>
 
 @functions {
-
-    private NewCustomerModel newCustomer = new NewCustomerModel();
-
     private void HandleValidSubmit()
     {
-        viewModel.Create(newCustomer);
+        viewModel.Create();
+        ReturnToList();
+    }
+
+    private void ReturnToList()
+    {
         UriHelper.NavigateTo("/customers");
     }
 }
