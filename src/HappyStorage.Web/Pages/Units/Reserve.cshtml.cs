@@ -13,17 +13,17 @@ namespace HappyStorage.Web.Pages.Unit
 
         public IUnitReserveViewModel ViewModel { get; private set; }
 
-        public string UnitNumber { get; private set; }
-
         public void OnGet([FromRoute] string unitNumber)
         {
-            UnitNumber = unitNumber;
+            ViewModel.UnitNumber = unitNumber;
         }
 
         //TODO: Need to rework this flow
-        public IActionResult OnPost([FromForm] string unitNumber, [FromForm] string customerPicker)
+        public IActionResult OnPost(
+            [FromForm(Name = "ViewModel.UnitNumber")] string unitNumber, 
+            [FromForm(Name = "ViewModel.SelectedCustomerNumber")] string customerNumber)
         {
-            ViewModel.ReserveUnit(unitNumber, customerPicker);
+            ViewModel.ReserveUnit(unitNumber, customerNumber);
             return RedirectToPage("/Units/List");
         }
     }

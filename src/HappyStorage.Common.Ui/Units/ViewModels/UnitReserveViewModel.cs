@@ -1,4 +1,8 @@
-﻿using HappyStorage.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using HappyStorage.Core;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HappyStorage.Common.Ui.Units.ViewModels
 {
@@ -10,6 +14,22 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
         {
             this.facade = facade;
         }
+
+        public string UnitNumber { get; set; }
+
+        public List<SelectListItem> Customers => FetchCustomers();
+
+        private List<SelectListItem> FetchCustomers()
+        {
+            return facade.ListCustomers().Select(c =>
+                new SelectListItem()
+                {
+                    Text = c.FullName,
+                    Value = c.CustomerNumber
+                }).ToList();
+        }
+
+        public string SelectedCustomerNumber { get; set; }
 
         public void ReserveUnit(string unitNumber, string customerNumber)
         {
