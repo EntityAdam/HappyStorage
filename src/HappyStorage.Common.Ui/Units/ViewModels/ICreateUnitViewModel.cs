@@ -6,6 +6,8 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
     {
         NewUnitModel NewUnit { get; set; }
 
+        void Create();
+
         void Create(NewUnitModel newUnit);
     }
 }

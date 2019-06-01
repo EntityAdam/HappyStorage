@@ -13,7 +13,12 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
             this.facade = facade;
         }
 
-        public NewUnitModel NewUnit { get; set; }
+        public NewUnitModel NewUnit { get; set; } = new NewUnitModel();
+
+        public void Create()
+        {
+            Create(this.NewUnit);
+        }
 
         public void Create(NewUnitModel newUnit)
         {

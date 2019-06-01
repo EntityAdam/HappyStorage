@@ -1,0 +1,55 @@
+﻿@page "/units/create"
+@using HappyStorage.BlazorWeb.Components
+@using HappyStorage.Common.Ui.Units.Models
+@inject Microsoft.AspNetCore.Components.IUriHelper UriHelper
+@inject HappyStorage.Common.Ui.Units.ViewModels.ICreateUnitViewModel viewModel
+
+<h1>Commission New Unit</h1>
+
+<EditForm Model="@viewModel.NewUnit" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <LabelComponent labelFor="@(() => viewModel.NewUnit.UnitNumber)"></LabelComponent>
+    <InputText class="form-control" bind-Value="@viewModel.NewUnit.UnitNumber" /> <!--type="text" placeholder="Unit Number"-->
+
+    <LabelComponent labelFor="@(() => viewModel.NewUnit.PricePerMonth)"></LabelComponent>
+    <InputNumber class="form-control" bind-Value="@viewModel.NewUnit.PricePerMonth" /> <!--type="number"-->
+    <br />
+
+    <div>
+        <h3>Dimensions</h3>
+        <LabelComponent labelFor="@(() => viewModel.NewUnit.Length)"></LabelComponent>
+        <InputNumber class="form-control" bind-Value="@viewModel.NewUnit.Length" /> <!--type="number"-->
+
+        <LabelComponent labelFor="@(() => viewModel.NewUnit.Width)"></LabelComponent>
+        <InputNumber class="form-control" bind-Value="@viewModel.NewUnit.Width" /> <!--type="number"-->
+
+        <LabelComponent labelFor="@(() => viewModel.NewUnit.Height)"></LabelComponent>
+        <InputNumber class="form-control" bind-Value="@viewModel.NewUnit.Height" /> <!--type="number"-->
+    </div>
+    <br />
+    <div>
+        <h3>Options</h3>
+        <LabelComponent labelFor="@(() => viewModel.NewUnit.IsClimateControlled)"></LabelComponent>
+        <InputCheckbox class="form-check" bind-Value="@viewModel.NewUnit.IsClimateControlled" /> <!--type="checkbox"-->
+
+        <LabelComponent labelFor="@(() => viewModel.NewUnit.IsVehicleAccessible)"></LabelComponent>
+        <InputCheckbox class="form-check" bind-Value="@viewModel.NewUnit.IsVehicleAccessible" /> <!--type="checkbox"-->
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+    <button class="btn" type="button" onclick="@ReturnToList">Cancel</button>
+</EditForm>
+
+@functions {
+    private void HandleValidSubmit()
+    {
+        viewModel.Create();
+        UriHelper.NavigateTo("/units");
+    }
+
+    private void ReturnToList()
+    {
+        UriHelper.NavigateTo("/units");
+    }
+}
