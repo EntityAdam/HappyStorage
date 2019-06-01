@@ -1,0 +1,39 @@
+﻿@page "/units/reserve/{unitNumber}"
+@using HappyStorage.BlazorWeb.Components
+@using HappyStorage.Common.Ui.Units.Models
+@inject Microsoft.AspNetCore.Components.IUriHelper UriHelper
+@inject HappyStorage.Common.Ui.Units.ViewModels.IUnitReserveViewModel viewModel
+
+<h1>Reserve Unit <strong>@viewModel.UnitNumber</strong></h1>
+
+<input type="text" hidden="hidden" asp-for="@viewModel.UnitNumber" />
+<div class="form-group col-md-4">
+    <label>Select Customer</label>
+    <SelectComponent selectFor="@(() => viewModel.SelectedCustomerNumber)" items="@(() => viewModel.FetchCustomers())" OnSelectionChanged="@SelectedCustomerChanged" class="form-control"></SelectComponent>
+
+</div>
+<div class="form-group col-md-4">
+    <button type="button" class="btn btn-primary" onclick="@Reserve">Reserve</button>
+    <a asp-page="/Units/List" class="btn btn-light">Cancel</a>
+</div>
+
+@functions {
+    [Parameter]
+    private string unitNumber { get; set; }
+
+    protected override void OnInit()
+    {
+        viewModel.UnitNumber = unitNumber;
+    }
+
+    protected void Reserve()
+    {
+        viewModel.ReserveUnit();
+        UriHelper.NavigateTo("/units");
+    }
+
+    protected void SelectedCustomerChanged(UIChangeEventArgs args)
+    {
+        viewModel.SelectedCustomerNumber = args.Value.ToString();
+    }
+}

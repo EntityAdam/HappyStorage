@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering;
+@using System.Linq.Expressions;
+
+<select class="@(@class)" onchange="@OnSelectionChanged">
+    @foreach (var item in items)
+    {
+        <option value="@item.Value">@item.Text</option>
+    }
+</select>
+
+
+@functions {
+    private List<SelectListItem> items { get; set; }
+
+    [Parameter]
+    private Expression<Func<string>> selectFor { get; set; }
+
+    [Parameter]
+    private string @class { get; set; }
+
+    [Parameter]
+    public Func<List<SelectListItem>> Items { get; set; }
+
+    [Parameter]
+    private EventCallback<UIChangeEventArgs> OnSelectionChanged { get; set; }
+
+    protected override void OnInit()
+    {
+        items = Items.Invoke();
+    }
+}

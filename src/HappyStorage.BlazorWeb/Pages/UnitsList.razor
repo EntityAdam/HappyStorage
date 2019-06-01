@@ -30,7 +30,7 @@
                     <th scope="row">@unit.UnitNumber</th>
                     <td>@unit.PricePerMonth</td>
                     <td>
-                        <a asp-page="/Units/Reserve" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-sm btn-primary">Reserve</a>
+                        <a href="/Units/Reserve/@unit.UnitNumber" class="btn btn-sm btn-primary">Reserve</a>
                         <a asp-page="/Units/Release" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-sm btn-danger">Delete</a>
                     </td>
                 </tr>

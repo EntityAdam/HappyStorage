@@ -18,8 +18,10 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
         public string UnitNumber { get; set; }
 
         public List<SelectListItem> Customers => FetchCustomers();
+        
+        public string SelectedCustomerNumber { get; set; }
 
-        private List<SelectListItem> FetchCustomers()
+        public List<SelectListItem> FetchCustomers()
         {
             return facade.ListCustomers().Select(c =>
                 new SelectListItem()
@@ -29,7 +31,10 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
                 }).ToList();
         }
 
-        public string SelectedCustomerNumber { get; set; }
+        public void ReserveUnit()
+        {
+            facade.ReserveUnit(this.UnitNumber, this.SelectedCustomerNumber);
+        }
 
         public void ReserveUnit(string unitNumber, string customerNumber)
         {
