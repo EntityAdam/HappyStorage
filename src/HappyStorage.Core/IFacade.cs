@@ -10,7 +10,8 @@ namespace HappyStorage.Core
 		void AddNewCustomer(NewCustomer newCustomer);
         void DeleteCustomer(string customerNumber);
 		IEnumerable<AvailableUnit> FindAvailableUnits(bool? isClimateControlled, bool? isVehicleAccessible, int? minimumCubicFeet);
-		void ReserveUnit(string unitNumber, string customerNumber);
+        IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber);
+        void ReserveUnit(string unitNumber, string customerNumber);
 		void ReleaseUnit(string unitNumber, string customerNumber);
 		decimal CalculateAmountDue(string customerNumber);
 		void Pay(string customerNumber, decimal amount);

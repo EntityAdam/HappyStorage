@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using HappyStorage.Common.Ui.Customers;
 using HappyStorage.Common.Ui.Units.ViewModels;
+using HappyStorage.Common.Ui.Tenants.ViewModels;
 
 namespace HappyStorage.Common.Ui.Extensions
 {
@@ -14,7 +15,9 @@ namespace HappyStorage.Common.Ui.Extensions
                 .AddTransient<IUnitCreateViewModel, UnitCreateViewModel>()
                 .AddTransient<IUnitDecommissionViewModel, UnitDecommissionViewModel>()
                 .AddTransient<IUnitReserveViewModel, UnitReserveViewModel>()
-                .AddTransient<IUnitListViewModel, UnitListViewModel>();
+                .AddTransient<IUnitListViewModel, UnitListViewModel>()
+                .AddTransient<ITenantUnitsViewModel, TenantUnitsViewModel>()
+                .AddTransient<ITenantReleaseViewModel, TenantReleaseViewModel>();
         }
     }
 }

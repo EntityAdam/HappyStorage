@@ -18,10 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Tenants\Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Prism.Core" Version="7.1.0.431" />
   </ItemGroup>
 

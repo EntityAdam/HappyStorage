@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace HappyStorage.Common.Ui.Customers
+namespace HappyStorage.Common.Ui
 {
     public abstract class BindableBase : INotifyPropertyChanged
     {

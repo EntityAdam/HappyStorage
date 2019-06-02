@@ -18,7 +18,6 @@ namespace HappyStorage.Web.Pages.Unit
             ViewModel.UnitNumber = unitNumber;
         }
 
-        //TODO: Need to rework this flow
         public IActionResult OnPost(
             [FromForm(Name = "ViewModel.UnitNumber")] string unitNumber, 
             [FromForm(Name = "ViewModel.SelectedCustomerNumber")] string customerNumber)

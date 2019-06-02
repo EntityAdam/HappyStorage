@@ -134,5 +134,12 @@ namespace HappyStorage.Core
 		private int GetDifferenceInMonths(DateTime start, DateTime end) => ((end.Year * 12) + end.Month) - ((start.Year * 12) + start.Month);
 
         public IEnumerable<CustomerLookup> ListCustomers() => customerStore.ListCustomers();
+
+        //TODO: Add Test
+        public IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber)
+        {
+            if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
+            return tenancyStore.GetCustomerUnits(customerNumber);
+        }
     }
 }
