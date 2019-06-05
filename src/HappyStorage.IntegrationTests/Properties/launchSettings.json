@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "HappyStorage.IntegrationTests": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

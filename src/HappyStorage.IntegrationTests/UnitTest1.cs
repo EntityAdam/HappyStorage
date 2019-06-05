@@ -8,7 +8,8 @@ namespace HappyStorage.IntegrationTests
         [Fact]
         public void Test1()
         {
-
+            var res = true;
+            Assert.True(res);
         }
     }
 }
