@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyStorage.Common.Ui", "H
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyStorage.IntegrationTests", "HappyStorage.IntegrationTests\HappyStorage.IntegrationTests.csproj", "{1051286C-F70A-4596-8196-2A67110868EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyStorage.Migrations", "HappyStorage.Migrations\HappyStorage.Migrations.csproj", "{6DE7E69B-B4E6-457B-94C2-9440C706BFB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{1051286C-F70A-4596-8196-2A67110868EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1051286C-F70A-4596-8196-2A67110868EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1051286C-F70A-4596-8196-2A67110868EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DE7E69B-B4E6-457B-94C2-9440C706BFB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DE7E69B-B4E6-457B-94C2-9440C706BFB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DE7E69B-B4E6-457B-94C2-9440C706BFB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DE7E69B-B4E6-457B-94C2-9440C706BFB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
