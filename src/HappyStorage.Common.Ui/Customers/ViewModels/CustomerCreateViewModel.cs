@@ -14,8 +14,6 @@ namespace HappyStorage.Common.Ui.Customers
         }
 
         public NewCustomerModel NewCustomer { get; set; } = new NewCustomerModel();
-        public ICommand NextCommand { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ICommand PrevCommand { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public void Create()
         {

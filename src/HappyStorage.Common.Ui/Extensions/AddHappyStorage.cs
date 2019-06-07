@@ -9,15 +9,16 @@ namespace HappyStorage.Common.Ui.Extensions
     {
         public static void AddHappyStorageCommonUi(this IServiceCollection services)
         {
+            //Keep me sorted alphabetic!
             services
-                .AddTransient<ICustomerListViewModel, CustomerListViewModel>()
                 .AddTransient<ICustomerCreateViewModel, CustomerCreateViewModel>()
+                .AddTransient<ICustomerListViewModel, CustomerListViewModel>()
+                .AddTransient<ITenantReleaseViewModel, TenantReleaseViewModel>()
+                .AddTransient<ITenantUnitsViewModel, TenantUnitsViewModel>()
                 .AddTransient<IUnitCreateViewModel, UnitCreateViewModel>()
                 .AddTransient<IUnitDecommissionViewModel, UnitDecommissionViewModel>()
-                .AddTransient<IUnitReserveViewModel, UnitReserveViewModel>()
                 .AddTransient<IUnitListViewModel, UnitListViewModel>()
-                .AddTransient<ITenantUnitsViewModel, TenantUnitsViewModel>()
-                .AddTransient<ITenantReleaseViewModel, TenantReleaseViewModel>();
+                .AddTransient<IUnitReserveViewModel, UnitReserveViewModel>();
         }
     }
 }
