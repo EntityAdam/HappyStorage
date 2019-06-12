@@ -3,7 +3,11 @@
 
 <h1>Units Occupied by <strong>@Model.ViewModel.SelectedCustomerNumber</strong></h1>
 
-@if (Model.ViewModel.TenantUnits.Any())
+@if (!Model.ViewModel.TenantUnits.Any())
+{
+    <h3>No Units Occupied</h3>
+}
+else
 {
     <table class="table">
         <thead>
@@ -26,8 +30,4 @@
             }
         </tbody>
     </table>
-}
-else
-{
-    <h3>No Units Occupied</h3>
 }

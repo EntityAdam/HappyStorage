@@ -1,0 +1,45 @@
+﻿@page "/tenant/unitlist/{customerNumber}"
+@using HappyStorage.BlazorWeb.Components;
+@inject HappyStorage.Common.Ui.Tenants.ViewModels.ITenantUnitsViewModel viewModel;
+@inject Microsoft.AspNetCore.Components.IUriHelper UriHelper;
+
+<h1>Units Occupied by <strong>@viewModel.SelectedCustomerNumber</strong></h1>
+
+@if (!viewModel.TenantUnits.Any())
+{
+    <h3>No Units Occupied</h3>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"><LabelComponent labelFor="@(() => viewModel.TenantUnits[0].UnitNumber)"></LabelComponent></th>
+                <th scope="col"><LabelComponent labelFor="@(() => viewModel.TenantUnits[0].ReservationDate)"></LabelComponent></th>
+                <th scope="col"><LabelComponent labelFor="@(() => viewModel.TenantUnits[0].AmountPaid)"></LabelComponent></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var unit in viewModel.TenantUnits)
+            {
+                <tr>
+                    <td>@unit.UnitNumber</td>
+                    <td>@unit.ReservationDate</td>
+                    <td>@unit.AmountPaid</td>
+                    <td><a href="/Tenants/Release?customerNumber=@viewModel.SelectedCustomerNumber&unitNumber=@unit.UnitNumber" class="btn btn-danger">Release</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@functions {
+    [Parameter]
+    private string customerNumber { get; set; }
+
+    protected override void OnInit()
+    {
+        viewModel.SelectedCustomerNumber = customerNumber;
+    }
+}

@@ -27,7 +27,7 @@
                     <th scope="row">@customer.CustomerNumber</th>
                     <td>@customer.FullName</td>
                     <td>
-                        <a asp-page="/Tenant/ListUnits" asp-route-customerNumber="@customer.CustomerNumber" class="btn btn-sm btn-primary">Manage Units</a>
+                        <a href="/Tenant/UnitList/@customer.CustomerNumber" class="btn btn-sm btn-primary">Manage Units</a>
                         <a asp-page="/Tenant/Payment" asp-route-customerNumber="@customer.CustomerNumber" class="btn btn-sm btn-info">Make a Payment</a>
                         <a href="/Customer/Delete/@customer.CustomerNumber" class="btn btn-sm btn-danger">Delete</a>
                     </td>
