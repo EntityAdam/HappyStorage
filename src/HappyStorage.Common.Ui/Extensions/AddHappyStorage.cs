@@ -2,6 +2,7 @@
 using HappyStorage.Common.Ui.Customers;
 using HappyStorage.Common.Ui.Units.ViewModels;
 using HappyStorage.Common.Ui.Tenants.ViewModels;
+using HappyStorage.Common.Ui.Customers.ViewModels;
 
 namespace HappyStorage.Common.Ui.Extensions
 {
@@ -12,6 +13,7 @@ namespace HappyStorage.Common.Ui.Extensions
             //Keep me sorted alphabetic!
             services
                 .AddTransient<ICustomerCreateViewModel, CustomerCreateViewModel>()
+                .AddTransient<ICustomerDeleteViewModel, CustomerDeleteViewModel>()
                 .AddTransient<ICustomerListViewModel, CustomerListViewModel>()
                 .AddTransient<ITenantReleaseViewModel, TenantReleaseViewModel>()
                 .AddTransient<ITenantUnitsViewModel, TenantUnitsViewModel>()
