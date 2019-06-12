@@ -1,0 +1,35 @@
+﻿@page "/tenant/release/{customerNumber}/{unitNumber}"
+@using HappyStorage.BlazorWeb.Components
+@using HappyStorage.Common.Ui.Units.Models
+@inject Microsoft.AspNetCore.Components.IUriHelper UriHelper
+@inject HappyStorage.Common.Ui.Tenants.ViewModels.ITenantReleaseViewModel viewModel
+
+<h1>Are you sure you want to release this unit?</h1>
+
+<button type="button" class="btn btn-danger" onclick="@Release">Release</button>
+<button type="button" class="btn btn-light" onclick="@GoBack">Go Back</button>
+
+@functions {
+    [Parameter]
+    private string unitNumber { get; set; }
+
+    [Parameter]
+    private string customerNumber { get; set; }
+
+    protected override void OnInit()
+    {
+        viewModel.UnitNumber = unitNumber;
+        viewModel.CustomerNumber = customerNumber;
+    }
+
+    protected void Release()
+    {
+        viewModel.ReleaseUnit();
+        UriHelper.NavigateTo($"/tenant/unitlist/{viewModel.CustomerNumber}");
+    }
+
+    protected void GoBack()
+    {
+        UriHelper.NavigateTo($"/tenant/unitlist/{viewModel.CustomerNumber}");
+    }
+}
