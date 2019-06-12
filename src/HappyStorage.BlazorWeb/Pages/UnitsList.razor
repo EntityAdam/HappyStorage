@@ -31,7 +31,7 @@
                     <td>@unit.PricePerMonth</td>
                     <td>
                         <a href="/Units/Reserve/@unit.UnitNumber" class="btn btn-sm btn-primary">Reserve</a>
-                        <a asp-page="/Units/Release" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-sm btn-danger">Delete</a>
+                        <a href="/Units/Decommission/@unit.UnitNumber" class="btn btn-sm btn-danger">Decommission</a>
                     </td>
                 </tr>
             }

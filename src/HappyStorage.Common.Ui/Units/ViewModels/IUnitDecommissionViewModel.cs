@@ -4,6 +4,8 @@
     {
         string UnitNumber { get; set; }
 
+        void Decommission();
+
         void Decommission(string unitNumber);
     }
 }

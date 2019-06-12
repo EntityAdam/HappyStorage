@@ -1,0 +1,31 @@
+﻿@page "/units/decommission/{unitNumber}"
+@using HappyStorage.BlazorWeb.Components
+@using HappyStorage.Common.Ui.Units.Models
+@inject Microsoft.AspNetCore.Components.IUriHelper UriHelper
+@inject HappyStorage.Common.Ui.Units.ViewModels.IUnitDecommissionViewModel viewModel
+
+<h1>Are you sure you want to decommission this unit?</h1>
+
+<button type="button" class="btn btn-danger" onclick="@Decommission">Delete</button>
+<button type="button" class="btn btn-light" onclick="@GoBack">Go Back</button>
+
+@functions {
+    [Parameter]
+    private string unitNumber { get; set; }
+
+    protected override void OnInit()
+    {
+        viewModel.UnitNumber = unitNumber;
+    }
+
+    protected void Decommission()
+    {
+        viewModel.Decommission();
+        UriHelper.NavigateTo("/units");
+    }
+
+    protected void GoBack()
+    {
+        UriHelper.NavigateTo("/units");
+    }
+}

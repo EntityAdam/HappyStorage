@@ -13,6 +13,11 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
 
         public string UnitNumber { get; set; }
 
+        public void Decommission()
+        {
+            facade.DecommissionUnit(UnitNumber);
+        }
+
         public void Decommission(string unitNumber)
         {
             facade.DecommissionUnit(unitNumber);
