@@ -1,0 +1,31 @@
+﻿@page "/customer/delete/{customerNumber}"
+@using HappyStorage.BlazorWeb.Components
+@using HappyStorage.Common.Ui.Customers
+@inject Microsoft.AspNetCore.Components.IUriHelper UriHelper
+@inject HappyStorage.Common.Ui.Customers.ViewModels.ICustomerDeleteViewModel viewModel
+
+<h1>Are you sure you want to delete this customer?</h1>
+
+<button type="button" class="btn btn-danger" onclick="@Delete">Delete</button>
+<button type="button" class="btn btn-light" onclick="@GoBack">Go Back</button>
+
+@functions {
+    [Parameter]
+    private string customerNumber { get; set; }
+
+    protected override void OnInit()
+    {
+        viewModel.CustomerNumber = customerNumber;
+    }
+
+    protected void Delete()
+    {
+        viewModel.Delete();
+        UriHelper.NavigateTo("/customers");
+    }
+
+    protected void GoBack()
+    {
+        UriHelper.NavigateTo("/customers");
+    }
+}
