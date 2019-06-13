@@ -1,9 +1,10 @@
-﻿using HappyStorage.Core;
+﻿using HappyStorage.Common.Ui.Customers.Models;
+using HappyStorage.Core;
 using Prism.Commands;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace HappyStorage.Common.Ui.Customers
+namespace HappyStorage.Common.Ui.Customers.ViewModels
 {
     public class CustomerListViewModel : BindableBase, ICustomerListViewModel
     {

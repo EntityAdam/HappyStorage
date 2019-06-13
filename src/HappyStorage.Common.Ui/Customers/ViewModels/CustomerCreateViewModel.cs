@@ -1,8 +1,8 @@
-﻿using HappyStorage.Core;
+﻿using HappyStorage.Common.Ui.Customers.Models;
+using HappyStorage.Core;
 using System;
-using System.Windows.Input;
 
-namespace HappyStorage.Common.Ui.Customers
+namespace HappyStorage.Common.Ui.Customers.ViewModels
 {
     public class CustomerCreateViewModel : ICustomerCreateViewModel
     {

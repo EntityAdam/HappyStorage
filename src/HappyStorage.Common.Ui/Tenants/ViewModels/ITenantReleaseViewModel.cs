@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HappyStorage.Common.Ui.Tenants.ViewModels
+﻿namespace HappyStorage.Common.Ui.Tenants.ViewModels
 {
     public interface ITenantReleaseViewModel
     {

@@ -1,7 +1,8 @@
-﻿using Prism.Commands;
+﻿using HappyStorage.Common.Ui.Customers.Models;
+using Prism.Commands;
 using System.ComponentModel;
 
-namespace HappyStorage.Common.Ui.Customers
+namespace HappyStorage.Common.Ui.Customers.ViewModels
 {
     public interface ICustomerListViewModel
     {

@@ -1,6 +1,6 @@
-﻿using System.Windows.Input;
+﻿using HappyStorage.Common.Ui.Customers.Models;
 
-namespace HappyStorage.Common.Ui.Customers
+namespace HappyStorage.Common.Ui.Customers.ViewModels
 {
     public interface ICustomerCreateViewModel
     {

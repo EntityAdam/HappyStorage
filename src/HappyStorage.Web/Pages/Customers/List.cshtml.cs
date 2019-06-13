@@ -1,4 +1,4 @@
-﻿using HappyStorage.Common.Ui.Customers;
+﻿using HappyStorage.Common.Ui.Customers.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

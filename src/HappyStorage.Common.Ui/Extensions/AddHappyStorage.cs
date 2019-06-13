@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using HappyStorage.Common.Ui.Customers;
 using HappyStorage.Common.Ui.Units.ViewModels;
 using HappyStorage.Common.Ui.Tenants.ViewModels;
 using HappyStorage.Common.Ui.Customers.ViewModels;
