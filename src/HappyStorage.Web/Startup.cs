@@ -35,7 +35,9 @@ namespace HappyStorage.Web
             services.AddTransient<ISqlUnitStoreSettings, SqlUnitStoreSettings>();
             services.AddTransient<ICustomerStore, FileCustomerStore>();
             services.AddTransient<IFileCustomerStoreSettings, FileCustomerStoreSettings>();
-            services.AddSingleton<ITenancyStore, MemoryTenancyStore>();
+            //services.AddSingleton<ITenancyStore, MemoryTenancyStore>();
+            services.AddTransient<ITenancyStore, SqlTenancyStore>();
+            services.AddTransient<ISqlTenancyStoreSettings, SqlTenancyStoreSettings>();
             services.AddTransient<IDateService, DateService>();
 
             services.AddHappyStorageCommonUi();
