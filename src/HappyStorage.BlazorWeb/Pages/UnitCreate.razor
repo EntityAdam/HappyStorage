@@ -11,34 +11,34 @@
     <ValidationSummary />
 
     <LabelComponent labelFor="@(() => viewModel.NewUnit.UnitNumber)"></LabelComponent>
-    <InputText class="form-control" bind-Value="@viewModel.NewUnit.UnitNumber" /> <!--type="text" placeholder="Unit Number"-->
+    <InputText class="form-control" @bind-Value="@viewModel.NewUnit.UnitNumber" /> <!--type="text" placeholder="Unit Number"-->
 
     <LabelComponent labelFor="@(() => viewModel.NewUnit.PricePerMonth)"></LabelComponent>
-    <InputNumber class="form-control" bind-Value="@viewModel.NewUnit.PricePerMonth" /> <!--type="number"-->
+    <InputNumber class="form-control" @bind-Value="@viewModel.NewUnit.PricePerMonth" /> <!--type="number"-->
     <br />
 
     <div>
         <h3>Dimensions</h3>
         <LabelComponent labelFor="@(() => viewModel.NewUnit.Length)"></LabelComponent>
-        <InputNumber class="form-control" bind-Value="@viewModel.NewUnit.Length" /> <!--type="number"-->
+        <InputNumber class="form-control" @bind-Value="@viewModel.NewUnit.Length" /> <!--type="number"-->
 
         <LabelComponent labelFor="@(() => viewModel.NewUnit.Width)"></LabelComponent>
-        <InputNumber class="form-control" bind-Value="@viewModel.NewUnit.Width" /> <!--type="number"-->
+        <InputNumber class="form-control" @bind-Value="@viewModel.NewUnit.Width" /> <!--type="number"-->
 
         <LabelComponent labelFor="@(() => viewModel.NewUnit.Height)"></LabelComponent>
-        <InputNumber class="form-control" bind-Value="@viewModel.NewUnit.Height" /> <!--type="number"-->
+        <InputNumber class="form-control" @bind-Value="@viewModel.NewUnit.Height" /> <!--type="number"-->
     </div>
     <br />
     <div>
         <h3>Options</h3>
         <LabelComponent labelFor="@(() => viewModel.NewUnit.IsClimateControlled)"></LabelComponent>
-        <InputCheckbox class="form-check" bind-Value="@viewModel.NewUnit.IsClimateControlled" /> <!--type="checkbox"-->
+        <InputCheckbox class="form-check" @bind-Value="@viewModel.NewUnit.IsClimateControlled" /> <!--type="checkbox"-->
 
         <LabelComponent labelFor="@(() => viewModel.NewUnit.IsVehicleAccessible)"></LabelComponent>
-        <InputCheckbox class="form-check" bind-Value="@viewModel.NewUnit.IsVehicleAccessible" /> <!--type="checkbox"-->
+        <InputCheckbox class="form-check" @bind-Value="@viewModel.NewUnit.IsVehicleAccessible" /> <!--type="checkbox"-->
     </div>
     <button class="btn btn-primary" type="submit">Submit</button>
-    <button class="btn" type="button" onclick="@ReturnToList">Cancel</button>
+    <button class="btn" type="button" @onclick="@ReturnToList">Cancel</button>
 </EditForm>
 
 @functions {

@@ -6,7 +6,7 @@
 
 <h1>Units</h1>
 <div>
-    <button class="btn btn-primary" onclick="@CreateUnit">Commission Unit</button>
+    <button class="btn btn-primary" @onclick="@CreateUnit">Commission Unit</button>
 </div>
 
 <UnitFilter Filter="@viewModel.Filter" OnClickFilter="@ApplyFilter" />
@@ -38,11 +38,11 @@
         </table>
         @if (@viewModel.HasPrevPage)
         {
-            <button class="btn btn-primary" onclick="@PrevPage">Prev</button>
+            <button class="btn btn-primary" @onclick="@PrevPage">Prev</button>
         }
         @if (@viewModel.HasNextPage)
         {
-            <button class="btn btn-primary" onclick="@NextPage">Next</button>
+            <button class="btn btn-primary" @onclick="@NextPage">Next</button>
         }
     </div>
 }
