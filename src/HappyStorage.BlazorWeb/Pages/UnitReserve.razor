@@ -1,6 +1,5 @@
 ﻿@page "/units/reserve/{unitNumber}"
 @using HappyStorage.BlazorWeb.Components
-@using HappyStorage.Common.Ui.Units.Models
 @inject Microsoft.AspNetCore.Components.IUriHelper UriHelper
 @inject HappyStorage.Common.Ui.Units.ViewModels.IUnitReserveViewModel viewModel
 
@@ -9,7 +8,12 @@
 <input type="text" hidden="hidden" asp-for="@viewModel.UnitNumber" />
 <div class="form-group col-md-4">
     <label>Select Customer</label>
-    <SelectComponent selectFor="@(() => viewModel.SelectedCustomerNumber)" items="@(() => viewModel.FetchCustomers())" OnSelectionChanged="@SelectedCustomerChanged" class="form-control"></SelectComponent>
+    <SelectComponent selectFor="@(() => viewModel.SelectedCustomerNumber)"
+                     items="@(() => viewModel.FetchCustomers())"
+                     OnSelectionChanged="@SelectedCustomerChanged"
+                     DefaultOption="Select a customer"
+                     class="form-control">
+    </SelectComponent>
 
 </div>
 <div class="form-group col-md-4">

@@ -2,6 +2,10 @@
 @using System.Linq.Expressions;
 
 <select class="@(@class)" onchange="@OnSelectionChanged">
+    @if (!string.IsNullOrEmpty(DefaultOption))
+    {
+        <option value="">@DefaultOption</option>
+    }
     @foreach (var item in items)
     {
         <option value="@item.Value">@item.Text</option>
@@ -19,6 +23,9 @@
 
     [Parameter]
     public Func<List<SelectListItem>> Items { get; set; }
+
+    [Parameter]
+    public string DefaultOption { get; set; }
 
     [Parameter]
     private EventCallback<UIChangeEventArgs> OnSelectionChanged { get; set; }
