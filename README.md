@@ -36,11 +36,8 @@ Added to the project are:
 
 ### A) Prerequisites
 If you want to run the Blazor Project locally, you will need:
- - .NET Core SDK 3.0.0 Preview 5 -> [Link](https://dotnet.microsoft.com/download/dotnet-core/3.0)
- - Visual Studio 2019 Preview 1
- - I have not tested with Visual Studio 2019, but it may work if you enable "Use Preview Versions"
-
-Otherwise, the latest .NET Core 2.2 and Visual Studio 2017 will work for the rest of the projects.
+ - .NET Core SDK 3.0.0 Preview 7 -> [Link](https://dotnet.microsoft.com/download/dotnet-core/3.0)
+ - Visual Studio 2019 Preview 1 or Visual Studio 2019 with "Use Preview Versions" enabled.
 
 ### B) SQL Database
 1. Create an SQL Database; ex: "HappyStorage"
@@ -54,5 +51,4 @@ Otherwise, the latest .NET Core 2.2 and Visual Studio 2017 will work for the res
 ```
 
 # 3. License
-`//TODO Add License`
-In the absence of a license, assume the least restrictive. This may be copied, modified and redistributed without any restrictions. There is no claim to the intellectual (or lack thereof) property.
+MIT License
