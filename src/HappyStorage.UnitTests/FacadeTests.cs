@@ -5,11 +5,11 @@ using HappyStorage.Core;
 
 namespace HappyStorage.UnitTests
 {
-    public class FacadeTests
-    {
-        [Fact]
-        public void CommissionsAndDecommissionsUnitsCorrectly()
-        {
+	public class FacadeTests
+	{
+		[Fact]
+		public void CommissionsAndDecommissionsUnitsCorrectly()
+		{
 			var unitStoreMock = new UnitStoreMock();
 			var facade = new Facade(unitStoreMock, new CustomerStoreDummy(), new TenancyStoreDummy(), new DateServiceDummy());
 			facade.CommissionNewUnit(new NewUnit()
@@ -255,8 +255,8 @@ namespace HappyStorage.UnitTests
 			Assert.Equal(6, find6.Length);
 
 
-            var customerLookup = facade.ListCustomers();
-            Assert.Equal(4, customerLookup.Count());
+			var customerLookup = facade.ListCustomers();
+			Assert.Equal(4, customerLookup.Count());
 		}
 
 		[Fact]
@@ -460,5 +460,5 @@ namespace HappyStorage.UnitTests
 			facade.Pay("Alpha", 900);
 			Assert.Equal(0, facade.CalculateAmountDue("Alpha"));
 		}
-    }
+	}
 }

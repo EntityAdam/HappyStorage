@@ -2,8 +2,8 @@
 
 namespace HappyStorage.FileStorage
 {
-    public interface IFileCustomerStoreSettings
-    {
+	public interface IFileCustomerStoreSettings
+	{
 		string GetRootPath();
-    }
+	}
 }

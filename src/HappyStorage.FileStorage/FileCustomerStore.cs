@@ -30,26 +30,26 @@ namespace HappyStorage.FileStorage
 
 		private string GetAddressPath(string customerNumber) => $"{fileCustomerStoreSettings.GetRootPath()}\\{customerNumber}_Address.txt";
 
-        public IEnumerable<CustomerLookup> ListCustomers()
-        {
-            var customerFiles = Directory.EnumerateFiles(fileCustomerStoreSettings.GetRootPath(), "*_FullName.txt", SearchOption.TopDirectoryOnly);
+		public IEnumerable<CustomerLookup> ListCustomers()
+		{
+			var customerFiles = Directory.EnumerateFiles(fileCustomerStoreSettings.GetRootPath(), "*_FullName.txt", SearchOption.TopDirectoryOnly);
 
-            foreach (var file in customerFiles)
-            {
-                yield return GetLookupFromFileName(file);
-            }
-        }
+			foreach (var file in customerFiles)
+			{
+				yield return GetLookupFromFileName(file);
+			}
+		}
 
-        private CustomerLookup GetLookupFromFileName(string file)
-        {
-            var filename = Path.GetFileNameWithoutExtension(file).Split('_');
-            var fullname = File.ReadAllText(file);
+		private CustomerLookup GetLookupFromFileName(string file)
+		{
+			var filename = Path.GetFileNameWithoutExtension(file).Split('_');
+			var fullname = File.ReadAllText(file);
 
-            return new CustomerLookup
-            {
-                CustomerNumber = filename[0],
-                FullName = fullname
-            };
-        }
-    }
+			return new CustomerLookup
+			{
+				CustomerNumber = filename[0],
+				FullName = fullname
+			};
+		}
+	}
 }

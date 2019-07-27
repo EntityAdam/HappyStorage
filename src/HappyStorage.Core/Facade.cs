@@ -4,8 +4,8 @@ using System.Linq;
 
 namespace HappyStorage.Core
 {
-    public class Facade : IFacade
-    {
+	public class Facade : IFacade
+	{
 		private readonly IUnitStore unitStore;
 		private readonly ICustomerStore customerStore;
 		private readonly ITenancyStore tenancyStore;
@@ -133,13 +133,13 @@ namespace HappyStorage.Core
 
 		private int GetDifferenceInMonths(DateTime start, DateTime end) => ((end.Year * 12) + end.Month) - ((start.Year * 12) + start.Month);
 
-        public IEnumerable<CustomerLookup> ListCustomers() => customerStore.ListCustomers();
+		public IEnumerable<CustomerLookup> ListCustomers() => customerStore.ListCustomers();
 
-        //TODO: Add Test
-        public IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber)
-        {
-            if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
-            return tenancyStore.GetCustomerUnits(customerNumber);
-        }
-    }
+		//TODO: Add Test
+		public IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber)
+		{
+			if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
+			return tenancyStore.GetCustomerUnits(customerNumber);
+		}
+	}
 }

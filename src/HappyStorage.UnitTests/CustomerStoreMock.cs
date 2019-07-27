@@ -6,8 +6,8 @@ using HappyStorage.Core;
 
 namespace HappyStorage.UnitTests
 {
-    internal class CustomerStoreMock : ICustomerStore
-    {
+	internal class CustomerStoreMock : ICustomerStore
+	{
 		internal class Customer
 		{
 			internal string CustomerNumber { get; set; }
@@ -29,6 +29,6 @@ namespace HappyStorage.UnitTests
 
 		public void Delete(string customerNumber) => Customers.RemoveAll(u => u.CustomerNumber == customerNumber);
 
-        public IEnumerable<CustomerLookup> ListCustomers() => Customers.Select(c => new CustomerLookup() { CustomerNumber = c.CustomerNumber, FullName = c.FullName });
-    }
+		public IEnumerable<CustomerLookup> ListCustomers() => Customers.Select(c => new CustomerLookup() { CustomerNumber = c.CustomerNumber, FullName = c.FullName });
+	}
 }

@@ -2,8 +2,8 @@
 
 namespace HappyStorage.SqlStorage
 {
-    public interface ISqlUnitStoreSettings
-    {
+	public interface ISqlUnitStoreSettings
+	{
 		string GetConnectionString();
-    }
+	}
 }

@@ -2,8 +2,8 @@
 
 namespace HappyStorage.Core
 {
-    public class NewUnit
-    {
+	public class NewUnit
+	{
 		public string UnitNumber { get; set; }
 		public int Length { get; set; }
 		public int Width { get; set; }
@@ -11,5 +11,5 @@ namespace HappyStorage.Core
 		public bool IsClimateControlled { get; set; }
 		public bool IsVehicleAccessible { get; set; }
 		public decimal PricePerMonth { get; set; }
-    }
+	}
 }

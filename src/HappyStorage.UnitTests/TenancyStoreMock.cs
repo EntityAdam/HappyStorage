@@ -5,8 +5,8 @@ using HappyStorage.Core;
 
 namespace HappyStorage.UnitTests
 {
-    internal class TenancyStoreMock : ITenancyStore
-    {
+	internal class TenancyStoreMock : ITenancyStore
+	{
 		internal class Tenant
 		{
 			internal string UnitNumber { get; set; }
