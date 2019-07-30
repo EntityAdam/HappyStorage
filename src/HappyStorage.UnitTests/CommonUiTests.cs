@@ -1,10 +1,4 @@
-﻿using HappyStorage.Common.Ui.Customers;
-using HappyStorage.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xunit;
+﻿using Xunit;
 
 namespace HappyStorage.UnitTests
 {
@@ -16,7 +10,6 @@ namespace HappyStorage.UnitTests
             //var changes = new List<object>();
             //var customerChanges = new List<(object, string)>();
             //var vm = new CustomerListViewModel(new Facade());
-
 
             //vm.PropertyChanged += (s, e) => { changes.Add(e.PropertyName); };
             //vm.Customers.ListChanged += (s, e) => { customerChanges.Add((e.ListChangedType, e.PropertyDescriptor?.DisplayName)); };

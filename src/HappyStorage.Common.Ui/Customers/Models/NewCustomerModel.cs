@@ -11,6 +11,7 @@ namespace HappyStorage.Common.Ui.Customers.Models
         public string FullName => $"{FirstName} {LastName}";
 
         private string firstName;
+
         [Required]
         [Display(Name = "First Name")]
         public string FirstName
@@ -24,6 +25,7 @@ namespace HappyStorage.Common.Ui.Customers.Models
         }
 
         private string lastName;
+
         [Required]
         [Display(Name = "Last Name")]
         public string LastName
@@ -52,6 +54,7 @@ namespace HappyStorage.Common.Ui.Customers.Models
                 OnPropertyChanged(nameof(Address));
             }
         }
+
         private string city;
 
         [Required]
@@ -65,6 +68,7 @@ namespace HappyStorage.Common.Ui.Customers.Models
                 OnPropertyChanged(nameof(Address));
             }
         }
+
         private string state;
 
         [Required]
@@ -78,6 +82,7 @@ namespace HappyStorage.Common.Ui.Customers.Models
                 OnPropertyChanged(nameof(Address));
             }
         }
+
         private string postalCode;
 
         [Required]

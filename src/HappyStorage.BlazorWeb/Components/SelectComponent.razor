@@ -4,11 +4,11 @@
 <select class="@(@class)" onchange="@OnSelectionChanged">
     @if (!string.IsNullOrEmpty(DefaultOption))
     {
-        <option value="">@DefaultOption</option>
+    <option value="">@DefaultOption</option>
     }
     @foreach (var item in items)
     {
-        <option value="@item.Value">@item.Text</option>
+    <option value="@item.Value">@item.Text</option>
     }
 </select>
 

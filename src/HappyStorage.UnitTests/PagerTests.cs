@@ -1,8 +1,6 @@
-﻿using System;
+﻿using HappyStorage.Common.Ui;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using HappyStorage.Common.Ui;
 using Xunit;
 
 namespace HappyStorage.UnitTests
@@ -13,7 +11,7 @@ namespace HappyStorage.UnitTests
         public void PagerNext()
         {
             var small = PagerTestsHelper.GetList(5);
-            
+
             var pager = new Pager<int>(small, 5);
             Assert.True(pager.CanExecuteNext);
             Assert.False(pager.CanExecutePrev);

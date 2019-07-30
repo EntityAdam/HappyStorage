@@ -18,7 +18,7 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
         {
             this.facade = facade;
             Customers.ListChanged += Customers_ListChanged;
-            
+
             NextPageCommand = new DelegateCommand(
                 () => Next(),
                 () => (Pager != null) ? Pager.CanExecuteNext : false
@@ -28,15 +28,17 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
                 () => (Pager != null) ? Pager.CanExecutePrev : false
             );
         }
-        
+
         public BindingList<CustomerLookupModel> Customers { get; set; } = new BindingList<CustomerLookupModel>();
 
         public DelegateCommand NextPageCommand { get; set; }
         public DelegateCommand PrevPageCommand { get; set; }
 
         public int CurrentPage => (Pager != null) ? Pager.CurrentPage : 0;
+
         //Suggested by LoisHendricks. Felt cute, might delete later.
         public bool HasPrevPage => PrevPageCommand.CanExecute();
+
         public bool HasNextPage => NextPageCommand.CanExecute();
 
         private void Customers_ListChanged(object sender, ListChangedEventArgs e)
@@ -76,7 +78,8 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
 
         public void JumpToPage(int? pageNum)
         {
-            if (pageNum != null) { 
+            if (pageNum != null)
+            {
                 UpdateList(Pager.TryJumpToPage((int)pageNum));
             }
             else

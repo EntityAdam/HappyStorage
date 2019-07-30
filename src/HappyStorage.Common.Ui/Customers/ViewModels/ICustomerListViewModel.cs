@@ -12,7 +12,9 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
         int CurrentPage { get; }
         bool HasNextPage { get; }
         bool HasPrevPage { get; }
+
         void JumpToPage(int? page);
+
         void Load();
     }
 }

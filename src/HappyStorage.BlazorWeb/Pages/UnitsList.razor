@@ -3,7 +3,6 @@
 @inject HappyStorage.Common.Ui.Units.ViewModels.IUnitListViewModel viewModel;
 @inject Microsoft.AspNetCore.Components.IUriHelper UriHelper;
 
-
 <h1>Units</h1>
 <div>
     <button class="btn btn-primary" @onclick="@CreateUnit">Commission Unit</button>
@@ -13,38 +12,38 @@
 
 @if (@viewModel.Units.Any())
 {
-    <br />
-    <div class="row">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"><LabelComponent labelFor="@(() => viewModel.Units[0].UnitNumber)" /></th>
-                    <th scope="col"><LabelComponent labelFor="@(() => viewModel.Units[0].PricePerMonth)" /></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
+<br />
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"><LabelComponent labelFor="@(() => viewModel.Units[0].UnitNumber)" /></th>
+                <th scope="col"><LabelComponent labelFor="@(() => viewModel.Units[0].PricePerMonth)" /></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
 
-            @foreach (var unit in viewModel.Units)
+        @foreach (var unit in viewModel.Units)
             {
-                <tr>
-                    <th scope="row">@unit.UnitNumber</th>
-                    <td>@unit.PricePerMonth</td>
-                    <td>
-                        <a href="/Units/Reserve/@unit.UnitNumber" class="btn btn-sm btn-primary">Reserve</a>
-                        <a href="/Units/Decommission/@unit.UnitNumber" class="btn btn-sm btn-danger">Decommission</a>
-                    </td>
-                </tr>
+        <tr>
+            <th scope="row">@unit.UnitNumber</th>
+            <td>@unit.PricePerMonth</td>
+            <td>
+                <a href="/Units/Reserve/@unit.UnitNumber" class="btn btn-sm btn-primary">Reserve</a>
+                <a href="/Units/Decommission/@unit.UnitNumber" class="btn btn-sm btn-danger">Decommission</a>
+            </td>
+        </tr>
             }
-        </table>
-        @if (@viewModel.HasPrevPage)
+    </table>
+    @if (@viewModel.HasPrevPage)
         {
-            <button class="btn btn-primary" @onclick="@PrevPage">Prev</button>
+    <button class="btn btn-primary" @onclick="@PrevPage">Prev</button>
         }
-        @if (@viewModel.HasNextPage)
+    @if (@viewModel.HasNextPage)
         {
-            <button class="btn btn-primary" @onclick="@NextPage">Next</button>
+    <button class="btn btn-primary" @onclick="@NextPage">Next</button>
         }
-    </div>
+</div>
 }
 
 @functions {

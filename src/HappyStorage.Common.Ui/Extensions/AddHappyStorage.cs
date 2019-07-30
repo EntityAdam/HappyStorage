@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using HappyStorage.Common.Ui.Units.ViewModels;
+﻿using HappyStorage.Common.Ui.Customers.ViewModels;
 using HappyStorage.Common.Ui.Tenants.ViewModels;
-using HappyStorage.Common.Ui.Customers.ViewModels;
+using HappyStorage.Common.Ui.Units.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HappyStorage.Common.Ui.Extensions
 {
@@ -23,4 +23,3 @@ namespace HappyStorage.Common.Ui.Extensions
         }
     }
 }
-

@@ -18,10 +18,12 @@ namespace HappyStorage.Common.Ui.Tenants.ViewModels
         {
             this.facade = facade;
         }
+
         private List<TenantUnitModel> GetTenantUnits()
         {
             return GetTenantUnits(this.SelectedCustomerNumber);
         }
+
         private List<TenantUnitModel> GetTenantUnits(string customerNumber)
         {
             return facade.GetCustomerUnits(customerNumber)

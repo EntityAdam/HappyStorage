@@ -1,8 +1,7 @@
-﻿using System;
+﻿using HappyStorage.Core;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
-using HappyStorage.Core;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HappyStorage.Common.Ui.Units.ViewModels
 {
@@ -18,7 +17,7 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
         public string UnitNumber { get; set; }
 
         public List<SelectListItem> Customers => FetchCustomers();
-        
+
         public string SelectedCustomerNumber { get; set; }
 
         public List<SelectListItem> FetchCustomers()

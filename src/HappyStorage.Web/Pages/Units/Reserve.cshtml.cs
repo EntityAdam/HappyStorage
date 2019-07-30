@@ -19,7 +19,7 @@ namespace HappyStorage.Web.Pages.Unit
         }
 
         public IActionResult OnPost(
-            [FromForm(Name = "ViewModel.UnitNumber")] string unitNumber, 
+            [FromForm(Name = "ViewModel.UnitNumber")] string unitNumber,
             [FromForm(Name = "ViewModel.SelectedCustomerNumber")] string customerNumber)
         {
             ViewModel.ReserveUnit(unitNumber, customerNumber);

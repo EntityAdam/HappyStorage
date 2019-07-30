@@ -1,12 +1,12 @@
-﻿using System;
-using HappyStorage.Core;
+﻿using HappyStorage.Core;
+using System;
 
 namespace HappyStorage.UnitTests
 {
-	internal class DateServiceMock : IDateService
-	{
-		internal DateTime CurrentDateTime { get; set; }
+    internal class DateServiceMock : IDateService
+    {
+        internal DateTime CurrentDateTime { get; set; }
 
-		public DateTime GetCurrentDateTime() => CurrentDateTime;
-	}
+        public DateTime GetCurrentDateTime() => CurrentDateTime;
+    }
 }

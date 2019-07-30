@@ -38,39 +38,38 @@
     </form>
 </div>
 
-
 @if (@Model.ViewModel.Units.Any())
 {
-    <br />
-    <div class="row">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"><label asp-for="@Model.ViewModel.Units[0].UnitNumber"></label></th>
-                    <th scope="col"><label asp-for="@Model.ViewModel.Units[0].PricePerMonth"></label></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
+<br />
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"><label asp-for="@Model.ViewModel.Units[0].UnitNumber"></label></th>
+                <th scope="col"><label asp-for="@Model.ViewModel.Units[0].PricePerMonth"></label></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
 
-            @foreach (var unit in Model.ViewModel.Units)
+        @foreach (var unit in Model.ViewModel.Units)
             {
-                <tr>
-                    <th scope="row">@unit.UnitNumber</th>
-                    <td>@unit.PricePerMonth</td>
-                    <td>
-                        <a asp-page="/Units/Reserve" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-sm btn-primary">Reserve</a>
-                        <a asp-page="/Units/Decommission" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-sm btn-danger">Delete</a>
-                    </td>
-                </tr>
+        <tr>
+            <th scope="row">@unit.UnitNumber</th>
+            <td>@unit.PricePerMonth</td>
+            <td>
+                <a asp-page="/Units/Reserve" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-sm btn-primary">Reserve</a>
+                <a asp-page="/Units/Decommission" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
             }
-        </table>
-        @if (@Model.ViewModel.HasPrevPage)
+    </table>
+    @if (@Model.ViewModel.HasPrevPage)
         {
-            <a class="btn btn-primary" asp-page="List" asp-route-pageNum="@(@Model.ViewModel.CurrentPage-1)">Prev</a>
+    <a class="btn btn-primary" asp-page="List" asp-route-pageNum="@(@Model.ViewModel.CurrentPage-1)">Prev</a>
         }
-        @if (@Model.ViewModel.HasNextPage)
+    @if (@Model.ViewModel.HasNextPage)
         {
-            <a class="btn btn-primary" asp-page="List" asp-route-pageNum="@(@Model.ViewModel.CurrentPage+1)">Next</a>
+    <a class="btn btn-primary" asp-page="List" asp-route-pageNum="@(@Model.ViewModel.CurrentPage+1)">Next</a>
         }
-    </div>
+</div>
 }

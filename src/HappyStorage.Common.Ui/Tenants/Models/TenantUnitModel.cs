@@ -10,7 +10,7 @@ namespace HappyStorage.Common.Ui.Tenants.Models
 
         [Display(Name = "Reservation Date")]
         public DateTime ReservationDate { get; set; }
-        
+
         [Display(Name = "Amount Paid")]
         public decimal AmountPaid { get; set; }
     }

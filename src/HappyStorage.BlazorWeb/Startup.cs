@@ -1,15 +1,15 @@
+using HappyStorage.BlazorWeb.Data;
+using HappyStorage.BlazorWeb.Services;
+using HappyStorage.BlazorWeb.Settings;
+using HappyStorage.Common.Ui.Extensions;
+using HappyStorage.Core;
+using HappyStorage.FileStorage;
+using HappyStorage.MemoryStorage;
+using HappyStorage.SqlStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using HappyStorage.BlazorWeb.Data;
-using HappyStorage.Core;
-using HappyStorage.SqlStorage;
-using HappyStorage.BlazorWeb.Settings;
-using HappyStorage.FileStorage;
-using HappyStorage.MemoryStorage;
-using HappyStorage.BlazorWeb.Services;
-using HappyStorage.Common.Ui.Extensions;
 
 namespace HappyStorage.BlazorWeb
 {
@@ -30,7 +30,6 @@ namespace HappyStorage.BlazorWeb
             services.AddTransient<IDateService, DateService>();
 
             services.AddHappyStorageCommonUi();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

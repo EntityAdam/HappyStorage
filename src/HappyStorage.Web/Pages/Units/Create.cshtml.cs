@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace HappyStorage.Ui.Pages.Unit
 {
-
     public class CreateModel : PageModel
     {
         public CreateModel(IUnitCreateViewModel viewModel)

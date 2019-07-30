@@ -17,14 +17,12 @@ namespace HappyStorage.Ui.Pages.Unit
 
         public IActionResult OnGet([FromQuery] int? pageNum)
         {
-
             if (pageNum != null)
             {
                 ViewModel.JumpToPage(pageNum);
             }
             return Page();
         }
-
 
         [BindProperty(Name = "ViewModel.Filter.IsClimateControlled")]
         public bool? ClimateControlled { get; set; }

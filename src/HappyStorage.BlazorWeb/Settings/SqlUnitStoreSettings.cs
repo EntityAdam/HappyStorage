@@ -11,6 +11,7 @@ namespace HappyStorage.BlazorWeb.Settings
         {
             this.configuration = configuration;
         }
+
         public string GetConnectionString()
         {
             return configuration.GetConnectionString("SqlUnitStore");

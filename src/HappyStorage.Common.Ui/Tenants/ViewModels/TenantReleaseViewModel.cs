@@ -12,9 +12,9 @@ namespace HappyStorage.Common.Ui.Tenants.ViewModels
         }
 
         public string UnitNumber { get; set; }
-        
+
         public string CustomerNumber { get; set; }
-        
+
         public void ReleaseUnit()
         {
             ReleaseUnit(this.UnitNumber, this.CustomerNumber);

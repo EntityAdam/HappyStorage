@@ -1,5 +1,4 @@
-﻿using HappyStorage.Common.Ui.Customers;
-using HappyStorage.Common.Ui.Units.Models;
+﻿using HappyStorage.Common.Ui.Units.Models;
 using HappyStorage.Core;
 using Prism.Commands;
 using System.Collections.Generic;
@@ -50,6 +49,7 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
             Pager = new Pager<AvailableUnit>(units, defaultPageSize);
             UpdateList(Pager.FirstPage());
         }
+
         public void Next()
         {
             UpdateList(Pager.Next());
@@ -61,6 +61,7 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
         }
 
         private UnitListFilter filter = new UnitListFilter();
+
         public UnitListFilter Filter
         {
             get => filter;

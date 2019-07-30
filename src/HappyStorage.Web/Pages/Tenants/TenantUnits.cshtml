@@ -5,29 +5,29 @@
 
 @if (!Model.ViewModel.TenantUnits.Any())
 {
-    <h3>No Units Occupied</h3>
+<h3>No Units Occupied</h3>
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col"><label asp-for="@Model.ViewModel.TenantUnits[0].UnitNumber"></label></th>
-                <th scope="col"><label asp-for="@Model.ViewModel.TenantUnits[0].ReservationDate"></label></th>
-                <th scope="col"><label asp-for="@Model.ViewModel.TenantUnits[0].AmountPaid"></label></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var unit in Model.ViewModel.TenantUnits)
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"><label asp-for="@Model.ViewModel.TenantUnits[0].UnitNumber"></label></th>
+            <th scope="col"><label asp-for="@Model.ViewModel.TenantUnits[0].ReservationDate"></label></th>
+            <th scope="col"><label asp-for="@Model.ViewModel.TenantUnits[0].AmountPaid"></label></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var unit in Model.ViewModel.TenantUnits)
             {
-                <tr>
-                    <td>@unit.UnitNumber</td>
-                    <td>@unit.ReservationDate</td>
-                    <td>@unit.AmountPaid</td>
-                    <td><a asp-page="/Tenants/Release" asp-route-customerNumber="@Model.ViewModel.SelectedCustomerNumber" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-danger">Release</a></td>
-                </tr>
+        <tr>
+            <td>@unit.UnitNumber</td>
+            <td>@unit.ReservationDate</td>
+            <td>@unit.AmountPaid</td>
+            <td><a asp-page="/Tenants/Release" asp-route-customerNumber="@Model.ViewModel.SelectedCustomerNumber" asp-route-unitNumber="@unit.UnitNumber" class="btn btn-danger">Release</a></td>
+        </tr>
             }
-        </tbody>
-    </table>
+    </tbody>
+</table>
 }

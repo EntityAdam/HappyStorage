@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace HappyStorage.Common.Ui
 {
@@ -13,8 +11,8 @@ namespace HappyStorage.Common.Ui
 
         private int firstPage => 0;
         private int lastPage => (totalItems / pageSize);
-        private int nextPage => page+1;
-        private int prevPage => page-1;
+        private int nextPage => page + 1;
+        private int prevPage => page - 1;
         private int totalItems => items.Count();
 
         public Pager(IEnumerable<T> items, int pageSize)
@@ -28,13 +26,14 @@ namespace HappyStorage.Common.Ui
             page++;
             return items.Skip(page * pageSize).Take(pageSize);
         }
+
         public IEnumerable<T> Prev()
         {
             page--;
             return items.Skip(page * pageSize).Take(pageSize);
         }
 
-        public bool CanExecuteNext => (((page+1) * pageSize) < totalItems);
+        public bool CanExecuteNext => (((page + 1) * pageSize) < totalItems);
 
         public bool CanExecutePrev => page > 0;
 
