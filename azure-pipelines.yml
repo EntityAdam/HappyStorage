@@ -22,16 +22,17 @@ steps:
   displayName: 'Building App...'
   inputs:
     command: build
-    projects: /src/HappyStorage.BlazorWeb/*.csproj
+    projects: ~/src/HappyStorage.BlazorWeb/HappyStorage.BlazorWeb.csproj
     configuration: $(BuildConfiguration)
 
 - task: DotNetCoreCLI@2
   displayName: 'Publishing App...'
   inputs:
     command: publish
-    projects: /src/HappyStorage.BlazorWeb/*.csproj
+    projects: ~/src/HappyStorage.BlazorWeb/HappyStorage.BlazorWeb.csproj
+    configuration: $(BuildConfiguration)
     publishWebProjects: true
-    arguments: '~/src/HappyStorage.BlazorWeb/ --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    arguments: '--output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: false
 
 - task: PublishBuildArtifacts@1
