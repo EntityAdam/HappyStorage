@@ -22,11 +22,23 @@ namespace HappyStorage.BlazorWeb
             services.AddSingleton<WeatherForecastService>();
 
             services.AddTransient<IFacade, Facade>();
+            
+            //unit store
             services.AddTransient<IUnitStore, SqlUnitStore>();
             services.AddTransient<ISqlUnitStoreSettings, SqlUnitStoreSettings>();
-            services.AddTransient<ICustomerStore, FileCustomerStore>();
-            services.AddTransient<IFileCustomerStoreSettings, FileCustomerStoreSettings>();
-            services.AddSingleton<ITenancyStore, MemoryTenancyStore>();
+
+            //customer store
+            //services.AddTransient<ICustomerStore, FileCustomerStore>();
+            //services.AddTransient<IFileCustomerStoreSettings, FileCustomerStoreSettings>();
+            services.AddTransient<ICustomerStore, SqlCustomerStore>();
+            services.AddTransient<ISqlCustomerStoreSettings, SqlCustomerStoreSettings>();
+
+            //tenancy store
+            //services.AddTransient<ITenancyStore, MemoryTenancyStore>();
+            services.AddTransient<ITenancyStore, SqlTenancyStore>();
+            services.AddTransient<ISqlTenancyStoreSettings, SqlTenancyStoreSettings>();
+
+            //date service
             services.AddTransient<IDateService, DateService>();
 
             services.AddHappyStorageCommonUi();
