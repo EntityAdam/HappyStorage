@@ -9,10 +9,6 @@ trigger:
 pool:
   vmImage: 'ubuntu-16.04'
 
-env:
-  sqlUnitStore_ConnectionString: $(sqlUnitStore)
-  pswd: $(dockerPassword) # Define dockerPassword in the Variables tab of this pipeline in Pipelines page of web interfac
-
 variables:
   dockerId: HappyStorage  # Replace with your Docker ID for Docker Hub or the admin user name for the Azure Container Registry
   imageName: happystorage-blazor  # Replace with the name of the image you want to publish
@@ -23,3 +19,6 @@ steps:
     docker login -u $(dockerId) -p $(pswd) $(dockerId).azurecr.io
     docker tag $(imageName) happystorage.azurecr.io/$(imageName)
     docker push $(dockerId).azurecr.io/$(imageName)
+  env:
+    sqlUnitStore: $(sqlUnitStore)
+    pswd: $(dockerPassword)
