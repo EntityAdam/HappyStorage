@@ -8,8 +8,10 @@
 
 <div asp-validation-summary="All"></div>
 
-<form asp-page="Create" method="post" class="form-group">
+<form asp-page="Details" method="post" class="form-group">
     <div class="form-group">
+        <input asp-for="@Model.ViewModel.NewCustomer.CustomerNumber" type="hidden" class="form-control" />
+        
         <h3>Name</h3>
         <label asp-for="@Model.ViewModel.NewCustomer.FirstName"></label>
         <input asp-for="@Model.ViewModel.NewCustomer.FirstName" type="text" class="form-control" placeholder="First Name" />

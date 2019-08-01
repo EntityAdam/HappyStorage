@@ -16,12 +16,17 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
 
         public void Update()
         {
-            var newCustomerDetails = new NewCustomer() 
-            { 
-                CustomerNumber = this.NewCustomer.CustomerNumber,
-                FullName = this.NewCustomer.FullName,
-                Address = this.NewCustomer.Address
-            }; 
+            Update(this.NewCustomer);
+        }
+
+        public void Update(NewCustomerModel newCustomer)
+        {
+            var newCustomerDetails = new NewCustomer()
+            {
+                CustomerNumber = newCustomer.CustomerNumber,
+                FullName = newCustomer.FullName,
+                Address = newCustomer.Address
+            };
             facade.UpdateCustomerDetails(newCustomerDetails);
         }
 
@@ -33,12 +38,12 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
                 new NewCustomerModel()
                 {
                     CustomerNumber = customer.CustomerNumber,
-                    FirstName = customer.FullName.Split(',')[0].Split(' ')[0],
-                    LastName = customer.FullName.Split(',')[0].Split(' ')[1],
-                    Street = customer.Address.Split(',')[0],
-                    City = customer.Address.Split(',')[1],
-                    State = customer.Address.Split(',')[2].Split(' ')[0],
-                    PostalCode = customer.Address.Split(',')[2].Split(' ')[1],
+                    FirstName = customer.FullName.Split(',')[0].Split(' ')[0].Trim(),
+                    LastName = customer.FullName.Split(',')[0].Split(' ')[1].Trim(),
+                    Street = customer.Address.Split(',')[0].Trim(),
+                    City = customer.Address.Split(',')[1].Trim(),
+                    State = customer.Address.Split(',')[2].Split(new[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries)[0].Trim(),
+                    PostalCode = customer.Address.Split(',')[2].Split(new[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries)[1].Trim(),
                 };
         }
     }

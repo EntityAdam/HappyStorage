@@ -99,11 +99,8 @@ namespace HappyStorage.SqlStorage
                 const string sql =
                     @"UPDATE [dbo].[Customers]
                       SET
-						([FullName]
-						,[Address])
-					VALUES
-						(@FullName
-						,@Address)
+                        [FullName] = @FullName
+					    ,[Address] = @Address
                     WHERE CustomerNumber = @CustomerNumber"
                     ;
                 var parameters = new
