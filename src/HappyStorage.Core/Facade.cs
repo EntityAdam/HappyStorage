@@ -147,5 +147,12 @@ namespace HappyStorage.Core
             if (!customerStore.CustomerExists(customerNumber)) throw new InvalidOperationException("The customer number does not exist.");
             return customerStore.GetCustomer(customerNumber);
         }
+
+        public void UpdateCustomerDetails(NewCustomer newCustomerDetails)
+        {
+            if (newCustomerDetails.CustomerNumber == null) throw new ArgumentException(nameof(newCustomerDetails.CustomerNumber));
+            if (!customerStore.CustomerExists(newCustomerDetails.CustomerNumber)) throw new InvalidOperationException("The customer number does not exist.");
+            customerStore.UpdateCustomer(newCustomerDetails);
+        }
     }
 }

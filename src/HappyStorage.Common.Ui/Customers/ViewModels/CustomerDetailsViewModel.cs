@@ -16,12 +16,13 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
 
         public void Update()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void Update(NewCustomerModel newCustomer)
-        {
-            throw new System.NotImplementedException();
+            var newCustomerDetails = new NewCustomer() 
+            { 
+                CustomerNumber = this.NewCustomer.CustomerNumber,
+                FullName = this.NewCustomer.FullName,
+                Address = this.NewCustomer.Address
+            }; 
+            facade.UpdateCustomerDetails(newCustomerDetails);
         }
 
         public void GetCustomer(string customerNumber)

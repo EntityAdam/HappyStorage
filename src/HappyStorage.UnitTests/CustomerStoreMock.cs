@@ -35,5 +35,12 @@ namespace HappyStorage.UnitTests
             var customer = Customers.FirstOrDefault(x => x.CustomerNumber == customerNumber);
             return new NewCustomer() { CustomerNumber = customer.CustomerNumber, FullName = customer.FullName, Address = customer.Address };
         }
+
+        public void UpdateCustomer(NewCustomer newCustomerDetails)
+        {
+            var customer = Customers.FirstOrDefault(x => x.CustomerNumber == newCustomerDetails.CustomerNumber);
+            customer.FullName = newCustomerDetails.FullName;
+            customer.Address = newCustomerDetails.Address;
+        }
     }
 }

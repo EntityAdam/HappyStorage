@@ -63,5 +63,10 @@ namespace HappyStorage.FileStorage
                 FullName = fullname
             };
         }
+
+        public void UpdateCustomer(NewCustomer newCustomerDetails)
+        {
+            Create(newCustomerDetails);
+        }
     }
 }

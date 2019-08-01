@@ -18,7 +18,9 @@ namespace HappyStorage.Core
         IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber);
 
         void ReserveUnit(string unitNumber, string customerNumber);
-
+        
+        void UpdateCustomerDetails(NewCustomer newCustomerDetails);
+        
         void ReleaseUnit(string unitNumber, string customerNumber);
 
         decimal CalculateAmountDue(string customerNumber);

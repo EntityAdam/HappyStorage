@@ -221,6 +221,14 @@ namespace HappyStorage.UnitTests
             {
                 CustomerNumber = "Delta"
             });
+
+            facade.UpdateCustomerDetails(new NewCustomer() { CustomerNumber = "Delta", FullName = "Delta Delta", Address = "Address" });
+
+            var details = facade.GetCustomerDetails("Delta");
+            Assert.Equal("Delta", details.CustomerNumber);
+            Assert.Equal("Delta Delta", details.FullName);
+            Assert.Equal("Address", details.Address);
+
             var find1 = facade.FindAvailableUnits(null, null, null).ToArray();
             Assert.Equal(6, find1.Length);
             var find2 = facade.FindAvailableUnits(true, null, 70).ToArray();

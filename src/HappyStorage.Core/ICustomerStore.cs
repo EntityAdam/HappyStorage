@@ -13,5 +13,7 @@ namespace HappyStorage.Core
         IEnumerable<CustomerLookup> ListCustomers();
 
         NewCustomer GetCustomer(string customerNumber);
+        
+        void UpdateCustomer(NewCustomer newCustomerDetails);
     }
 }

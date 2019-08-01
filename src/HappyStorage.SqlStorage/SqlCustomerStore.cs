@@ -92,6 +92,30 @@ namespace HappyStorage.SqlStorage
             });
         }
 
+        public void UpdateCustomer(NewCustomer newCustomerDetails)
+        {
+            UseConnection(con =>
+            {
+                const string sql =
+                    @"UPDATE [dbo].[Customers]
+                      SET
+						([FullName]
+						,[Address])
+					VALUES
+						(@FullName
+						,@Address)
+                    WHERE CustomerNumber = @CustomerNumber"
+                    ;
+                var parameters = new
+                {
+                    newCustomerDetails.CustomerNumber,
+                    newCustomerDetails.FullName,
+                    newCustomerDetails.Address,
+                };
+                con.Execute(sql, parameters);
+            });
+        }
+
         private void UseConnection(Action<SqlConnection> action)
         {
             using (var con = new SqlConnection(sqlCustomerStoreSettings.GetConnectionString()))

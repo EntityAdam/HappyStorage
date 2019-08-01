@@ -9,7 +9,5 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
         void GetCustomer(string customerNumber);
 
         void Update();
-
-        void Update(NewCustomerModel newCustomer);
     }
 }
