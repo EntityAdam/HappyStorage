@@ -84,10 +84,78 @@ namespace HappyStorage.UnitTests
         }
 
         [Fact]
-        public void AddsAndDeletesCustomersCorrectly()
+        public void CantDeleteCustomersWithoutTenancyStore()
         {
             var customerStoreMock = new CustomerStoreMock();
             var facade = new Facade(new UnitStoreMock(), customerStoreMock, new TenancyStoreDummy(), new DateServiceDummy());
+            facade.AddNewCustomer(new NewCustomer()
+            {
+                CustomerNumber = "Alpha",
+                FullName = "Alpha Name",
+                Address = "Alpha Address"
+            });
+
+            Assert.Throws<NotSupportedException>(() => facade.DeleteCustomer("Alpha"));
+        }
+
+        [Fact]
+        public void CantDeleteCustomersWhoHaveUnitReservations()
+        {
+            var customerStoreMock = new CustomerStoreMock();
+            var tenancyStoreMock = new TenancyStoreMock();
+            var unitStoreMock = new UnitStoreMock();
+            var dateServiceMock = new DateServiceMock();
+            var facade = new Facade(new UnitStoreMock(), customerStoreMock, tenancyStoreMock, dateServiceMock);
+
+            facade.AddNewCustomer(new NewCustomer()
+            {
+                CustomerNumber = "Alpha",
+                FullName = "Alpha Name",
+                Address = "Alpha Address"
+            });
+            facade.AddNewCustomer(new NewCustomer()
+            {
+                CustomerNumber = "Bravo",
+                FullName = "Bravo Name",
+                Address = "Bravo Address"
+            });
+            facade.CommissionNewUnit(new NewUnit()
+            {
+                UnitNumber = "1A",
+                Length = 10,
+                Width = 12,
+                Height = 14,
+                IsClimateControlled = true,
+                IsVehicleAccessible = true,
+                PricePerMonth = 90
+            });
+            facade.CommissionNewUnit(new NewUnit()
+            {
+                UnitNumber = "2B",
+                IsClimateControlled = false,
+                IsVehicleAccessible = false,
+            });
+
+            dateServiceMock.CurrentDateTime = new DateTime(2017, 01, 01);
+
+            facade.ReserveUnit("1A", "Alpha");
+            facade.ReserveUnit("2B", "Bravo");
+
+            Assert.Throws<InvalidOperationException>(() => facade.DeleteCustomer("Alpha"));
+            Assert.Throws<InvalidOperationException>(() => facade.DeleteCustomer("Bravo"));
+
+            facade.ReleaseUnit("2B", "Bravo");
+            facade.DeleteCustomer("Bravo");
+
+            Assert.Single(customerStoreMock.Customers);
+        }
+
+        [Fact]
+        public void AddsAndDeletesCustomersCorrectly()
+        {
+            var customerStoreMock = new CustomerStoreMock();
+            var tenancyStoreMock = new TenancyStoreMock();
+            var facade = new Facade(new UnitStoreMock(), customerStoreMock, tenancyStoreMock, new DateServiceDummy());
             facade.AddNewCustomer(new NewCustomer()
             {
                 CustomerNumber = "Alpha",

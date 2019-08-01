@@ -48,6 +48,7 @@ namespace HappyStorage.Core
             if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
             if (String.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException(nameof(customerNumber));
             if (!customerStore.CustomerExists(customerNumber)) throw new InvalidOperationException("The customer number does not exist.");
+            if (tenancyStore.GetCustomerUnits(customerNumber).Any()) throw new InvalidOperationException("The customer has a unit reserved and cannot be deleted until all units are released");
             customerStore.Delete(customerNumber);
         }
 
