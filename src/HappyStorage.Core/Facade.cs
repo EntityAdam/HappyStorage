@@ -32,6 +32,7 @@ namespace HappyStorage.Core
             if (unitNumber == null) throw new ArgumentNullException(nameof(unitNumber));
             if (String.IsNullOrWhiteSpace(unitNumber)) throw new ArgumentException(nameof(unitNumber));
             if (!unitStore.UnitExists(unitNumber)) throw new InvalidOperationException("The unit number does not exist.");
+            if (tenancyStore.UnitNumberOccupied(unitNumber)) throw new InvalidOperationException("The unit cannot be deleted because it is currently occupied.");
             unitStore.Delete(unitNumber);
         }
 
@@ -48,7 +49,7 @@ namespace HappyStorage.Core
             if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
             if (String.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException(nameof(customerNumber));
             if (!customerStore.CustomerExists(customerNumber)) throw new InvalidOperationException("The customer number does not exist.");
-            if (tenancyStore.GetCustomerUnits(customerNumber).Any()) throw new InvalidOperationException("The customer has a unit reserved and cannot be deleted until all units are released");
+            if (tenancyStore.GetCustomerUnits(customerNumber).Any()) throw new InvalidOperationException("The customer has one or more units reserved and cannot be deleted until all units are released");
             customerStore.Delete(customerNumber);
         }
 

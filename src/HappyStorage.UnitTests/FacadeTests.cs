@@ -7,11 +7,31 @@ namespace HappyStorage.UnitTests
 {
     public class FacadeTests
     {
+
+        [Fact]
+        public void CantDecommissionUnitsWithoutTenancyStore()
+        {
+            var unitStoreMock = new UnitStoreMock();
+            var facade = new Facade(unitStoreMock, new CustomerStoreDummy(), new TenancyStoreDummy(), new DateServiceDummy());
+            facade.CommissionNewUnit(new NewUnit()
+            {
+                UnitNumber = "1A",
+                Length = 10,
+                Width = 12,
+                Height = 14,
+                IsClimateControlled = true,
+                IsVehicleAccessible = true,
+                PricePerMonth = 90
+            });
+            Assert.Throws<NotSupportedException>(() => facade.DecommissionUnit("1A"));
+        }
+
         [Fact]
         public void CommissionsAndDecommissionsUnitsCorrectly()
         {
             var unitStoreMock = new UnitStoreMock();
-            var facade = new Facade(unitStoreMock, new CustomerStoreDummy(), new TenancyStoreDummy(), new DateServiceDummy());
+            var tenancyStoreMock = new TenancyStoreMock();
+            var facade = new Facade(unitStoreMock, new CustomerStoreDummy(), tenancyStoreMock, new DateServiceDummy());
             facade.CommissionNewUnit(new NewUnit()
             {
                 UnitNumber = "1A",
@@ -99,13 +119,13 @@ namespace HappyStorage.UnitTests
         }
 
         [Fact]
-        public void CantDeleteCustomersWhoHaveUnitReservations()
+        public void CantDeleteCustomersWhoHaveUnits_AndCantDecomissionUnitsWhichAreOccupied()
         {
             var customerStoreMock = new CustomerStoreMock();
             var tenancyStoreMock = new TenancyStoreMock();
             var unitStoreMock = new UnitStoreMock();
             var dateServiceMock = new DateServiceMock();
-            var facade = new Facade(new UnitStoreMock(), customerStoreMock, tenancyStoreMock, dateServiceMock);
+            var facade = new Facade(unitStoreMock, customerStoreMock, tenancyStoreMock, dateServiceMock);
 
             facade.AddNewCustomer(new NewCustomer()
             {
@@ -118,6 +138,12 @@ namespace HappyStorage.UnitTests
                 CustomerNumber = "Bravo",
                 FullName = "Bravo Name",
                 Address = "Bravo Address"
+            });
+            facade.AddNewCustomer(new NewCustomer()
+            {
+                CustomerNumber = "Charlie",
+                FullName = "Charlie Name",
+                Address = "Charlie Address"
             });
             facade.CommissionNewUnit(new NewUnit()
             {
@@ -135,19 +161,29 @@ namespace HappyStorage.UnitTests
                 IsClimateControlled = false,
                 IsVehicleAccessible = false,
             });
+            facade.CommissionNewUnit(new NewUnit()
+            {
+                UnitNumber = "3C",
+                IsClimateControlled = true,
+                IsVehicleAccessible = false,
+            });
 
             dateServiceMock.CurrentDateTime = new DateTime(2017, 01, 01);
 
             facade.ReserveUnit("1A", "Alpha");
             facade.ReserveUnit("2B", "Bravo");
+            facade.ReserveUnit("3C", "Charlie");
 
             Assert.Throws<InvalidOperationException>(() => facade.DeleteCustomer("Alpha"));
-            Assert.Throws<InvalidOperationException>(() => facade.DeleteCustomer("Bravo"));
+            facade.ReleaseUnit("1A", "Alpha");
+            facade.DeleteCustomer("Alpha");
 
+            Assert.Throws<InvalidOperationException>(() => facade.DecommissionUnit("2B"));
             facade.ReleaseUnit("2B", "Bravo");
-            facade.DeleteCustomer("Bravo");
+            facade.DecommissionUnit("2B");
 
-            Assert.Single(customerStoreMock.Customers);
+            Assert.Equal(2, customerStoreMock.Customers.Count());
+            Assert.Equal(2, unitStoreMock.Units.Count());
         }
 
         [Fact]
