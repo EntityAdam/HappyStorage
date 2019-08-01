@@ -26,5 +26,7 @@ namespace HappyStorage.Core
         void Pay(string customerNumber, decimal amount);
 
         IEnumerable<CustomerLookup> ListCustomers();
+
+        NewCustomer GetCustomerDetails(string customerNumber);
     }
 }

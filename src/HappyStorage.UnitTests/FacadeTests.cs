@@ -127,7 +127,7 @@ namespace HappyStorage.UnitTests
                 Address = "Foxtrot Address"
             });
             Assert.Equal(4, customerStoreMock.Customers.Count);
-            var delta = customerStoreMock.Customers.Single(c => c.CustomerNumber == "Delta");
+            var delta = facade.GetCustomerDetails("Delta");
             Assert.Equal("Delta Name", delta.FullName);
             Assert.Equal("Delta Address", delta.Address);
             var customerNumbers = customerStoreMock.Customers.Select(c => c.CustomerNumber).ToArray();

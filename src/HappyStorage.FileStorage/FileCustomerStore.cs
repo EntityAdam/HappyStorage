@@ -40,6 +40,18 @@ namespace HappyStorage.FileStorage
             }
         }
 
+        public NewCustomer GetCustomer(string customerNumber)
+        {
+            var customerFullName = File.ReadAllText(GetFullNamePath(customerNumber));
+            var customerAddress = File.ReadAllText(GetAddressPath(customerNumber));
+            return new NewCustomer()
+            {
+                CustomerNumber = customerNumber,
+                FullName = customerFullName,
+                Address = customerAddress
+            };
+        }
+
         private CustomerLookup GetLookupFromFileName(string file)
         {
             var filename = Path.GetFileNameWithoutExtension(file).Split('_');

@@ -13,6 +13,7 @@ namespace HappyStorage.Common.Ui.Extensions
             services
                 .AddTransient<ICustomerCreateViewModel, CustomerCreateViewModel>()
                 .AddTransient<ICustomerDeleteViewModel, CustomerDeleteViewModel>()
+                .AddTransient<ICustomerDetailsViewModel, CustomerDetailsViewModel>()
                 .AddTransient<ICustomerListViewModel, CustomerListViewModel>()
                 .AddTransient<ITenantReleaseViewModel, TenantReleaseViewModel>()
                 .AddTransient<ITenantUnitsViewModel, TenantUnitsViewModel>()

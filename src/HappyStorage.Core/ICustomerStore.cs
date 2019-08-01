@@ -11,5 +11,7 @@ namespace HappyStorage.Core
         void Delete(string customerNumber);
 
         IEnumerable<CustomerLookup> ListCustomers();
+
+        NewCustomer GetCustomer(string customerNumber);
     }
 }

@@ -140,5 +140,12 @@ namespace HappyStorage.Core
             if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
             return tenancyStore.GetCustomerUnits(customerNumber);
         }
+
+        public NewCustomer GetCustomerDetails(string customerNumber)
+        {
+            if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
+            if (!customerStore.CustomerExists(customerNumber)) throw new InvalidOperationException("The customer number does not exist.");
+            return customerStore.GetCustomer(customerNumber);
+        }
     }
 }

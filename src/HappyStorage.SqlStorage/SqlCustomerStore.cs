@@ -3,6 +3,7 @@ using HappyStorage.Core;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace HappyStorage.SqlStorage
 {
@@ -74,6 +75,20 @@ namespace HappyStorage.SqlStorage
                     @"SELECT TOP 100 CustomerNumber, FullName FROM [Customers]";
 
                 return con.Query<CustomerLookup>(sql);
+            });
+        }
+
+        public NewCustomer GetCustomer(string customerNumber)
+        {
+            return UseConnection(con =>
+            {
+                const string sql =
+                    @"SELECT TOP 1 CustomerNumber, FullName, Address FROM [Customers] WHERE CustomerNumber = @CustomerNumber";
+                var parameters = new
+                {
+                    CustomerNumber = customerNumber
+                };
+                return con.Query<NewCustomer>(sql, parameters).FirstOrDefault();
             });
         }
 

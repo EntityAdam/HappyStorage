@@ -12,6 +12,8 @@ namespace HappyStorage.UnitTests
 
         public void Delete(string customerNumber) => throw new NotSupportedException();
 
+        public NewCustomer GetCustomer(string customerNumber) => throw new NotSupportedException();
+
         public IEnumerable<CustomerLookup> ListCustomers() => throw new NotSupportedException();
     }
 }
