@@ -503,6 +503,10 @@ namespace HappyStorage.UnitTests
 
             facade.UpdateCustomerDetails(new NewCustomer() { CustomerNumber = "Delta", FullName = "Delta Delta", Address = "Address" });
 
+            Assert.Empty(facade.GetCustomerUnits("Alpha"));
+            Assert.Empty(facade.GetCustomerUnits("Bravo"));
+            Assert.Empty(facade.GetCustomerUnits("Charlie"));
+
             var details = facade.GetCustomerDetails("Delta");
             Assert.Equal("Delta", details.CustomerNumber);
             Assert.Equal("Delta Delta", details.FullName);
@@ -518,6 +522,13 @@ namespace HappyStorage.UnitTests
             Assert.Equal("C3", unit.UnitNumber);
             dateServiceMock.CurrentDateTime = new DateTime(2017, 01, 01);
             facade.ReserveUnit("C3", "Charlie");
+
+            var charliesUnits = facade.GetCustomerUnits("Charlie");
+            Assert.Single(charliesUnits);
+            Assert.True(charliesUnits.Single().UnitNumber == "C3");
+            Assert.True(charliesUnits.Single().ReservationDate == new DateTime(2017, 01, 01));
+            Assert.True(charliesUnits.Single().AmountPaid == 0);
+
             dateServiceMock.CurrentDateTime = new DateTime(2017, 03, 01);
             Assert.Equal(140, facade.CalculateAmountDue("Charlie"));
             dateServiceMock.CurrentDateTime = new DateTime(2017, 04, 01);
@@ -540,7 +551,6 @@ namespace HappyStorage.UnitTests
             Assert.Single(find5);
             var find6 = facade.SearchAvailableUnits(null, null, null).ToArray();
             Assert.Equal(6, find6.Length);
-
             var customerLookup = facade.ListCustomersAndTenants();
             Assert.Equal(4, customerLookup.Count());
         }
