@@ -11,9 +11,11 @@ namespace HappyStorage.Core
 
         IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber);
 
-        IEnumerable<string> GetOccupiedUnitNumbers();
+        IEnumerable<string> ListOccupiedUnits();
 
-        bool UnitNumberOccupied(string unitNumber);
+        IEnumerable<TenantLookup> ListTenants();
+
+        bool IsUnitNumberOccupied(string unitNumber);
 
         void UpdateAmountPaid(string unitNumber, decimal amountToApply);
     }

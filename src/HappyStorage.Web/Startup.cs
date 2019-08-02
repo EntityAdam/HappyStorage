@@ -30,19 +30,11 @@ namespace HappyStorage.Web
             services.AddTransient<IFacade, Facade>();
             services.AddTransient<IUnitStore, SqlUnitStore>();
             services.AddTransient<ISqlUnitStoreSettings, SqlUnitStoreSettings>();
-
-            //services.AddTransient<ICustomerStore, FileCustomerStore>();
-            //services.AddTransient<IFileCustomerStoreSettings, FileCustomerStoreSettings>();
-
             services.AddTransient<ICustomerStore, SqlCustomerStore>();
             services.AddTransient<ISqlCustomerStoreSettings, SqlCustomerStoreSettings>();
-
-            //services.AddSingleton<ITenancyStore, MemoryTenancyStore>();
             services.AddTransient<ITenancyStore, SqlTenancyStore>();
             services.AddTransient<ISqlTenancyStoreSettings, SqlTenancyStoreSettings>();
-
             services.AddTransient<IDateService, DateService>();
-
             services.AddHappyStorageCommonUi();
 
             services.AddRazorPages()

@@ -45,7 +45,7 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
 
         public void Load()
         {
-            var units = facade.FindAvailableUnits(null, null, null);
+            var units = facade.SearchAvailableUnits(null, null, null);
             Pager = new Pager<AvailableUnit>(units, defaultPageSize);
             UpdateList(Pager.FirstPage());
         }
@@ -108,7 +108,7 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
 
         public void ApplyFilter()
         {
-            var filteredUnits = facade.FindAvailableUnits(filter.IsClimateControlled, filter.IsVehicleAccessible, filter.MinimumCubicFeet);
+            var filteredUnits = facade.SearchAvailableUnits(filter.IsClimateControlled, filter.IsVehicleAccessible, filter.MinimumCubicFeet);
             UpdateList(filteredUnits);
         }
     }

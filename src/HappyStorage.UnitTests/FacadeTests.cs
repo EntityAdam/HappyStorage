@@ -7,23 +7,84 @@ namespace HappyStorage.UnitTests
 {
     public class FacadeTests
     {
+        [Fact]
+        public void NullChecks()
+        {
+            var facade = new Facade(new UnitStoreDummy(), new CustomerStoreDummy(), new TenancyStoreDummy(), new DateServiceDummy());
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                facade.CommissionNewUnit(null);
+            });
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                facade.DecommissionUnit(null);
+            });
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                facade.AddNewCustomer(null);
+            });
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                facade.DeleteCustomer(null);
+            });
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                facade.ReserveUnit(null, null);
+            });
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                facade.ReleaseUnit(null, null);
+            });
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                facade.CalculateAmountDue(null);
+            });
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                facade.Pay(null, 0);
+            });
+        }
 
         [Fact]
-        public void CantDecommissionUnitsWithoutTenancyStore()
+        public void ValidationChecks()
         {
-            var unitStoreMock = new UnitStoreMock();
-            var facade = new Facade(unitStoreMock, new CustomerStoreDummy(), new TenancyStoreDummy(), new DateServiceDummy());
-            facade.CommissionNewUnit(new NewUnit()
+            var facade = new Facade(new UnitStoreDummy(), new CustomerStoreDummy(), new TenancyStoreDummy(), new DateServiceDummy());
+            Assert.Throws<ArgumentException>(() =>
             {
-                UnitNumber = "1A",
-                Length = 10,
-                Width = 12,
-                Height = 14,
-                IsClimateControlled = true,
-                IsVehicleAccessible = true,
-                PricePerMonth = 90
+                facade.CommissionNewUnit(new NewUnit());
             });
-            Assert.Throws<NotSupportedException>(() => facade.DecommissionUnit("1A"));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                facade.DecommissionUnit(String.Empty);
+            });
+            Assert.Throws<ArgumentException>(() =>
+            {
+                facade.AddNewCustomer(new NewCustomer());
+            });
+            Assert.Throws<ArgumentException>(() =>
+            {
+                facade.DeleteCustomer(String.Empty);
+            });
+            Assert.Throws<ArgumentException>(() =>
+            {
+                facade.ReserveUnit(String.Empty, String.Empty);
+            });
+            Assert.Throws<ArgumentException>(() =>
+            {
+                facade.ReleaseUnit(String.Empty, String.Empty);
+            });
+            Assert.Throws<ArgumentException>(() =>
+            {
+                facade.CalculateAmountDue(String.Empty);
+            });
+            Assert.Throws<ArgumentException>(() =>
+            {
+                facade.Pay(String.Empty, 0);
+            });
+            Assert.Throws<ArgumentException>(() =>
+            {
+                facade.Pay("Alpha", -99);
+            });
         }
 
         [Fact]
@@ -104,22 +165,129 @@ namespace HappyStorage.UnitTests
         }
 
         [Fact]
-        public void CantDeleteCustomersWithoutTenancyStore()
+        public void CantDecomissionOccupiedUnits()
         {
             var customerStoreMock = new CustomerStoreMock();
-            var facade = new Facade(new UnitStoreMock(), customerStoreMock, new TenancyStoreDummy(), new DateServiceDummy());
+            var tenancyStoreMock = new TenancyStoreMock();
+            var unitStoreMock = new UnitStoreMock();
+            var dateServiceMock = new DateServiceMock();
+            var facade = new Facade(unitStoreMock, customerStoreMock, tenancyStoreMock, dateServiceMock);
+
             facade.AddNewCustomer(new NewCustomer()
             {
                 CustomerNumber = "Alpha",
                 FullName = "Alpha Name",
                 Address = "Alpha Address"
             });
+            facade.AddNewCustomer(new NewCustomer()
+            {
+                CustomerNumber = "Bravo",
+                FullName = "Bravo Name",
+                Address = "Bravo Address"
+            });
+            facade.AddNewCustomer(new NewCustomer()
+            {
+                CustomerNumber = "Charlie",
+                FullName = "Charlie Name",
+                Address = "Charlie Address"
+            });
+            facade.CommissionNewUnit(new NewUnit()
+            {
+                UnitNumber = "1A",
+                Length = 10,
+                Width = 12,
+                Height = 14,
+                IsClimateControlled = true,
+                IsVehicleAccessible = true,
+                PricePerMonth = 90
+            });
+            facade.CommissionNewUnit(new NewUnit()
+            {
+                UnitNumber = "2B",
+                IsClimateControlled = false,
+                IsVehicleAccessible = false,
+            });
+            facade.CommissionNewUnit(new NewUnit()
+            {
+                UnitNumber = "3C",
+                IsClimateControlled = true,
+                IsVehicleAccessible = false,
+            });
 
-            Assert.Throws<NotSupportedException>(() => facade.DeleteCustomer("Alpha"));
+            dateServiceMock.CurrentDateTime = new DateTime(2017, 01, 01);
+
+            facade.ReserveUnit("1A", "Alpha");
+            facade.ReserveUnit("2B", "Bravo");
+            facade.ReserveUnit("3C", "Charlie");
+
+            Assert.Throws<InvalidOperationException>(() => facade.DecommissionUnit("2B"));
+            facade.ReleaseUnit("2B", "Bravo");
+            facade.DecommissionUnit("2B");
+            Assert.Equal(2, unitStoreMock.Units.Count());
+
+            Assert.Throws<InvalidOperationException>(() => facade.DecommissionUnit("1A"));
+            facade.ReleaseUnit("1A", "Alpha");
+            facade.DecommissionUnit("1A");
+            Assert.Single(unitStoreMock.Units);
         }
 
         [Fact]
-        public void CantDeleteCustomersWhoHaveUnits_AndCantDecomissionUnitsWhichAreOccupied()
+        public void AddsAndDeletesCustomersCorrectly()
+        {
+            var customerStoreMock = new CustomerStoreMock();
+            var tenancyStoreMock = new TenancyStoreMock();
+            var facade = new Facade(new UnitStoreMock(), customerStoreMock, tenancyStoreMock, new DateServiceDummy());
+            facade.AddNewCustomer(new NewCustomer()
+            {
+                CustomerNumber = "Alpha",
+                FullName = "Alpha Name",
+                Address = "Alpha Address"
+            });
+            facade.AddNewCustomer(new NewCustomer()
+            {
+                CustomerNumber = "Bravo",
+                FullName = "Bravo Name",
+                Address = "Bravo Address"
+            });
+            facade.AddNewCustomer(new NewCustomer()
+            {
+                CustomerNumber = "Charlie",
+                FullName = "Charlie Name",
+                Address = "Charlie Address"
+            });
+            facade.AddNewCustomer(new NewCustomer()
+            {
+                CustomerNumber = "Delta",
+                FullName = "Delta Name",
+                Address = "Delta Address"
+            });
+            facade.DeleteCustomer("Charlie");
+            facade.AddNewCustomer(new NewCustomer()
+            {
+                CustomerNumber = "Echo",
+                FullName = "Echo Name",
+                Address = "Echo Address"
+            });
+            facade.DeleteCustomer("Alpha");
+            facade.AddNewCustomer(new NewCustomer()
+            {
+                CustomerNumber = "Foxtrot",
+                FullName = "Foxtrot Name",
+                Address = "Foxtrot Address"
+            });
+            Assert.Equal(4, customerStoreMock.Customers.Count);
+            var delta = facade.GetCustomerDetails("Delta");
+            Assert.Equal("Delta Name", delta.FullName);
+            Assert.Equal("Delta Address", delta.Address);
+            var customerNumbers = customerStoreMock.Customers.Select(c => c.CustomerNumber).ToArray();
+            Assert.Contains("Bravo", customerNumbers);
+            Assert.Contains("Delta", customerNumbers);
+            Assert.Contains("Echo", customerNumbers);
+            Assert.Contains("Foxtrot", customerNumbers);
+        }
+
+        [Fact]
+        public void CantDeleteCustomersWithReservedUnits()
         {
             var customerStoreMock = new CustomerStoreMock();
             var tenancyStoreMock = new TenancyStoreMock();
@@ -177,68 +345,75 @@ namespace HappyStorage.UnitTests
             Assert.Throws<InvalidOperationException>(() => facade.DeleteCustomer("Alpha"));
             facade.ReleaseUnit("1A", "Alpha");
             facade.DeleteCustomer("Alpha");
-
-            Assert.Throws<InvalidOperationException>(() => facade.DecommissionUnit("2B"));
-            facade.ReleaseUnit("2B", "Bravo");
-            facade.DecommissionUnit("2B");
-
             Assert.Equal(2, customerStoreMock.Customers.Count());
-            Assert.Equal(2, unitStoreMock.Units.Count());
+
+            Assert.Throws<InvalidOperationException>(() => facade.DeleteCustomer("Bravo"));
+            facade.ReleaseUnit("2B", "Bravo");
+            facade.DeleteCustomer("Bravo");
+            Assert.Single(customerStoreMock.Customers);
         }
 
         [Fact]
-        public void AddsAndDeletesCustomersCorrectly()
+        public void RejectsDuplicateUnits()
+        {
+            var unitStoreMock = new UnitStoreMock();
+            var facade = new Facade(unitStoreMock, new CustomerStoreDummy(), new TenancyStoreDummy(), new DateServiceDummy());
+            facade.CommissionNewUnit(new NewUnit() { UnitNumber = "Number" });
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                facade.CommissionNewUnit(new NewUnit() { UnitNumber = "Number" });
+            });
+        }
+
+        [Fact]
+        public void RejectsDuplicateCustomers()
         {
             var customerStoreMock = new CustomerStoreMock();
+            var facade = new Facade(new UnitStoreDummy(), customerStoreMock, new TenancyStoreDummy(), new DateServiceDummy());
+            facade.AddNewCustomer(new NewCustomer() { CustomerNumber = "Number" });
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                facade.AddNewCustomer(new NewCustomer() { CustomerNumber = "Number" });
+            });
+        }
+
+        [Fact]
+        public void RejectsDuplicateReservations()
+        {
+            var unitStoreMock = new UnitStoreMock();
+            var customerStoreMock = new CustomerStoreMock();
             var tenancyStoreMock = new TenancyStoreMock();
-            var facade = new Facade(new UnitStoreMock(), customerStoreMock, tenancyStoreMock, new DateServiceDummy());
-            facade.AddNewCustomer(new NewCustomer()
+            var dateServiceMock = new DateServiceMock();
+            var facade = new Facade(unitStoreMock, customerStoreMock, tenancyStoreMock, dateServiceMock);
+            facade.CommissionNewUnit(new NewUnit() { UnitNumber = "A1" });
+            facade.AddNewCustomer(new NewCustomer() { CustomerNumber = "Alpha" });
+            facade.ReserveUnit("A1", "Alpha");
+            Assert.Throws<InvalidOperationException>(() =>
             {
-                CustomerNumber = "Alpha",
-                FullName = "Alpha Name",
-                Address = "Alpha Address"
+                facade.ReserveUnit("A1", "Alpha");
             });
-            facade.AddNewCustomer(new NewCustomer()
+        }
+
+        [Fact]
+        public void CannotReleaseInvalidReservations()
+        {
+            var unitStoreMock = new UnitStoreMock();
+            var customerStoreMock = new CustomerStoreMock();
+            var tenancyStoreMock = new TenancyStoreMock();
+            var dateServiceMock = new DateServiceMock();
+            var facade = new Facade(unitStoreMock, customerStoreMock, tenancyStoreMock, dateServiceMock);
+            facade.CommissionNewUnit(new NewUnit() { UnitNumber = "A1" });
+            facade.AddNewCustomer(new NewCustomer() { CustomerNumber = "Alpha" });
+            Assert.Throws<InvalidOperationException>(() =>
             {
-                CustomerNumber = "Bravo",
-                FullName = "Bravo Name",
-                Address = "Bravo Address"
+                facade.ReleaseUnit("A1", "Alpha");
             });
-            facade.AddNewCustomer(new NewCustomer()
+            facade.ReserveUnit("A1", "Alpha");
+            facade.ReleaseUnit("A1", "Alpha");
+            Assert.Throws<InvalidOperationException>(() =>
             {
-                CustomerNumber = "Charlie",
-                FullName = "Charlie Name",
-                Address = "Charlie Address"
+                facade.ReleaseUnit("A1", "Alpha");
             });
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Delta",
-                FullName = "Delta Name",
-                Address = "Delta Address"
-            });
-            facade.DeleteCustomer("Charlie");
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Echo",
-                FullName = "Echo Name",
-                Address = "Echo Address"
-            });
-            facade.DeleteCustomer("Alpha");
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Foxtrot",
-                FullName = "Foxtrot Name",
-                Address = "Foxtrot Address"
-            });
-            Assert.Equal(4, customerStoreMock.Customers.Count);
-            var delta = facade.GetCustomerDetails("Delta");
-            Assert.Equal("Delta Name", delta.FullName);
-            Assert.Equal("Delta Address", delta.Address);
-            var customerNumbers = customerStoreMock.Customers.Select(c => c.CustomerNumber).ToArray();
-            Assert.Contains("Bravo", customerNumbers);
-            Assert.Contains("Delta", customerNumbers);
-            Assert.Contains("Echo", customerNumbers);
-            Assert.Contains("Foxtrot", customerNumbers);
         }
 
         [Fact]
@@ -333,11 +508,11 @@ namespace HappyStorage.UnitTests
             Assert.Equal("Delta Delta", details.FullName);
             Assert.Equal("Address", details.Address);
 
-            var find1 = facade.FindAvailableUnits(null, null, null).ToArray();
+            var find1 = facade.SearchAvailableUnits(null, null, null).ToArray();
             Assert.Equal(6, find1.Length);
-            var find2 = facade.FindAvailableUnits(true, null, 70).ToArray();
+            var find2 = facade.SearchAvailableUnits(true, null, 70).ToArray();
             Assert.Equal(2, find2.Length);
-            var find3 = facade.FindAvailableUnits(null, true, 750).ToArray();
+            var find3 = facade.SearchAvailableUnits(null, true, 750).ToArray();
             Assert.Single(find3);
             var unit = find3.Single();
             Assert.Equal("C3", unit.UnitNumber);
@@ -355,162 +530,19 @@ namespace HappyStorage.UnitTests
             Assert.Equal(0, facade.CalculateAmountDue("Charlie"));
             dateServiceMock.CurrentDateTime = new DateTime(2017, 06, 01);
             Assert.Equal(70, facade.CalculateAmountDue("Charlie"));
-            var find4 = facade.FindAvailableUnits(null, true, 750).ToArray();
+            var find4 = facade.SearchAvailableUnits(null, true, 750).ToArray();
             Assert.Empty(find4);
             facade.Pay("Charlie", 70);
             facade.ReleaseUnit("C3", "Charlie");
             dateServiceMock.CurrentDateTime = new DateTime(2017, 07, 01);
             Assert.Equal(0, facade.CalculateAmountDue("Charlie"));
-            var find5 = facade.FindAvailableUnits(null, true, 750).ToArray();
+            var find5 = facade.SearchAvailableUnits(null, true, 750).ToArray();
             Assert.Single(find5);
-            var find6 = facade.FindAvailableUnits(null, null, null).ToArray();
+            var find6 = facade.SearchAvailableUnits(null, null, null).ToArray();
             Assert.Equal(6, find6.Length);
 
-            var customerLookup = facade.ListCustomers();
+            var customerLookup = facade.ListCustomersAndTenants();
             Assert.Equal(4, customerLookup.Count());
-        }
-
-        [Fact]
-        public void NullChecks()
-        {
-            var facade = new Facade(new UnitStoreDummy(), new CustomerStoreDummy(), new TenancyStoreDummy(), new DateServiceDummy());
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                facade.CommissionNewUnit(null);
-            });
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                facade.DecommissionUnit(null);
-            });
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                facade.AddNewCustomer(null);
-            });
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                facade.DeleteCustomer(null);
-            });
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                facade.ReserveUnit(null, null);
-            });
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                facade.ReleaseUnit(null, null);
-            });
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                facade.CalculateAmountDue(null);
-            });
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                facade.Pay(null, 0);
-            });
-        }
-
-        [Fact]
-        public void ValidationChecks()
-        {
-            var facade = new Facade(new UnitStoreDummy(), new CustomerStoreDummy(), new TenancyStoreDummy(), new DateServiceDummy());
-            Assert.Throws<ArgumentException>(() =>
-            {
-                facade.CommissionNewUnit(new NewUnit());
-            });
-            Assert.Throws<ArgumentException>(() =>
-            {
-                facade.DecommissionUnit(String.Empty);
-            });
-            Assert.Throws<ArgumentException>(() =>
-            {
-                facade.AddNewCustomer(new NewCustomer());
-            });
-            Assert.Throws<ArgumentException>(() =>
-            {
-                facade.DeleteCustomer(String.Empty);
-            });
-            Assert.Throws<ArgumentException>(() =>
-            {
-                facade.ReserveUnit(String.Empty, String.Empty);
-            });
-            Assert.Throws<ArgumentException>(() =>
-            {
-                facade.ReleaseUnit(String.Empty, String.Empty);
-            });
-            Assert.Throws<ArgumentException>(() =>
-            {
-                facade.CalculateAmountDue(String.Empty);
-            });
-            Assert.Throws<ArgumentException>(() =>
-            {
-                facade.Pay(String.Empty, 0);
-            });
-            Assert.Throws<ArgumentException>(() =>
-            {
-                facade.Pay("Alpha", -99);
-            });
-        }
-
-        [Fact]
-        public void RejectsDuplicateUnits()
-        {
-            var unitStoreMock = new UnitStoreMock();
-            var facade = new Facade(unitStoreMock, new CustomerStoreDummy(), new TenancyStoreDummy(), new DateServiceDummy());
-            facade.CommissionNewUnit(new NewUnit() { UnitNumber = "Number" });
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                facade.CommissionNewUnit(new NewUnit() { UnitNumber = "Number" });
-            });
-        }
-
-        [Fact]
-        public void RejectsDuplicateCustomers()
-        {
-            var customerStoreMock = new CustomerStoreMock();
-            var facade = new Facade(new UnitStoreDummy(), customerStoreMock, new TenancyStoreDummy(), new DateServiceDummy());
-            facade.AddNewCustomer(new NewCustomer() { CustomerNumber = "Number" });
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                facade.AddNewCustomer(new NewCustomer() { CustomerNumber = "Number" });
-            });
-        }
-
-        [Fact]
-        public void RejectsDuplicateReservations()
-        {
-            var unitStoreMock = new UnitStoreMock();
-            var customerStoreMock = new CustomerStoreMock();
-            var tenancyStoreMock = new TenancyStoreMock();
-            var dateServiceMock = new DateServiceMock();
-            var facade = new Facade(unitStoreMock, customerStoreMock, tenancyStoreMock, dateServiceMock);
-            facade.CommissionNewUnit(new NewUnit() { UnitNumber = "A1" });
-            facade.AddNewCustomer(new NewCustomer() { CustomerNumber = "Alpha" });
-            facade.ReserveUnit("A1", "Alpha");
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                facade.ReserveUnit("A1", "Alpha");
-            });
-        }
-
-        [Fact]
-        public void CannotReleaseInvalidReservations()
-        {
-            var unitStoreMock = new UnitStoreMock();
-            var customerStoreMock = new CustomerStoreMock();
-            var tenancyStoreMock = new TenancyStoreMock();
-            var dateServiceMock = new DateServiceMock();
-            var facade = new Facade(unitStoreMock, customerStoreMock, tenancyStoreMock, dateServiceMock);
-            facade.CommissionNewUnit(new NewUnit() { UnitNumber = "A1" });
-            facade.AddNewCustomer(new NewCustomer() { CustomerNumber = "Alpha" });
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                facade.ReleaseUnit("A1", "Alpha");
-            });
-            facade.ReserveUnit("A1", "Alpha");
-            facade.ReleaseUnit("A1", "Alpha");
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                facade.ReleaseUnit("A1", "Alpha");
-            });
         }
 
         [Fact]

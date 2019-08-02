@@ -10,7 +10,7 @@ namespace HappyStorage.Core
 
         decimal GetPricePerMonth(string unitNumber);
 
-        IEnumerable<AvailableUnit> SearchUnits(bool? isClimateControlled, bool? isVehicleAccessible, int? minimumCubicFeet);
+        IEnumerable<AvailableUnit> SearchAvailableUnits(bool? isClimateControlled, bool? isVehicleAccessible, int? minimumCubicFeet);
 
         bool UnitExists(string unitNumber);
     }

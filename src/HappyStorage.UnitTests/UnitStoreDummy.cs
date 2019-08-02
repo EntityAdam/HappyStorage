@@ -12,7 +12,7 @@ namespace HappyStorage.UnitTests
 
         public decimal GetPricePerMonth(string unitNumber) => throw new NotSupportedException();
 
-        public IEnumerable<AvailableUnit> SearchUnits(bool? isClimateControlled, bool? isVehicleAccessible, int? minimumCubicFeet) => throw new NotSupportedException();
+        public IEnumerable<AvailableUnit> SearchAvailableUnits(bool? isClimateControlled, bool? isVehicleAccessible, int? minimumCubicFeet) => throw new NotSupportedException();
 
         public bool UnitExists(string unitNumber) => throw new NotSupportedException();
     }

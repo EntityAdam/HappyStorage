@@ -12,9 +12,11 @@ namespace HappyStorage.UnitTests
 
         public IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber) => throw new NotSupportedException();
 
-        public IEnumerable<string> GetOccupiedUnitNumbers() => throw new NotSupportedException();
+        public IEnumerable<string> ListOccupiedUnits() => throw new NotSupportedException();
 
-        public bool UnitNumberOccupied(string unitNumber) => throw new NotSupportedException();
+        public IEnumerable<TenantLookup> ListTenants() => throw new NotSupportedException();
+
+        public bool IsUnitNumberOccupied(string unitNumber) => throw new NotSupportedException();
 
         public void UpdateAmountPaid(string unitNumber, decimal amountToApply) => throw new NotSupportedException();
     }

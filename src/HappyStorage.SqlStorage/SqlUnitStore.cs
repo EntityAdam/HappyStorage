@@ -77,7 +77,7 @@ namespace HappyStorage.SqlStorage
             });
         }
 
-        public IEnumerable<AvailableUnit> SearchUnits(bool? isClimateControlled, bool? isVehicleAccessible, int? minimumCubicFeet)
+        public IEnumerable<AvailableUnit> SearchAvailableUnits(bool? isClimateControlled, bool? isVehicleAccessible, int? minimumCubicFeet)
         {
             return UseConnection(con =>
             {

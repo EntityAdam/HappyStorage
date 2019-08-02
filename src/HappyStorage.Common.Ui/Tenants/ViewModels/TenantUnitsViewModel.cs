@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace HappyStorage.Common.Ui.Tenants.ViewModels
 {
-    //TODO: Default SelectedCustomerNumber value.
     public class TenantUnitsViewModel : ITenantUnitsViewModel
     {
         private readonly IFacade facade;

@@ -32,7 +32,7 @@ namespace HappyStorage.Core
             if (unitNumber == null) throw new ArgumentNullException(nameof(unitNumber));
             if (String.IsNullOrWhiteSpace(unitNumber)) throw new ArgumentException(nameof(unitNumber));
             if (!unitStore.UnitExists(unitNumber)) throw new InvalidOperationException("The unit number does not exist.");
-            if (tenancyStore.UnitNumberOccupied(unitNumber)) throw new InvalidOperationException("The unit cannot be deleted because it is currently occupied.");
+            if (tenancyStore.IsUnitNumberOccupied(unitNumber)) throw new InvalidOperationException("The unit cannot be deleted because it is currently occupied.");
             unitStore.Delete(unitNumber);
         }
 
@@ -53,10 +53,10 @@ namespace HappyStorage.Core
             customerStore.Delete(customerNumber);
         }
 
-        public IEnumerable<AvailableUnit> FindAvailableUnits(bool? isClimateControlled, bool? isVehicleAccessible, int? minimumCubicFeet)
+        public IEnumerable<AvailableUnit> SearchAvailableUnits(bool? isClimateControlled, bool? isVehicleAccessible, int? minimumCubicFeet)
         {
-            var units = unitStore.SearchUnits(isClimateControlled, isVehicleAccessible, minimumCubicFeet);
-            var occupiedUnitNumbers = tenancyStore.GetOccupiedUnitNumbers().ToArray();
+            var units = unitStore.SearchAvailableUnits(isClimateControlled, isVehicleAccessible, minimumCubicFeet);
+            var occupiedUnitNumbers = tenancyStore.ListOccupiedUnits().ToArray();
             return units.Where(u => !occupiedUnitNumbers.Contains(u.UnitNumber));
         }
 
@@ -66,7 +66,7 @@ namespace HappyStorage.Core
             if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
             if (String.IsNullOrWhiteSpace(unitNumber)) throw new ArgumentException(nameof(unitNumber));
             if (String.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException(nameof(customerNumber));
-            if (tenancyStore.UnitNumberOccupied(unitNumber)) throw new InvalidOperationException("The unit is already occupied.");
+            if (tenancyStore.IsUnitNumberOccupied(unitNumber)) throw new InvalidOperationException("The unit is already occupied.");
             tenancyStore.Create(unitNumber, customerNumber, dateService.GetCurrentDateTime(), 0m);
         }
 
@@ -76,7 +76,7 @@ namespace HappyStorage.Core
             if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
             if (String.IsNullOrWhiteSpace(unitNumber)) throw new ArgumentException(nameof(unitNumber));
             if (String.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException(nameof(customerNumber));
-            if (!tenancyStore.UnitNumberOccupied(unitNumber)) throw new InvalidOperationException("The unit is not occupied.");
+            if (!tenancyStore.IsUnitNumberOccupied(unitNumber)) throw new InvalidOperationException("The unit is not occupied.");
             tenancyStore.Delete(unitNumber, customerNumber);
         }
 
@@ -134,9 +134,23 @@ namespace HappyStorage.Core
 
         private int GetDifferenceInMonths(DateTime start, DateTime end) => ((end.Year * 12) + end.Month) - ((start.Year * 12) + start.Month);
 
+        //TODO: NOT CURRENTLY USED
         public IEnumerable<CustomerLookup> ListCustomers() => customerStore.ListCustomers();
 
-        //TODO: Add Test
+        public IEnumerable<CustomerLookup> ListCustomersAndTenants() 
+        {
+            var customers = customerStore.ListCustomers();
+            var tenants = tenancyStore.ListTenants();
+
+            foreach (var customer in customers)
+            {
+                customer.UnitsReservedCount = tenants.Where(t=>t.CustomerNumber == customer.CustomerNumber).Count();
+            }
+
+            return customers;
+        }
+
+        //TODO: TEST
         public IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber)
         {
             if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));

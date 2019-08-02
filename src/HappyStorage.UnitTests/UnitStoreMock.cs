@@ -33,7 +33,7 @@ namespace HappyStorage.UnitTests
 
         public decimal GetPricePerMonth(string unitNumber) => Units.Single(u => u.UnitNumber == unitNumber).PricePerMonth;
 
-        public IEnumerable<AvailableUnit> SearchUnits(bool? isClimateControlled, bool? isVehicleAccessible, int? minimumCubicFeet)
+        public IEnumerable<AvailableUnit> SearchAvailableUnits(bool? isClimateControlled, bool? isVehicleAccessible, int? minimumCubicFeet)
         {
             return Units
                 .Where(u => (isClimateControlled.HasValue && u.IsClimateControlled == isClimateControlled.Value) || !isClimateControlled.HasValue)

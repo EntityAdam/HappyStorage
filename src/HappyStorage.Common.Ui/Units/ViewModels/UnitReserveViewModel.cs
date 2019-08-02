@@ -22,7 +22,7 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
 
         public List<SelectListItem> FetchCustomers()
         {
-            return facade.ListCustomers().Select(c =>
+            return facade.ListCustomersAndTenants().Select(c =>
                 new SelectListItem()
                 {
                     Text = c.FullName,

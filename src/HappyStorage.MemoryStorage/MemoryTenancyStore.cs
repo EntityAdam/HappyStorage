@@ -25,15 +25,17 @@ namespace HappyStorage.MemoryStorage
             AmountPaid = amountPaid
         });
 
+        public IEnumerable<TenantLookup> ListTenants() => Tenants.Select(t => new TenantLookup { CustomerNumber = t.CustomerNumber, UnitNumber = t.UnitNumber, ReservationDate = t.ReservationDate, AmountPaid = t.AmountPaid});
+
         public void Delete(string unitNumber, string customerNumber) => Tenants.RemoveAll(t => t.UnitNumber == unitNumber && t.CustomerNumber == customerNumber);
 
         public IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber) => Tenants
             .Where(t => t.CustomerNumber == customerNumber)
             .Select(t => (t.UnitNumber, t.ReservationDate, t.AmountPaid));
 
-        public IEnumerable<string> GetOccupiedUnitNumbers() => Tenants.Select(t => t.UnitNumber);
+        public IEnumerable<string> ListOccupiedUnits() => Tenants.Select(t => t.UnitNumber);
 
-        public bool UnitNumberOccupied(string unitNumber) => Tenants.Any(t => t.UnitNumber == unitNumber);
+        public bool IsUnitNumberOccupied(string unitNumber) => Tenants.Any(t => t.UnitNumber == unitNumber);
 
         public void UpdateAmountPaid(string unitNumber, decimal amountToApply) => Tenants.Single(t => t.UnitNumber == unitNumber).AmountPaid += amountToApply;
     }

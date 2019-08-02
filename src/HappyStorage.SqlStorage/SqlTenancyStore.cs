@@ -72,7 +72,7 @@ namespace HappyStorage.SqlStorage
             });
         }
 
-        public IEnumerable<string> GetOccupiedUnitNumbers()
+        public IEnumerable<string> ListOccupiedUnits()
         {
             return UseConnection(con =>
             {
@@ -81,7 +81,22 @@ namespace HappyStorage.SqlStorage
             });
         }
 
-        public bool UnitNumberOccupied(string unitNumber)
+        public IEnumerable<TenantLookup> ListTenants()
+        {
+            return UseConnection(con =>
+            {
+                const string sql = 
+                        @"SELECT 
+                            [UnitNumber],
+                            [CustomerNumber],
+                            [AmountPaid],
+                            [ReservationDate]
+                        FROM [Tenants]";
+                return con.Query<TenantLookup>(sql);
+            });
+        }
+
+        public bool IsUnitNumberOccupied(string unitNumber)
         {
             return UseConnection(con =>
             {

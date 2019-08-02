@@ -48,7 +48,7 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
 
         public void Load()
         {
-            var customers = facade.ListCustomers();
+            var customers = facade.ListCustomersAndTenants();
             Pager = new Pager<CustomerLookup>(customers, defaultPageSize);
             UpdateList(Pager.FirstPage());
         }
@@ -71,7 +71,9 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
                 Customers.Add(new CustomerLookupModel()
                 {
                     CustomerNumber = c.CustomerNumber,
-                    FullName = c.FullName
+                    FullName = c.FullName,
+                    UnitsReservedCount = c.UnitsReservedCount
+                    
                 });
             }
         }

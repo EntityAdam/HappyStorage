@@ -20,6 +20,7 @@
             <tr>
                 <th scope="col"><label asp-for="@Model.ViewModel.Customers[0].CustomerNumber"></label></th>
                 <th scope="col"><label asp-for="@Model.ViewModel.Customers[0].FullName"></label></th>
+                <th scope="col"><label asp-for="@Model.ViewModel.Customers[0].UnitsReservedCount"></label></th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -30,8 +31,14 @@
             <th scope="row">@customer.CustomerNumber</th>
             <td>@customer.FullName</td>
             <td>
+                @customer.UnitsReservedCount
+                @if (customer.HasReservedUnits)
+                {
+                    <a asp-page="/Tenants/TenantUnits" asp-route-customerNumber="@customer.CustomerNumber">View</a>
+                }
+            </td>
+            <td>
                 <a asp-page="/Customers/Details" asp-route-customerNumber="@customer.CustomerNumber" class="btn btn-sm btn-primary">Details</a>
-                <a asp-page="/Tenants/TenantUnits" asp-route-customerNumber="@customer.CustomerNumber" class="btn btn-sm btn-primary">Manage Units</a>
                 <a asp-page="/Customers/Payment" asp-route-customerNumber="@customer.CustomerNumber" class="btn btn-sm btn-info">Make a Payment</a>
                 <a asp-page="/Customers/Delete" asp-route-customerNumber="@customer.CustomerNumber" class="btn btn-sm btn-danger">Delete</a>
             </td>
