@@ -22,7 +22,7 @@ namespace HappyStorage.Core
 
         IEnumerable<AvailableUnit> SearchAvailableUnits(bool? isClimateControlled, bool? isVehicleAccessible, int? minimumCubicFeet);
 
-        IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber);
+        IEnumerable<TenantLookup> GetCustomerUnits(string customerNumber);
 
         void ReserveUnit(string unitNumber, string customerNumber);
 

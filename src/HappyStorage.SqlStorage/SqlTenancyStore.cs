@@ -54,7 +54,7 @@ namespace HappyStorage.SqlStorage
             });
         }
 
-        public IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber)
+        public IEnumerable<TenantLookup> GetCustomerUnits(string customerNumber)
         {
             return UseConnection(con =>
             {
@@ -68,7 +68,7 @@ namespace HappyStorage.SqlStorage
                 {
                     CustomerNumber = customerNumber
                 };
-                return con.Query<(string unitNumber, DateTime reservationDate, decimal amountPaid)>(sql, parameters);
+                return con.Query<TenantLookup>(sql, parameters);
             });
         }
 

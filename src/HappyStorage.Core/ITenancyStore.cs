@@ -9,7 +9,7 @@ namespace HappyStorage.Core
 
         void Delete(string unitNumber, string customerNumber);
 
-        IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber);
+        IEnumerable<TenantLookup> GetCustomerUnits(string customerNumber);
 
         IEnumerable<string> ListOccupiedUnits();
 

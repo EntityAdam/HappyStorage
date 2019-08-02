@@ -29,9 +29,9 @@ namespace HappyStorage.MemoryStorage
 
         public void Delete(string unitNumber, string customerNumber) => Tenants.RemoveAll(t => t.UnitNumber == unitNumber && t.CustomerNumber == customerNumber);
 
-        public IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber) => Tenants
+        public IEnumerable<TenantLookup> GetCustomerUnits(string customerNumber) => Tenants
             .Where(t => t.CustomerNumber == customerNumber)
-            .Select(t => (t.UnitNumber, t.ReservationDate, t.AmountPaid));
+            .Select(t => new TenantLookup() { UnitNumber = t.UnitNumber, ReservationDate = t.ReservationDate, AmountPaid = t.AmountPaid });
 
         public IEnumerable<string> ListOccupiedUnits() => Tenants.Select(t => t.UnitNumber);
 

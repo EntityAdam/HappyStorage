@@ -10,7 +10,7 @@ namespace HappyStorage.UnitTests
 
         public void Delete(string unitNumber, string customerNumber) => throw new NotSupportedException();
 
-        public IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber) => throw new NotSupportedException();
+        public IEnumerable<TenantLookup> GetCustomerUnits(string customerNumber) => throw new NotSupportedException();
 
         public IEnumerable<string> ListOccupiedUnits() => throw new NotSupportedException();
 

@@ -29,9 +29,9 @@ namespace HappyStorage.Common.Ui.Tenants.ViewModels
                 .Select(c =>
                 new TenantUnitModel()
                 {
-                    UnitNumber = c.unitNumber,
-                    ReservationDate = c.reservationDate,
-                    AmountPaid = c.amountPaid
+                    UnitNumber = c.UnitNumber,
+                    ReservationDate = c.ReservationDate,
+                    AmountPaid = c.AmountPaid
                 }).ToList();
         }
     }

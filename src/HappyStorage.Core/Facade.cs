@@ -88,9 +88,9 @@ namespace HappyStorage.Core
                 .GetCustomerUnits(customerNumber)
                 .Select(u => new
                 {
-                    ReservationDate = u.reservationDate,
-                    AmountPaid = u.amountPaid,
-                    PricePerMonth = unitStore.GetPricePerMonth(u.unitNumber)
+                    ReservationDate = u.ReservationDate,
+                    AmountPaid = u.AmountPaid,
+                    PricePerMonth = unitStore.GetPricePerMonth(u.UnitNumber)
                 })
                 .ToArray();
             var currentDateTime = dateService.GetCurrentDateTime();
@@ -108,12 +108,12 @@ namespace HappyStorage.Core
             var currentDateTime = dateService.GetCurrentDateTime();
             var customerUnits = tenancyStore
                 .GetCustomerUnits(customerNumber)
-                .OrderBy(u => u.reservationDate)
+                .OrderBy(u => u.ReservationDate)
                 .Select(u => new
                 {
-                    UnitNumber = u.unitNumber,
-                    TotalCost = GetDifferenceInMonths(u.reservationDate, currentDateTime) * unitStore.GetPricePerMonth(u.unitNumber),
-                    AmountPaid = u.amountPaid
+                    UnitNumber = u.UnitNumber,
+                    TotalCost = GetDifferenceInMonths(u.ReservationDate, currentDateTime) * unitStore.GetPricePerMonth(u.UnitNumber),
+                    AmountPaid = u.AmountPaid
                 })
                 .ToArray();
             var amountRemaining = amount;
@@ -151,7 +151,7 @@ namespace HappyStorage.Core
         }
 
         //TODO: TEST
-        public IEnumerable<(string unitNumber, DateTime reservationDate, decimal amountPaid)> GetCustomerUnits(string customerNumber)
+        public IEnumerable<TenantLookup> GetCustomerUnits(string customerNumber)
         {
             if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
             return tenancyStore.GetCustomerUnits(customerNumber);
