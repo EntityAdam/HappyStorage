@@ -1,5 +1,6 @@
 ﻿using HappyStorage.Common.Ui.Tenants.Models;
 using HappyStorage.Core;
+using HappyStorage.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
 

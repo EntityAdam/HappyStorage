@@ -1,4 +1,5 @@
 using HappyStorage.Core;
+using HappyStorage.Core.Models;
 using System;
 using System.Linq;
 using Xunit;

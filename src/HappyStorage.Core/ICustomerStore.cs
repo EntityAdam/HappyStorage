@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+using HappyStorage.Core.Models;
+
 namespace HappyStorage.Core
 {
     public interface ICustomerStore

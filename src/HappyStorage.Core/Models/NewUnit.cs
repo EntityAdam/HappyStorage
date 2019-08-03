@@ -1,4 +1,4 @@
-﻿namespace HappyStorage.Core
+﻿namespace HappyStorage.Core.Models
 {
     public class NewUnit
     {

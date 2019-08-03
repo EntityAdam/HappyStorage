@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HappyStorage.Core;
+using HappyStorage.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -1,5 +1,6 @@
 ﻿using HappyStorage.Common.Ui.Units.Models;
 using HappyStorage.Core;
+using HappyStorage.Core.Models;
 using Prism.Commands;
 using System.Collections.Generic;
 using System.ComponentModel;

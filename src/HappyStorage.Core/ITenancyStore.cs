@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HappyStorage.Core.Models;
+using System;
 using System.Collections.Generic;
 
 namespace HappyStorage.Core

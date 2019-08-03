@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using HappyStorage.Core;
+using HappyStorage.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;

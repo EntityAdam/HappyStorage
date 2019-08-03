@@ -1,5 +1,6 @@
 ﻿using HappyStorage.Common.Ui.Customers.Models;
 using HappyStorage.Core;
+using HappyStorage.Core.Models;
 
 namespace HappyStorage.Common.Ui.Customers.ViewModels
 {
