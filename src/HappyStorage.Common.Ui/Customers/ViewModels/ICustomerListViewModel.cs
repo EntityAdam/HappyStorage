@@ -7,8 +7,12 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
     public interface ICustomerListViewModel
     {
         BindingList<CustomerLookupModel> Customers { get; set; }
-        DelegateCommand NextPageCommand { get; }
-        DelegateCommand PrevPageCommand { get; }
+        //DelegateCommand NextPageCommand { get; }
+        //DelegateCommand PrevPageCommand { get; }
+
+        ISimpleCommand NextPageCommand { get; }
+        ISimpleCommand PrevPageCommand { get; }
+
         int CurrentPage { get; }
         bool HasNextPage { get; }
         bool HasPrevPage { get; }

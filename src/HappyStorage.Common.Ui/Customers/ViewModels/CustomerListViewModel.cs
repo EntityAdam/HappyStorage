@@ -20,27 +20,39 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
             this.facade = facade;
             Customers.ListChanged += Customers_ListChanged;
 
-            NextPageCommand = new DelegateCommand(
-                () => Next(),
-                () => (Pager != null) ? Pager.CanExecuteNext : false
-            );
-            PrevPageCommand = new DelegateCommand(
-                () => Prev(),
-                () => (Pager != null) ? Pager.CanExecutePrev : false
+            //NextPageCommand = new DelegateCommand(
+            //    () => Next(),
+            //    () => (Pager != null) ? Pager.CanExecuteNext : false
+            //);
+            //PrevPageCommand = new DelegateCommand(
+            //    () => Prev(),
+            //    () => (Pager != null) ? Pager.CanExecutePrev : false
+            //);
+
+            NextPageCommand = new SimpleCommand(
+                param => Next(),
+                param => (Pager != null) ? Pager.CanExecuteNext : false
+            );;
+            PrevPageCommand = new SimpleCommand(
+                param => Prev(),
+                param => (Pager != null) ? Pager.CanExecutePrev : false
             );
         }
 
         public BindingList<CustomerLookupModel> Customers { get; set; } = new BindingList<CustomerLookupModel>();
 
-        public DelegateCommand NextPageCommand { get; set; }
-        public DelegateCommand PrevPageCommand { get; set; }
+        //public DelegateCommand NextPageCommand { get; set; }
+        //public DelegateCommand PrevPageCommand { get; set; }
+
+        public ISimpleCommand NextPageCommand { get; set; }
+        public ISimpleCommand PrevPageCommand { get; set; }
 
         public int CurrentPage => (Pager != null) ? Pager.CurrentPage : 0;
 
         //Suggested by LoisHendricks. Felt cute, might delete later.
-        public bool HasPrevPage => PrevPageCommand.CanExecute();
+        public bool HasPrevPage => PrevPageCommand.CanExecute(this);
 
-        public bool HasNextPage => NextPageCommand.CanExecute();
+        public bool HasNextPage => NextPageCommand.CanExecute(this);
 
         private void Customers_ListChanged(object sender, ListChangedEventArgs e)
         {

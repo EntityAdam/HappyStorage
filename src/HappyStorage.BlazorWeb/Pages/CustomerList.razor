@@ -34,11 +34,11 @@
         </tr>
             }
     </table>
-    @if (viewModel.HasPrevPage)
+    @if (viewModel.PrevPageCommand.CanExecute(this))
         {
     <button class="btn btn-primary" @onclick="@PrevPage">Prev</button>
         }
-    @if (viewModel.HasNextPage)
+    @if (viewModel.NextPageCommand.CanExecute(this))
         {
     <button class="btn btn-primary" @onclick="@NextPage">Next</button>
         }
@@ -61,11 +61,11 @@
 
     protected void NextPage()
     {
-        viewModel.NextPageCommand.Execute();
+        viewModel.NextPageCommand.Execute(this);
     }
 
     protected void PrevPage()
     {
-        viewModel.PrevPageCommand.Execute();
+        viewModel.PrevPageCommand.Execute(this);
     }
 }
