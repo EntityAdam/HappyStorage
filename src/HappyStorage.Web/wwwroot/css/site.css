@@ -1,54 +1,58 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
+#topbar {
+    min-height: 2vh;
+    background: #000000;
+    color: #fff;
+    transition: all 0.3s;
 }
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    #topbar .topbar-brand {
+        background: #1f262d;
+    }
+    #topbar .brand-text {
+        font-size: 2em;
+    }
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 100vh;
+    background: #1F262D;
+    color: #fff;
+    transition: all 0.3s;
 }
 
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    #sidebar.active {
+        margin-left: -200px;
+    }
+
+    #sidebar .sidebar-brand {
+        padding: 5px;
+        height: auto;
+        font-size: 28px;
+    }
+
+    #sidebar ul li {
+        border: 2px solid red;
+        padding: 5px;
+    }
+
+        #sidebar ul li i.fa:before {
+            font-size: 32px;
+        }
+
+a[data-toggle="collapse"] {
+    position: relative;
 }
 
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
 }
