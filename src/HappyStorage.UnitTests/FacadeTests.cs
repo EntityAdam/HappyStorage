@@ -166,6 +166,63 @@ namespace HappyStorage.UnitTests
         }
 
         [Fact]
+        public void CommissionedUnitCubicFeetShouldNotExceedIntMaxValue()
+        {
+            var unitStoreMock = new UnitStoreMock();
+            var tenancyStoreMock = new TenancyStoreMock();
+            var facade = new Facade(unitStoreMock, new CustomerStoreDummy(), tenancyStoreMock, new DateServiceDummy());
+            facade.CommissionNewUnit(new NewUnit()
+            {
+                UnitNumber = "1A",
+                Length = 10,
+                Width = 10,
+                Height = 10,
+                IsClimateControlled = true,
+                IsVehicleAccessible = true,
+                PricePerMonth = 90
+            });
+            facade.CommissionNewUnit(new NewUnit()
+            {
+                UnitNumber = "2B",
+                IsClimateControlled = true,
+                IsVehicleAccessible = true,
+                PricePerMonth = 90
+            });
+
+
+            var failUnit1 = new NewUnit()
+                {
+                    UnitNumber = "3C",
+                    Length = int.MaxValue / 2,
+                    Width = int.MaxValue / 2,
+                    Height = 2,
+                    IsClimateControlled = false,
+                    IsVehicleAccessible = false,
+                };
+            Assert.Throws<ArgumentOutOfRangeException>(() => facade.CommissionNewUnit(failUnit1));
+
+            var failUnit2 = new NewUnit()
+            {
+                UnitNumber = "4B",
+                Length = 1,
+                IsClimateControlled = false,
+                IsVehicleAccessible = false,
+            };
+            Assert.Throws<ArgumentException>(() => facade.CommissionNewUnit(failUnit2));
+
+            var failUnit3 = new NewUnit()
+            {
+                UnitNumber = "4B",
+                Length = 1,
+                Width = 5,
+                Height = 0,
+                IsClimateControlled = false,
+                IsVehicleAccessible = false,
+            };
+            Assert.Throws<ArgumentException>(() => facade.CommissionNewUnit(failUnit3));
+        }
+
+        [Fact]
         public void CantDecomissionOccupiedUnits()
         {
             var customerStoreMock = new CustomerStoreMock();

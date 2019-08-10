@@ -20,10 +20,32 @@ namespace HappyStorage.Core
             this.dateService = dateService ?? throw new ArgumentNullException(nameof(dateService));
         }
 
+        //TODO: This looks ugly, consider a 'cube' class?
         public void CommissionNewUnit(NewUnit newUnit)
         {
             if (newUnit == null) throw new ArgumentNullException(nameof(newUnit));
             if (String.IsNullOrWhiteSpace(newUnit.UnitNumber)) throw new ArgumentException(nameof(newUnit.UnitNumber));
+            if (newUnit.Length > 0 || newUnit.Height > 0 || newUnit.Width > 0)
+            {
+                if (newUnit.Length == 0 || newUnit.Height == 0 || newUnit.Width == 0)
+                {
+                    throw new ArgumentException("The unit may not have 0 for any dimesion");
+                }
+                else
+                {
+                    checked
+                    {
+                        try
+                        {
+                            var res = newUnit.Length * newUnit.Width * newUnit.Height;
+                        }
+                        catch (OverflowException ex)
+                        {
+                            throw new ArgumentOutOfRangeException($"The unit may not exceed {int.MaxValue} cubic feet", ex);
+                        }
+                    }
+                }
+            }
             if (unitStore.UnitExists(newUnit.UnitNumber)) throw new InvalidOperationException("The unit number already exists.");
             unitStore.Create(newUnit);
         }
