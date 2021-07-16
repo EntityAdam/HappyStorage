@@ -21,14 +21,14 @@
         </div>
     </div>
     <div class="form-row">
-        <button class="btn btn-primary mb-2" @onclick="@OnClickFilter">Apply Filter</button>
+        <button class="btn btn-primary mb-2" @onclick="OnClickFilter">Apply Filter</button>
     </div>
 </div>
 
-@functions {
+@code {
     [Parameter]
-    private EventCallback<UIMouseEventArgs> OnClickFilter { get; set; }
+    public EventCallback<MouseEventArgs> OnClickFilter { get; set; }
 
     [Parameter]
-    private UnitListFilter Filter { get; set; }
+    public UnitListFilter Filter { get; set; }
 }

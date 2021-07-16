@@ -1,25 +1,25 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Rendering;
 @using System.Linq.Expressions;
 
-<select class="@(@class)" onchange="@OnSelectionChanged">
+<select class="@(@class)" @onchange="OnSelectionChanged">
     @if (!string.IsNullOrEmpty(DefaultOption))
     {
-    <option value="">@DefaultOption</option>
+        <option value="">@DefaultOption</option>
     }
     @foreach (var item in items)
     {
-    <option value="@item.Value">@item.Text</option>
+        <option value="@item.Value">@item.Text</option>
     }
 </select>
 
-@functions {
+@code {
     private List<SelectListItem> items { get; set; }
 
     [Parameter]
-    private Expression<Func<string>> selectFor { get; set; }
+    public Expression<Func<string>> selectFor { get; set; }
 
     [Parameter]
-    private string @class { get; set; }
+    public string @class { get; set; }
 
     [Parameter]
     public Func<List<SelectListItem>> Items { get; set; }
@@ -28,9 +28,9 @@
     public string DefaultOption { get; set; }
 
     [Parameter]
-    private EventCallback<UIChangeEventArgs> OnSelectionChanged { get; set; }
+    public EventCallback<ChangeEventArgs> OnSelectionChanged { get; set; }
 
-    protected override void OnInit()
+    protected override void OnInitialized()
     {
         items = Items.Invoke();
     }

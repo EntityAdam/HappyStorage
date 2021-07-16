@@ -1,42 +1,43 @@
 ﻿@page "/units/reserve/{unitNumber}"
-@using HappyStorage.BlazorWeb.Components
-@inject Microsoft.AspNetCore.Components.IUriHelper UriHelper
-@inject HappyStorage.Common.Ui.Units.ViewModels.IUnitReserveViewModel viewModel
+    @using HappyStorage.BlazorWeb.Components
+    @inject NavigationManager UriHelper
+    @inject HappyStorage.Common.Ui.Units.ViewModels.IUnitReserveViewModel viewModel
 
-<h1>Reserve Unit <strong>@viewModel.UnitNumber</strong></h1>
+    <h1>Reserve Unit <strong>@viewModel.UnitNumber</strong></h1>
+    <EditForm Model="viewModel">
+        <input type="text" hidden="hidden" asp-for="@viewModel.UnitNumber" />
+        <div class="form-group col-md-4">
+            <label>Select Customer</label>
+            <SelectComponent selectFor="@(() => viewModel.SelectedCustomerNumber)"
+                             Items="viewModel.FetchCustomers"
+                             OnSelectionChanged="@((e) => SelectedCustomerChanged(e))"
+                             DefaultOption="Select a customer"
+                             class="form-control">
+            </SelectComponent>
+        </div>
+        <div class="form-group col-md-4">
+            <button type="button" class="btn btn-primary" @onclick="Reserve">Reserve</button>
+            <a asp-page="/Units/List" class="btn btn-light">Cancel</a>
+        </div>
+    </EditForm>
 
-<input type="text" hidden="hidden" asp-for="@viewModel.UnitNumber" />
-<div class="form-group col-md-4">
-    <label>Select Customer</label>
-    <SelectComponent selectFor="@(() => viewModel.SelectedCustomerNumber)"
-                     items="@(() => viewModel.FetchCustomers())"
-                     OnSelectionChanged="@SelectedCustomerChanged"
-                     DefaultOption="Select a customer"
-                     class="form-control">
-    </SelectComponent>
-</div>
-<div class="form-group col-md-4">
-    <button type="button" class="btn btn-primary" @onclick="@Reserve">Reserve</button>
-    <a asp-page="/Units/List" class="btn btn-light">Cancel</a>
-</div>
+    @code {
+        [Parameter]
+        public string unitNumber { get; set; }
 
-@functions {
-    [Parameter]
-    private string unitNumber { get; set; }
+        protected override void OnInitialized()
+        {
+            viewModel.UnitNumber = unitNumber;
+        }
 
-    protected override void OnInit()
-    {
-        viewModel.UnitNumber = unitNumber;
+        protected void Reserve()
+        {
+            viewModel.ReserveUnit();
+            UriHelper.NavigateTo("/units");
+        }
+
+        protected void SelectedCustomerChanged(ChangeEventArgs args)
+        {
+            viewModel.SelectedCustomerNumber = args.Value.ToString();
+        }
     }
-
-    protected void Reserve()
-    {
-        viewModel.ReserveUnit();
-        UriHelper.NavigateTo("/units");
-    }
-
-    protected void SelectedCustomerChanged(UIChangeEventArgs args)
-    {
-        viewModel.SelectedCustomerNumber = args.Value.ToString();
-    }
-}
