@@ -1,7 +1,7 @@
 ﻿@page "/customer/create"
 @using HappyStorage.Common.Ui.Customers
 @using HappyStorage.BlazorWeb.Components
-@inject Microsoft.AspNetCore.Components.IUriHelper UriHelper
+@inject NavigationManager UriHelper
 @inject HappyStorage.Common.Ui.Customers.ViewModels.ICustomerCreateViewModel viewModel
 
 <h1>Create Customer</h1>
@@ -34,7 +34,7 @@
     </div>
     <br />
     <button class="btn btn-primary" type="submit">Submit</button>
-    <button class="btn" type="button" @onclick="@ReturnToList">Cancel</button>
+    <button class="btn" type="button" @onclick="ReturnToList">Cancel</button>
 </EditForm>
 
 @functions {

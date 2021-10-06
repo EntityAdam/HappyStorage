@@ -1,12 +1,12 @@
 ﻿@page "/units/create"
 @using HappyStorage.BlazorWeb.Components
 @using HappyStorage.Common.Ui.Units.Models
-@inject Microsoft.AspNetCore.Components.IUriHelper UriHelper
+@inject NavigationManager UriHelper
 @inject HappyStorage.Common.Ui.Units.ViewModels.IUnitCreateViewModel viewModel
 
 <h1>Commission New Unit</h1>
 
-<EditForm Model="@viewModel.NewUnit" OnValidSubmit="@HandleValidSubmit">
+<EditForm Model="@viewModel.NewUnit" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -38,10 +38,10 @@
         <InputCheckbox class="form-check" @bind-Value="@viewModel.NewUnit.IsVehicleAccessible" /> <!--type="checkbox"-->
     </div>
     <button class="btn btn-primary" type="submit">Submit</button>
-    <button class="btn" type="button" @onclick="@ReturnToList">Cancel</button>
+    <button class="btn" type="button" @onclick="ReturnToList">Cancel</button>
 </EditForm>
 
-@functions {
+@code {
     private void HandleValidSubmit()
     {
         viewModel.Create();

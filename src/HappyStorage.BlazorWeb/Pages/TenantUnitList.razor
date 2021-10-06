@@ -1,7 +1,6 @@
 ﻿@page "/tenant/unitlist/{customerNumber}"
 @using HappyStorage.BlazorWeb.Components;
 @inject HappyStorage.Common.Ui.Tenants.ViewModels.ITenantUnitsViewModel viewModel;
-@inject Microsoft.AspNetCore.Components.IUriHelper UriHelper;
 
 <h1>Units Occupied by <strong>@viewModel.SelectedCustomerNumber</strong></h1>
 
@@ -34,11 +33,11 @@ else
 </table>
 }
 
-@functions {
+@code {
     [Parameter]
-    private string customerNumber { get; set; }
+    public string customerNumber { get; set; }
 
-    protected override void OnInit()
+    protected override void OnInitialized()
     {
         viewModel.SelectedCustomerNumber = customerNumber;
     }

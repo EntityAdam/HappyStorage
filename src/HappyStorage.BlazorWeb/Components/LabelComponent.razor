@@ -4,22 +4,22 @@
 
 <label class="@(@class)">@displayAttributeName</label>
 
-@functions {
+@code {
     private string displayAttributeName;
 
     [Parameter]
-    private object viewModel { get; set; }
+    public object viewModel { get; set; }
 
     [Parameter]
-    private string property { get; set; }
+    public string property { get; set; }
 
     [Parameter]
-    private Expression<Func<object>> labelFor { get; set; }
+    public Expression<Func<object>> labelFor { get; set; }
 
     [Parameter]
-    private string @class { get; set; }
+    public string @class { get; set; }
 
-    protected override void OnInit()
+    protected override void OnInitialized()
     {
         var member = labelFor.Body as MemberExpression;
         var unary = labelFor.Body as UnaryExpression;
