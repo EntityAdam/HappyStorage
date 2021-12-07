@@ -22,16 +22,7 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
 
         public void Create(NewUnitModel newUnit)
         {
-            var unit = new NewUnit()
-            {
-                UnitNumber = newUnit.UnitNumber,
-                Length = newUnit.Length,
-                Width = newUnit.Width,
-                Height = newUnit.Height,
-                IsClimateControlled = newUnit.IsClimateControlled,
-                IsVehicleAccessible = newUnit.IsVehicleAccessible,
-                PricePerMonth = newUnit.PricePerMonth
-            };
+            var unit = new NewUnit(newUnit.UnitNumber, newUnit.Length, newUnit.Width, newUnit.Height, newUnit.IsClimateControlled, newUnit.IsVehicleAccessible, newUnit.PricePerMonth);
             facade.CommissionNewUnit(unit);
         }
     }

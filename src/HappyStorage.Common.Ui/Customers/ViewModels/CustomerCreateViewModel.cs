@@ -24,12 +24,7 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
         public void Create(NewCustomerModel newCustomer)
         {
             //map
-            var customer = new NewCustomer()
-            {
-                CustomerNumber = Guid.NewGuid().ToString().Split('-')[0],
-                FullName = $"{newCustomer.FirstName} {newCustomer.LastName}",
-                Address = $"{newCustomer.Address}"
-            };
+            var customer = new NewCustomer(Guid.NewGuid().ToString().Split('-')[0], $"{newCustomer.FirstName} {newCustomer.LastName}", $"{newCustomer.Address}");
 
             //create
             facade.AddNewCustomer(customer);

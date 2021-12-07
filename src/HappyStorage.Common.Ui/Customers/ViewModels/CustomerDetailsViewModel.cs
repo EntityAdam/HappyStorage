@@ -22,12 +22,7 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
 
         public void Update(NewCustomerModel newCustomer)
         {
-            var newCustomerDetails = new NewCustomer()
-            {
-                CustomerNumber = newCustomer.CustomerNumber,
-                FullName = newCustomer.FullName,
-                Address = newCustomer.Address
-            };
+            var newCustomerDetails = new NewCustomer(newCustomer.CustomerNumber, newCustomer.FullName, newCustomer.Address);
             facade.UpdateCustomerDetails(newCustomerDetails);
         }
 

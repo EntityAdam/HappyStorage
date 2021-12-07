@@ -29,12 +29,12 @@ namespace HappyStorage.UnitTests
 
         public void Delete(string customerNumber) => Customers.RemoveAll(u => u.CustomerNumber == customerNumber);
 
-        public IEnumerable<CustomerLookup> ListCustomers() => Customers.Select(c => new CustomerLookup() { CustomerNumber = c.CustomerNumber, FullName = c.FullName });
+        public IEnumerable<CustomerLookup> ListCustomers() => Customers.Select(c => new CustomerLookup(c.CustomerNumber, c.FullName, 0));
 
         public NewCustomer GetCustomer(string customerNumber)
         {
             var customer = Customers.FirstOrDefault(x => x.CustomerNumber == customerNumber);
-            return new NewCustomer() { CustomerNumber = customer.CustomerNumber, FullName = customer.FullName, Address = customer.Address };
+            return new NewCustomer(customer.CustomerNumber, customer.FullName, customer.Address);
         }
 
         public void UpdateCustomer(NewCustomer newCustomerDetails)

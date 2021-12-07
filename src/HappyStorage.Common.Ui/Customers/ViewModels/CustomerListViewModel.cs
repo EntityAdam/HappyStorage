@@ -67,14 +67,14 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
         private void UpdateList(IEnumerable<CustomerLookup> page)
         {
             Customers.Clear();
+
             foreach (var c in page)
             {
                 Customers.Add(new CustomerLookupModel()
                 {
                     CustomerNumber = c.CustomerNumber,
                     FullName = c.FullName,
-                    UnitsReservedCount = c.UnitsReservedCount
-                    
+                    UnitsReservedCount = c.UnitsReservedCount ?? default,
                 });
             }
         }

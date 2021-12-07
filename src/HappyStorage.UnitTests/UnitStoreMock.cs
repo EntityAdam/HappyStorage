@@ -8,16 +8,7 @@ namespace HappyStorage.UnitTests
 {
     internal class UnitStoreMock : IUnitStore
     {
-        internal class Unit
-        {
-            internal string UnitNumber { get; set; }
-            internal int Length { get; set; }
-            internal int Width { get; set; }
-            internal int Height { get; set; }
-            internal bool IsClimateControlled { get; set; }
-            internal bool IsVehicleAccessible { get; set; }
-            internal decimal PricePerMonth { get; set; }
-        }
+        internal record Unit(string UnitNumber, int Length, int Width, int Height, bool IsClimateControlled, bool IsVehicleAccessible, decimal PricePerMonth);
 
         internal readonly List<Unit> Units = new List<Unit>();
 
@@ -32,7 +23,8 @@ namespace HappyStorage.UnitTests
 
         public void Delete(string unitNumber) => Units.RemoveAll(u => u.UnitNumber == unitNumber);
 
-        public decimal GetPricePerMonth(string unitNumber) => Units.Single(u => u.UnitNumber == unitNumber).PricePerMonth;
+        public decimal GetPricePerMonth(string unitNumber) => 
+            Units.Single(u => u.UnitNumber == unitNumber).PricePerMonth;
 
         public IEnumerable<AvailableUnit> SearchAvailableUnits(bool? isClimateControlled, bool? isVehicleAccessible, int? minimumCubicFeet)
         {

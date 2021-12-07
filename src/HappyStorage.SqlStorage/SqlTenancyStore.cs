@@ -128,20 +128,16 @@ namespace HappyStorage.SqlStorage
 
         private void UseConnection(Action<SqlConnection> action)
         {
-            using (var con = new SqlConnection(sqlTenancyStoreSettings.GetConnectionString()))
-            {
-                con.Open();
-                action(con);
-            }
+            using var con = new SqlConnection(sqlTenancyStoreSettings.GetConnectionString());
+            con.Open();
+            action(con);
         }
 
         private T UseConnection<T>(Func<SqlConnection, T> func)
         {
-            using (var con = new SqlConnection(sqlTenancyStoreSettings.GetConnectionString()))
-            {
-                con.Open();
-                return func(con);
-            }
+            using var con = new SqlConnection(sqlTenancyStoreSettings.GetConnectionString());
+            con.Open();
+            return func(con);
         }
     }
 }

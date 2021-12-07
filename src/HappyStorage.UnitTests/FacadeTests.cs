@@ -52,18 +52,6 @@ namespace HappyStorage.UnitTests
             var facade = new Facade(new UnitStoreDummy(), new CustomerStoreDummy(), new TenancyStoreDummy(), new DateServiceDummy());
             Assert.Throws<ArgumentException>(() =>
             {
-                facade.CommissionNewUnit(new NewUnit());
-            });
-            Assert.Throws<ArgumentException>(() =>
-            {
-                facade.DecommissionUnit(String.Empty);
-            });
-            Assert.Throws<ArgumentException>(() =>
-            {
-                facade.AddNewCustomer(new NewCustomer());
-            });
-            Assert.Throws<ArgumentException>(() =>
-            {
                 facade.DeleteCustomer(String.Empty);
             });
             Assert.Throws<ArgumentException>(() =>
@@ -94,59 +82,19 @@ namespace HappyStorage.UnitTests
             var unitStoreMock = new UnitStoreMock();
             var tenancyStoreMock = new TenancyStoreMock();
             var facade = new Facade(unitStoreMock, new CustomerStoreDummy(), tenancyStoreMock, new DateServiceDummy());
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "1A",
-                Length = 10,
-                Width = 12,
-                Height = 14,
-                IsClimateControlled = true,
-                IsVehicleAccessible = true,
-                PricePerMonth = 90
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "2B",
-                IsClimateControlled = false,
-                IsVehicleAccessible = false,
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "3C",
-                IsClimateControlled = true,
-                IsVehicleAccessible = false,
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "4D",
-                IsClimateControlled = false,
-                IsVehicleAccessible = true,
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "5E",
-                IsClimateControlled = false,
-                IsVehicleAccessible = false,
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "6F",
-                IsClimateControlled = false,
-                IsVehicleAccessible = false,
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "7G"
-            });
+            facade.CommissionNewUnit(new NewUnit("1A", 10, 12, 14, true, true, 90));
+            facade.CommissionNewUnit(new NewUnit("2B", 0, 0, 0, false, false, 0));
+            facade.CommissionNewUnit(new NewUnit("3C", 0, 0, 0, true, false, 0));
+            facade.CommissionNewUnit(new NewUnit("4D", 0, 0, 0, false, true, 0));
+            facade.CommissionNewUnit(new NewUnit("5E", 0, 0, 0, false, false, 0));
+            facade.CommissionNewUnit(new NewUnit("6F", 0, 0, 0, false, false, 0));
+            facade.CommissionNewUnit(new NewUnit("7G", 0, 0, 0, false, false, 0));
+            facade.CommissionNewUnit(new NewUnit("9I", 0, 0, 0, false, false, 0));
+
             facade.DecommissionUnit("7G");
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "8H"
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "9I"
-            });
+
+            facade.CommissionNewUnit(new NewUnit("8H", 0, 0, 0, false, false, 0));
+
             facade.DecommissionUnit("8H");
             Assert.Equal(7, unitStoreMock.Units.Count);
             var unit = unitStoreMock.Units.Single(u => u.UnitNumber == "1A");
@@ -171,55 +119,14 @@ namespace HappyStorage.UnitTests
             var unitStoreMock = new UnitStoreMock();
             var tenancyStoreMock = new TenancyStoreMock();
             var facade = new Facade(unitStoreMock, new CustomerStoreDummy(), tenancyStoreMock, new DateServiceDummy());
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "1A",
-                Length = 10,
-                Width = 10,
-                Height = 10,
-                IsClimateControlled = true,
-                IsVehicleAccessible = true,
-                PricePerMonth = 90
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "2B",
-                IsClimateControlled = true,
-                IsVehicleAccessible = true,
-                PricePerMonth = 90
-            });
 
+            facade.CommissionNewUnit(new NewUnit("1A", 10, 12, 14, true, true, 90));
 
-            var failUnit1 = new NewUnit()
-                {
-                    UnitNumber = "3C",
-                    Length = int.MaxValue / 2,
-                    Width = int.MaxValue / 2,
-                    Height = 2,
-                    IsClimateControlled = false,
-                    IsVehicleAccessible = false,
-                };
+            facade.CommissionNewUnit(new NewUnit("2B", 0, 0, 0, true, true, 90));
+
+            var failUnit1 = new NewUnit("3C", int.MaxValue / 2, int.MaxValue / 2, 2, false, false, 90);
             Assert.Throws<ArgumentOutOfRangeException>(() => facade.CommissionNewUnit(failUnit1));
 
-            var failUnit2 = new NewUnit()
-            {
-                UnitNumber = "4B",
-                Length = 1,
-                IsClimateControlled = false,
-                IsVehicleAccessible = false,
-            };
-            Assert.Throws<ArgumentException>(() => facade.CommissionNewUnit(failUnit2));
-
-            var failUnit3 = new NewUnit()
-            {
-                UnitNumber = "4B",
-                Length = 1,
-                Width = 5,
-                Height = 0,
-                IsClimateControlled = false,
-                IsVehicleAccessible = false,
-            };
-            Assert.Throws<ArgumentException>(() => facade.CommissionNewUnit(failUnit3));
         }
 
         [Fact]
@@ -231,46 +138,12 @@ namespace HappyStorage.UnitTests
             var dateServiceMock = new DateServiceMock();
             var facade = new Facade(unitStoreMock, customerStoreMock, tenancyStoreMock, dateServiceMock);
 
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Alpha",
-                FullName = "Alpha Name",
-                Address = "Alpha Address"
-            });
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Bravo",
-                FullName = "Bravo Name",
-                Address = "Bravo Address"
-            });
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Charlie",
-                FullName = "Charlie Name",
-                Address = "Charlie Address"
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "1A",
-                Length = 10,
-                Width = 12,
-                Height = 14,
-                IsClimateControlled = true,
-                IsVehicleAccessible = true,
-                PricePerMonth = 90
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "2B",
-                IsClimateControlled = false,
-                IsVehicleAccessible = false,
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "3C",
-                IsClimateControlled = true,
-                IsVehicleAccessible = false,
-            });
+            facade.AddNewCustomer(new NewCustomer("Alpha", "Alpha Name", "Alpha Address"));
+            facade.AddNewCustomer(new NewCustomer("Bravo", "Bravo Name", "Bravo Address"));
+            facade.AddNewCustomer(new NewCustomer("Charlie", "Charlie Name", "Charlie Address"));
+            facade.CommissionNewUnit(new NewUnit("1A", 10, 12, 14, true, true, 90));
+            facade.CommissionNewUnit(new NewUnit("2B", 0, 0, 0, false, false, 0));
+            facade.CommissionNewUnit(new NewUnit("3C", 0, 0, 0, true, false, 0));
 
             dateServiceMock.CurrentDateTime = new DateTime(2017, 01, 01);
 
@@ -295,45 +168,15 @@ namespace HappyStorage.UnitTests
             var customerStoreMock = new CustomerStoreMock();
             var tenancyStoreMock = new TenancyStoreMock();
             var facade = new Facade(new UnitStoreMock(), customerStoreMock, tenancyStoreMock, new DateServiceDummy());
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Alpha",
-                FullName = "Alpha Name",
-                Address = "Alpha Address"
-            });
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Bravo",
-                FullName = "Bravo Name",
-                Address = "Bravo Address"
-            });
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Charlie",
-                FullName = "Charlie Name",
-                Address = "Charlie Address"
-            });
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Delta",
-                FullName = "Delta Name",
-                Address = "Delta Address"
-            });
-            facade.DeleteCustomer("Charlie");
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Echo",
-                FullName = "Echo Name",
-                Address = "Echo Address"
-            });
-            facade.DeleteCustomer("Alpha");
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Foxtrot",
-                FullName = "Foxtrot Name",
-                Address = "Foxtrot Address"
-            });
-            Assert.Equal(4, customerStoreMock.Customers.Count);
+
+            facade.AddNewCustomer(new NewCustomer("Alpha", "Alpha Name", "Alpha Address"));
+            facade.AddNewCustomer(new NewCustomer("Bravo", "Bravo Name", "Bravo Address"));
+            facade.AddNewCustomer(new NewCustomer("Charlie", "Charlie Name", "Charlie Address"));
+            facade.AddNewCustomer(new NewCustomer("Delta", "Delta Name", "Delta Address"));
+            facade.AddNewCustomer(new NewCustomer("Echo", "Echo Name", "Echo Address"));
+            facade.AddNewCustomer(new NewCustomer("Foxtrot", "Foxtrot Name", "Foxtrot Address"));
+
+            Assert.Equal(6, customerStoreMock.Customers.Count);
             var delta = facade.GetCustomerDetails("Delta");
             Assert.Equal("Delta Name", delta.FullName);
             Assert.Equal("Delta Address", delta.Address);
@@ -353,46 +196,14 @@ namespace HappyStorage.UnitTests
             var dateServiceMock = new DateServiceMock();
             var facade = new Facade(unitStoreMock, customerStoreMock, tenancyStoreMock, dateServiceMock);
 
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Alpha",
-                FullName = "Alpha Name",
-                Address = "Alpha Address"
-            });
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Bravo",
-                FullName = "Bravo Name",
-                Address = "Bravo Address"
-            });
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Charlie",
-                FullName = "Charlie Name",
-                Address = "Charlie Address"
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "1A",
-                Length = 10,
-                Width = 12,
-                Height = 14,
-                IsClimateControlled = true,
-                IsVehicleAccessible = true,
-                PricePerMonth = 90
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "2B",
-                IsClimateControlled = false,
-                IsVehicleAccessible = false,
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "3C",
-                IsClimateControlled = true,
-                IsVehicleAccessible = false,
-            });
+            facade.AddNewCustomer(new NewCustomer("Alpha", "Alpha Name", "Alpha Address"));
+            facade.AddNewCustomer(new NewCustomer("Bravo", "Bravo Name", "Bravo Address"));
+            facade.AddNewCustomer(new NewCustomer("Charlie", "Charlie Name", "Charlie Address"));
+
+
+            facade.CommissionNewUnit(new NewUnit("1A", 10, 12, 14, true, true, 90));
+            facade.CommissionNewUnit(new NewUnit("2B", 0, 0, 0, false, false, 0));
+            facade.CommissionNewUnit(new NewUnit("3C", 0, 0, 0, true, false, 0));
 
             dateServiceMock.CurrentDateTime = new DateTime(2017, 01, 01);
 
@@ -416,10 +227,10 @@ namespace HappyStorage.UnitTests
         {
             var unitStoreMock = new UnitStoreMock();
             var facade = new Facade(unitStoreMock, new CustomerStoreDummy(), new TenancyStoreDummy(), new DateServiceDummy());
-            facade.CommissionNewUnit(new NewUnit() { UnitNumber = "Number" });
+            facade.CommissionNewUnit(new NewUnit("1A", 10, 12, 14, true, true, 90));
             Assert.Throws<InvalidOperationException>(() =>
             {
-                facade.CommissionNewUnit(new NewUnit() { UnitNumber = "Number" });
+                facade.CommissionNewUnit(new NewUnit("1A", 10, 12, 14, true, true, 90));
             });
         }
 
@@ -428,10 +239,10 @@ namespace HappyStorage.UnitTests
         {
             var customerStoreMock = new CustomerStoreMock();
             var facade = new Facade(new UnitStoreDummy(), customerStoreMock, new TenancyStoreDummy(), new DateServiceDummy());
-            facade.AddNewCustomer(new NewCustomer() { CustomerNumber = "Number" });
+            facade.AddNewCustomer(new NewCustomer("Alpha", "Alpha Name", "Alpha Address"));
             Assert.Throws<InvalidOperationException>(() =>
             {
-                facade.AddNewCustomer(new NewCustomer() { CustomerNumber = "Number" });
+                facade.AddNewCustomer(new NewCustomer("Alpha", "Alpha Name", "Alpha Address"));
             });
         }
 
@@ -443,8 +254,8 @@ namespace HappyStorage.UnitTests
             var tenancyStoreMock = new TenancyStoreMock();
             var dateServiceMock = new DateServiceMock();
             var facade = new Facade(unitStoreMock, customerStoreMock, tenancyStoreMock, dateServiceMock);
-            facade.CommissionNewUnit(new NewUnit() { UnitNumber = "A1" });
-            facade.AddNewCustomer(new NewCustomer() { CustomerNumber = "Alpha" });
+            facade.CommissionNewUnit(new NewUnit("1A", 10, 12, 14, true, true, 90));
+            facade.AddNewCustomer(new NewCustomer("Alpha", "Alpha Name", "Alpha Address"));
             facade.ReserveUnit("A1", "Alpha");
             Assert.Throws<InvalidOperationException>(() =>
             {
@@ -460,8 +271,8 @@ namespace HappyStorage.UnitTests
             var tenancyStoreMock = new TenancyStoreMock();
             var dateServiceMock = new DateServiceMock();
             var facade = new Facade(unitStoreMock, customerStoreMock, tenancyStoreMock, dateServiceMock);
-            facade.CommissionNewUnit(new NewUnit() { UnitNumber = "A1" });
-            facade.AddNewCustomer(new NewCustomer() { CustomerNumber = "Alpha" });
+            facade.CommissionNewUnit(new NewUnit("1A", 10, 12, 14, true, true, 90));
+            facade.AddNewCustomer(new NewCustomer("Alpha", "Alpha Name", "Alpha Address"));
             Assert.Throws<InvalidOperationException>(() =>
             {
                 facade.ReleaseUnit("A1", "Alpha");
@@ -482,84 +293,21 @@ namespace HappyStorage.UnitTests
             var tenancyStoreMock = new TenancyStoreMock();
             var dateServiceMock = new DateServiceMock();
             var facade = new Facade(unitStoreMock, customerStoreMock, tenancyStoreMock, dateServiceMock);
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "A1",
-                Length = 5,
-                Width = 5,
-                Height = 8,
-                IsClimateControlled = false,
-                IsVehicleAccessible = true,
-                PricePerMonth = 50
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "B2",
-                Length = 10,
-                Width = 5,
-                Height = 8,
-                IsClimateControlled = false,
-                IsVehicleAccessible = true,
-                PricePerMonth = 60
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "C3",
-                Length = 10,
-                Width = 10,
-                Height = 8,
-                IsClimateControlled = false,
-                IsVehicleAccessible = true,
-                PricePerMonth = 70
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "D4",
-                Length = 4,
-                Width = 4,
-                Height = 4,
-                IsClimateControlled = true,
-                IsVehicleAccessible = false,
-                PricePerMonth = 100
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "E5",
-                Length = 6,
-                Width = 6,
-                Height = 6,
-                IsClimateControlled = true,
-                IsVehicleAccessible = false,
-                PricePerMonth = 110
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "F6",
-                Length = 8,
-                Width = 8,
-                Height = 8,
-                IsClimateControlled = true,
-                IsVehicleAccessible = false,
-                PricePerMonth = 120
-            });
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Alpha"
-            });
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Bravo"
-            });
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Charlie"
-            });
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Delta"
-            });
 
-            facade.UpdateCustomerDetails(new NewCustomer() { CustomerNumber = "Delta", FullName = "Delta Delta", Address = "Address" });
+
+            facade.CommissionNewUnit(new NewUnit("1A", 5, 5, 8, false, true, 50));
+            facade.CommissionNewUnit(new NewUnit("2B", 10, 5, 8, false, true, 60));
+            facade.CommissionNewUnit(new NewUnit("3C", 10, 10, 8, false, true, 70));
+            facade.CommissionNewUnit(new NewUnit("4D", 4, 4, 4, true, false, 100));
+            facade.CommissionNewUnit(new NewUnit("5E", 6, 6, 6, true, false, 110));
+            facade.CommissionNewUnit(new NewUnit("6F", 8, 8, 8, true, false, 120));
+
+            facade.AddNewCustomer(new NewCustomer("Alpha", "Alpha Name", "Alpha Address"));
+            facade.AddNewCustomer(new NewCustomer("Bravo", "Bravo Name", "Bravo Address"));
+            facade.AddNewCustomer(new NewCustomer("Charlie", "Charlie Name", "Charlie Address"));
+            facade.AddNewCustomer(new NewCustomer("Delta", "Delta Name", "Delta Address"));
+
+            facade.UpdateCustomerDetails(new NewCustomer("Delta", "Delta Delta", "Address"));
 
             Assert.Empty(facade.GetCustomerUnits("Alpha"));
             Assert.Empty(facade.GetCustomerUnits("Bravo"));
@@ -577,13 +325,13 @@ namespace HappyStorage.UnitTests
             var find3 = facade.SearchAvailableUnits(null, true, 750).ToArray();
             Assert.Single(find3);
             var unit = find3.Single();
-            Assert.Equal("C3", unit.UnitNumber);
+            Assert.Equal("3C", unit.UnitNumber);
             dateServiceMock.CurrentDateTime = new DateTime(2017, 01, 01);
-            facade.ReserveUnit("C3", "Charlie");
+            facade.ReserveUnit("3C", "Charlie");
 
             var charliesUnits = facade.GetCustomerUnits("Charlie");
             Assert.Single(charliesUnits);
-            Assert.True(charliesUnits.Single().UnitNumber == "C3");
+            Assert.True(charliesUnits.Single().UnitNumber == "3C");
             Assert.True(charliesUnits.Single().ReservationDate == new DateTime(2017, 01, 01));
             Assert.True(charliesUnits.Single().AmountPaid == 0);
 
@@ -602,7 +350,7 @@ namespace HappyStorage.UnitTests
             var find4 = facade.SearchAvailableUnits(null, true, 750).ToArray();
             Assert.Empty(find4);
             facade.Pay("Charlie", 70);
-            facade.ReleaseUnit("C3", "Charlie");
+            facade.ReleaseUnit("3C", "Charlie");
             dateServiceMock.CurrentDateTime = new DateTime(2017, 07, 01);
             Assert.Equal(0, facade.CalculateAmountDue("Charlie"));
             var find5 = facade.SearchAvailableUnits(null, true, 750).ToArray();
@@ -621,37 +369,16 @@ namespace HappyStorage.UnitTests
             var tenancyStoreMock = new TenancyStoreMock();
             var dateServiceMock = new DateServiceMock();
             var facade = new Facade(unitStoreMock, customerStoreMock, tenancyStoreMock, dateServiceMock);
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "A1",
-                Length = 2,
-                Width = 2,
-                Height = 2,
-                IsClimateControlled = true,
-                IsVehicleAccessible = false,
-                PricePerMonth = 20
-            });
-            facade.CommissionNewUnit(new NewUnit()
-            {
-                UnitNumber = "B2",
-                Length = 8,
-                Width = 8,
-                Height = 8,
-                IsClimateControlled = false,
-                IsVehicleAccessible = true,
-                PricePerMonth = 80
-            });
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Alpha"
-            });
-            facade.AddNewCustomer(new NewCustomer()
-            {
-                CustomerNumber = "Bravo"
-            });
+
+            facade.CommissionNewUnit(new NewUnit("1A", 2, 2, 2, true, true, 20));
+            facade.CommissionNewUnit(new NewUnit("2B", 8, 8, 8, false, true, 80));
+
+            facade.AddNewCustomer(new NewCustomer("Alpha", "Alpha Name", "Alpha Address"));
+            facade.AddNewCustomer(new NewCustomer("Bravo", "Bravo Name", "Bravo Address"));
+
             dateServiceMock.CurrentDateTime = new DateTime(2017, 01, 01);
-            facade.ReserveUnit("A1", "Alpha");
-            facade.ReserveUnit("B2", "Alpha");
+            facade.ReserveUnit("1A", "Alpha");
+            facade.ReserveUnit("2B", "Alpha");
             dateServiceMock.CurrentDateTime = new DateTime(2017, 03, 01);
             Assert.Equal(200, facade.CalculateAmountDue("Alpha"));
             facade.Pay("Alpha", 150);
