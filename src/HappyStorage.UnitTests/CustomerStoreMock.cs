@@ -8,12 +8,7 @@ namespace HappyStorage.UnitTests
 {
     internal class CustomerStoreMock : ICustomerStore
     {
-        internal class Customer
-        {
-            internal string CustomerNumber { get; set; }
-            internal string FullName { get; set; }
-            internal string Address { get; set; }
-        }
+        internal record Customer(string CustomerNumber, string FullName, string Address);
 
         internal readonly List<Customer> Customers = new();
 
@@ -33,15 +28,16 @@ namespace HappyStorage.UnitTests
 
         public NewCustomer GetCustomer(string customerNumber)
         {
-            var customer = Customers.FirstOrDefault(x => x.CustomerNumber == customerNumber);
+            var customer = Customers.Single(x => x.CustomerNumber == customerNumber);
             return new NewCustomer(customer.CustomerNumber, customer.FullName, customer.Address);
         }
 
         public void UpdateCustomer(NewCustomer newCustomerDetails)
         {
-            var customer = Customers.FirstOrDefault(x => x.CustomerNumber == newCustomerDetails.CustomerNumber);
-            customer.FullName = newCustomerDetails.FullName;
-            customer.Address = newCustomerDetails.Address;
+            var customer = Customers.Single(x => x.CustomerNumber == newCustomerDetails.CustomerNumber);
+            var update = customer with { FullName = newCustomerDetails.FullName, Address = newCustomerDetails.Address };
+            Customers.Remove(customer);
+            Customers.Add(update);
         }
     }
 }

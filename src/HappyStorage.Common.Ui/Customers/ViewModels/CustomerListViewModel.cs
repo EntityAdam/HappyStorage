@@ -13,12 +13,12 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
 
         private readonly IFacade facade;
 
-        private Pager<CustomerLookup> Pager { get; set; }
+        private Pager<CustomerLookup> Pager { get; set; } = default!;
 
         public CustomerListViewModel(IFacade facade)
         {
             this.facade = facade;
-            Customers.ListChanged += Customers_ListChanged;
+            Customers.ListChanged += Customers_ListChanged!;
 
             NextPageCommand = new DelegateCommand(
                 () => Next(),

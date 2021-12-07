@@ -14,35 +14,35 @@ namespace HappyStorage.UnitTests
             var facade = new Facade(new UnitStoreDummy(), new CustomerStoreDummy(), new TenancyStoreDummy(), new DateServiceDummy());
             Assert.Throws<ArgumentNullException>(() =>
             {
-                facade.CommissionNewUnit(null);
+                facade.CommissionNewUnit(null!);
             });
             Assert.Throws<ArgumentNullException>(() =>
             {
-                facade.DecommissionUnit(null);
+                facade.DecommissionUnit(null!);
             });
             Assert.Throws<ArgumentNullException>(() =>
             {
-                facade.AddNewCustomer(null);
+                facade.AddNewCustomer(null!);
             });
             Assert.Throws<ArgumentNullException>(() =>
             {
-                facade.DeleteCustomer(null);
+                facade.DeleteCustomer(null!);
             });
             Assert.Throws<ArgumentNullException>(() =>
             {
-                facade.ReserveUnit(null, null);
+                facade.ReserveUnit(null!, null!);
             });
             Assert.Throws<ArgumentNullException>(() =>
             {
-                facade.ReleaseUnit(null, null);
+                facade.ReleaseUnit(null!, null!);
             });
             Assert.Throws<ArgumentNullException>(() =>
             {
-                facade.CalculateAmountDue(null);
+                facade.CalculateAmountDue(null!);
             });
             Assert.Throws<ArgumentNullException>(() =>
             {
-                facade.Pay(null, 0);
+                facade.Pay(null!, 0);
             });
         }
 
@@ -52,23 +52,23 @@ namespace HappyStorage.UnitTests
             var facade = new Facade(new UnitStoreDummy(), new CustomerStoreDummy(), new TenancyStoreDummy(), new DateServiceDummy());
             Assert.Throws<ArgumentException>(() =>
             {
-                facade.DeleteCustomer(String.Empty);
+                facade.DeleteCustomer(string.Empty);
             });
             Assert.Throws<ArgumentException>(() =>
             {
-                facade.ReserveUnit(String.Empty, String.Empty);
+                facade.ReserveUnit(string.Empty, string.Empty);
             });
             Assert.Throws<ArgumentException>(() =>
             {
-                facade.ReleaseUnit(String.Empty, String.Empty);
+                facade.ReleaseUnit(string.Empty, string.Empty);
             });
             Assert.Throws<ArgumentException>(() =>
             {
-                facade.CalculateAmountDue(String.Empty);
+                facade.CalculateAmountDue(string.Empty);
             });
             Assert.Throws<ArgumentException>(() =>
             {
-                facade.Pay(String.Empty, 0);
+                facade.Pay(string.Empty, 0);
             });
             Assert.Throws<ArgumentException>(() =>
             {
