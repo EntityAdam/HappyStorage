@@ -10,6 +10,21 @@ namespace HappyStorage.SqlStorage
 {
     public class SqlCustomerStore : ICustomerStore
     {
+
+        public class NewCustomerSql
+        {
+            public string CustomerNumber { get; set; }
+            public string FullName { get; set; }
+            public string Address { get; set; }
+        }
+
+        private class CustomerLookupSql
+        {
+            public string CustomerNumber { get; set; }
+            public string FullName { get; set; }
+            public int? UnitsReservedCount { get; set; }
+        }
+
         private readonly ISqlCustomerStoreSettings sqlCustomerStoreSettings;
 
         public SqlCustomerStore(ISqlCustomerStoreSettings sqlCustomerStoreSettings)
@@ -75,7 +90,8 @@ namespace HappyStorage.SqlStorage
                 const string sql =
                     @"SELECT TOP 100 CustomerNumber, FullName FROM [Customers]";
 
-                return con.Query<CustomerLookup>(sql);
+                var result = con.Query<CustomerLookupSql>(sql);
+                return result.Select(c => new CustomerLookup(c.CustomerNumber, c.FullName, c.UnitsReservedCount));
             });
         }
 
@@ -89,7 +105,8 @@ namespace HappyStorage.SqlStorage
                 {
                     CustomerNumber = customerNumber
                 };
-                return con.Query<NewCustomer>(sql, parameters).Single();
+                var result = con.Query<NewCustomerSql>(sql, parameters).Single();
+                return new NewCustomer(result.CustomerNumber, result.FullName, result.Address);
             });
         }
 

@@ -4,11 +4,20 @@ using HappyStorage.Core.Models;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HappyStorage.SqlStorage
 {
     public class SqlTenancyStore : ITenancyStore
     {
+        public class TenantLookupSql
+        {
+            public string UnitNumber { get; set; }
+            public string CustomerNumber { get; set; }
+            public DateTime ReservationDate { get; set; }
+            public decimal AmountPaid { get; set; }
+        }
+
         private readonly ISqlTenancyStoreSettings sqlTenancyStoreSettings;
 
         public SqlTenancyStore(ISqlTenancyStoreSettings sqlTenancyStoreSettings) =>
@@ -69,7 +78,8 @@ namespace HappyStorage.SqlStorage
                 {
                     CustomerNumber = customerNumber
                 };
-                return con.Query<TenantLookup>(sql, parameters);
+                var result = con.Query<TenantLookupSql>(sql, parameters);
+                return result.Select(t => new TenantLookup(t.UnitNumber, t.CustomerNumber, t.ReservationDate, t.AmountPaid));
             });
         }
 
@@ -86,14 +96,15 @@ namespace HappyStorage.SqlStorage
         {
             return UseConnection(con =>
             {
-                const string sql = 
+                const string sql =
                         @"SELECT 
                             [UnitNumber],
                             [CustomerNumber],
                             [AmountPaid],
                             [ReservationDate]
                         FROM [Tenants]";
-                return con.Query<TenantLookup>(sql);
+                var result = con.Query<TenantLookupSql>(sql);
+                return result.Select(t => new TenantLookup(t.UnitNumber, t.CustomerNumber, t.ReservationDate, t.AmountPaid));
             });
         }
 
