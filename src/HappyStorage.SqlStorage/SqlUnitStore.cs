@@ -113,7 +113,7 @@ namespace HappyStorage.SqlStorage
                         sql.Append(" WHERE ");
                     whereStatementApplied = true;
                     sql.Append("(Length * Width * Height) >= ");
-                    sql.Append(minimumCubicFeet.Value.ToString());
+                    sql.Append(minimumCubicFeet.Value);
                 }
                 return con.Query<AvailableUnit>(sql.ToString());
             });
@@ -147,6 +147,6 @@ namespace HappyStorage.SqlStorage
             return func(con);
         }
 
-        private string GetBitString(bool value) => value ? "1" : "0";
+        private static string GetBitString(bool value) => value ? "1" : "0";
     }
 }

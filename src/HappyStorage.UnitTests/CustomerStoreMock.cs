@@ -15,9 +15,9 @@ namespace HappyStorage.UnitTests
             internal string Address { get; set; }
         }
 
-        internal readonly List<Customer> Customers = new List<Customer>();
+        internal readonly List<Customer> Customers = new();
 
-        private IMapper mapper = new MapperConfiguration(cfg =>
+        private readonly IMapper mapper = new MapperConfiguration(cfg =>
         {
             cfg.ShouldMapProperty = p => p.GetMethod.IsPublic || p.GetMethod.IsAssembly;
             cfg.CreateMap<NewCustomer, Customer>();

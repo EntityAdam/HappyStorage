@@ -6,7 +6,7 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
 {
     public class CustomerDetailsViewModel : BindableBase, ICustomerDetailsViewModel
     {
-        private IFacade facade;
+        private readonly IFacade facade;
 
         public NewCustomerModel NewCustomer { get; set; } = new NewCustomerModel();
 

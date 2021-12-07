@@ -10,15 +10,8 @@ namespace HappyStorage.UnitTests
     {
 
         internal record Tenant(string UnitNumber, string CustomerNumber, DateTime ReservationDate, decimal AmountPaid);
-        //internal class Tenant
-        //{
-        //    internal string UnitNumber { get; set; }
-        //    internal string CustomerNumber { get; set; }
-        //    internal DateTime ReservationDate { get; set; }
-        //    internal decimal AmountPaid { get; set; }
-        //}
 
-        internal readonly List<Tenant> Tenants = new List<Tenant>();
+        internal readonly List<Tenant> Tenants = new();
 
         public void Create(string unitNumber, string customerNumber, DateTime reservationDate, decimal amountPaid) =>
             Tenants.Add(new Tenant(unitNumber, customerNumber, reservationDate, amountPaid));

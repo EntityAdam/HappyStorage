@@ -10,7 +10,7 @@ namespace HappyStorage.SqlStorage
 {
     public class SqlCustomerStore : ICustomerStore
     {
-        private ISqlCustomerStoreSettings sqlCustomerStoreSettings;
+        private readonly ISqlCustomerStoreSettings sqlCustomerStoreSettings;
 
         public SqlCustomerStore(ISqlCustomerStoreSettings sqlCustomerStoreSettings)
         {

@@ -22,11 +22,11 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
 
             NextPageCommand = new DelegateCommand(
                 () => Next(),
-                () => (Pager != null) ? Pager.CanExecuteNext : false
+                () => (Pager != null) && Pager.CanExecuteNext
             );
             PrevPageCommand = new DelegateCommand(
                 () => Prev(),
-                () => (Pager != null) ? Pager.CanExecutePrev : false
+                () => (Pager != null) && Pager.CanExecutePrev
             );
         }
 

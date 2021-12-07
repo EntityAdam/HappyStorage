@@ -154,7 +154,7 @@ namespace HappyStorage.UnitTests
             Assert.Throws<InvalidOperationException>(() => facade.DecommissionUnit("2B"));
             facade.ReleaseUnit("2B", "Bravo");
             facade.DecommissionUnit("2B");
-            Assert.Equal(2, unitStoreMock.Units.Count());
+            Assert.Equal(2, unitStoreMock.Units.Count);
 
             Assert.Throws<InvalidOperationException>(() => facade.DecommissionUnit("1A"));
             facade.ReleaseUnit("1A", "Alpha");
@@ -214,7 +214,7 @@ namespace HappyStorage.UnitTests
             Assert.Throws<InvalidOperationException>(() => facade.DeleteCustomer("Alpha"));
             facade.ReleaseUnit("1A", "Alpha");
             facade.DeleteCustomer("Alpha");
-            Assert.Equal(2, customerStoreMock.Customers.Count());
+            Assert.Equal(2, customerStoreMock.Customers.Count);
 
             Assert.Throws<InvalidOperationException>(() => facade.DeleteCustomer("Bravo"));
             facade.ReleaseUnit("2B", "Bravo");

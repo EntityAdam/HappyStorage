@@ -10,9 +10,9 @@ namespace HappyStorage.UnitTests
     {
         internal record Unit(string UnitNumber, int Length, int Width, int Height, bool IsClimateControlled, bool IsVehicleAccessible, decimal PricePerMonth);
 
-        internal readonly List<Unit> Units = new List<Unit>();
+        internal readonly List<Unit> Units = new();
 
-        private IMapper mapper = new MapperConfiguration(cfg =>
+        private readonly IMapper mapper = new MapperConfiguration(cfg =>
         {
             cfg.ShouldMapProperty = p => p.GetMethod.IsPublic || p.GetMethod.IsAssembly;
             cfg.CreateMap<NewUnit, Unit>();

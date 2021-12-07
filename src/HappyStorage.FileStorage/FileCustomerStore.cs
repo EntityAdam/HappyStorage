@@ -48,7 +48,7 @@ namespace HappyStorage.FileStorage
             return new NewCustomer(customerNumber, customerFullName, customerAddress);
         }
 
-        private CustomerLookup GetLookupFromFileName(string file)
+        private static CustomerLookup GetLookupFromFileName(string file)
         {
             var filename = Path.GetFileNameWithoutExtension(file).Split('_');
             var fullname = File.ReadAllText(file);
