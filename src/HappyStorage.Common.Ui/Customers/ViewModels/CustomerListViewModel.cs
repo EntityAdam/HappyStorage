@@ -51,7 +51,7 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
         {
             var customers = facade.ListCustomersAndTenants();
             Pager = new Pager<CustomerLookup>(customers, defaultPageSize);
-            UpdateList(Pager.FirstPage());
+            UpdateList(Pager.First());
         }
 
         public void Next()
@@ -83,11 +83,11 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
         {
             if (pageNum != null)
             {
-                UpdateList(Pager.TryJumpToPage((int)pageNum));
+                UpdateList(Pager.Page((int)pageNum));
             }
             else
             {
-                UpdateList(Pager.FirstPage());
+                UpdateList(Pager.First());
             }
         }
     }
