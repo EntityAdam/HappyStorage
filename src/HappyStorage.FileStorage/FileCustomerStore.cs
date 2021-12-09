@@ -45,24 +45,14 @@ namespace HappyStorage.FileStorage
         {
             var customerFullName = File.ReadAllText(GetFullNamePath(customerNumber));
             var customerAddress = File.ReadAllText(GetAddressPath(customerNumber));
-            return new NewCustomer()
-            {
-                CustomerNumber = customerNumber,
-                FullName = customerFullName,
-                Address = customerAddress
-            };
+            return new NewCustomer(customerNumber, customerFullName, customerAddress);
         }
 
-        private CustomerLookup GetLookupFromFileName(string file)
+        private static CustomerLookup GetLookupFromFileName(string file)
         {
             var filename = Path.GetFileNameWithoutExtension(file).Split('_');
             var fullname = File.ReadAllText(file);
-
-            return new CustomerLookup
-            {
-                CustomerNumber = filename[0],
-                FullName = fullname
-            };
+            return new CustomerLookup(filename[0], fullname, 0);
         }
 
         public void UpdateCustomer(NewCustomer newCustomerDetails)

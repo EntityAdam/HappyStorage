@@ -9,11 +9,9 @@ namespace HappyStorage.Common.Ui
         private readonly int pageSize;
         private int page = -1;
 
-        private int firstPage => 0;
-        private int lastPage => (totalItems / pageSize);
-        private int nextPage => page + 1;
-        private int prevPage => page - 1;
-        private int totalItems => items.Count();
+        private static int FirstPage => 0;
+        private int LastPage => (TotalItems / pageSize);
+        private int TotalItems => items.Count();
 
         public Pager(IEnumerable<T> items, int pageSize)
         {
@@ -33,15 +31,15 @@ namespace HappyStorage.Common.Ui
             return items.Skip(page * pageSize).Take(pageSize);
         }
 
-        public bool CanExecuteNext => (((page + 1) * pageSize) < totalItems);
+        public bool CanExecuteNext => ((page + 1) * pageSize) < TotalItems;
 
         public bool CanExecutePrev => page > 0;
 
         public int CurrentPage => page;
 
-        public IEnumerable<T> TryJumpToPage(int pageNumber)
+        public IEnumerable<T> Page(int pageNumber)
         {
-            if (pageNumber <= lastPage)
+            if (pageNumber <= LastPage)
             {
                 page = pageNumber;
                 return items.Skip(pageNumber * pageSize).Take(pageSize);
@@ -53,14 +51,14 @@ namespace HappyStorage.Common.Ui
             }
         }
 
-        public IEnumerable<T> FirstPage()
+        public IEnumerable<T> First()
         {
-            return TryJumpToPage(firstPage);
+            return Page(Pager<T>.FirstPage);
         }
 
-        public IEnumerable<T> LastPage()
+        public IEnumerable<T> Last()
         {
-            return TryJumpToPage(lastPage);
+            return Page(LastPage);
         }
     }
 }

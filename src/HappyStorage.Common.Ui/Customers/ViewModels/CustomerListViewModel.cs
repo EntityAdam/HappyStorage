@@ -13,20 +13,20 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
 
         private readonly IFacade facade;
 
-        private Pager<CustomerLookup> Pager { get; set; }
+        private Pager<CustomerLookup> Pager { get; set; } = default!;
 
         public CustomerListViewModel(IFacade facade)
         {
             this.facade = facade;
-            Customers.ListChanged += Customers_ListChanged;
+            Customers.ListChanged += Customers_ListChanged!;
 
             NextPageCommand = new DelegateCommand(
                 () => Next(),
-                () => (Pager != null) ? Pager.CanExecuteNext : false
+                () => (Pager != null) && Pager.CanExecuteNext
             );
             PrevPageCommand = new DelegateCommand(
                 () => Prev(),
-                () => (Pager != null) ? Pager.CanExecutePrev : false
+                () => (Pager != null) && Pager.CanExecutePrev
             );
         }
 
@@ -51,7 +51,7 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
         {
             var customers = facade.ListCustomersAndTenants();
             Pager = new Pager<CustomerLookup>(customers, defaultPageSize);
-            UpdateList(Pager.FirstPage());
+            UpdateList(Pager.First());
         }
 
         public void Next()
@@ -67,14 +67,14 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
         private void UpdateList(IEnumerable<CustomerLookup> page)
         {
             Customers.Clear();
+
             foreach (var c in page)
             {
                 Customers.Add(new CustomerLookupModel()
                 {
                     CustomerNumber = c.CustomerNumber,
                     FullName = c.FullName,
-                    UnitsReservedCount = c.UnitsReservedCount
-                    
+                    UnitsReservedCount = c.UnitsReservedCount ?? default,
                 });
             }
         }
@@ -83,11 +83,11 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
         {
             if (pageNum != null)
             {
-                UpdateList(Pager.TryJumpToPage((int)pageNum));
+                UpdateList(Pager.Page((int)pageNum));
             }
             else
             {
-                UpdateList(Pager.FirstPage());
+                UpdateList(Pager.First());
             }
         }
     }

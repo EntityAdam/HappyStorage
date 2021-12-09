@@ -1,6 +1,5 @@
 ﻿using HappyStorage.Common.Ui.Tenants.Models;
 using HappyStorage.Core;
-using HappyStorage.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,13 +26,7 @@ namespace HappyStorage.Common.Ui.Tenants.ViewModels
         private List<TenantUnitModel> GetTenantUnits(string customerNumber)
         {
             return facade.GetCustomerUnits(customerNumber)
-                .Select(c =>
-                new TenantUnitModel()
-                {
-                    UnitNumber = c.UnitNumber,
-                    ReservationDate = c.ReservationDate,
-                    AmountPaid = c.AmountPaid
-                }).ToList();
+                .Select(c => new TenantUnitModel(c.UnitNumber, c.ReservationDate, c.AmountPaid)).ToList();
         }
     }
 }

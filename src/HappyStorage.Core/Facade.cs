@@ -24,7 +24,7 @@ namespace HappyStorage.Core
         public void CommissionNewUnit(NewUnit newUnit)
         {
             if (newUnit == null) throw new ArgumentNullException(nameof(newUnit));
-            if (String.IsNullOrWhiteSpace(newUnit.UnitNumber)) throw new ArgumentException(nameof(newUnit.UnitNumber));
+            if (string.IsNullOrWhiteSpace(newUnit.UnitNumber)) throw new ArgumentException(nameof(newUnit.UnitNumber));
             if (newUnit.Length > 0 || newUnit.Height > 0 || newUnit.Width > 0)
             {
                 if (newUnit.Length == 0 || newUnit.Height == 0 || newUnit.Width == 0)
@@ -53,7 +53,7 @@ namespace HappyStorage.Core
         public void DecommissionUnit(string unitNumber)
         {
             if (unitNumber == null) throw new ArgumentNullException(nameof(unitNumber));
-            if (String.IsNullOrWhiteSpace(unitNumber)) throw new ArgumentException(nameof(unitNumber));
+            if (string.IsNullOrWhiteSpace(unitNumber)) throw new ArgumentException("Unit Number is empty.", nameof(unitNumber));
             if (!unitStore.UnitExists(unitNumber)) throw new InvalidOperationException("The unit number does not exist.");
             if (tenancyStore.IsUnitNumberOccupied(unitNumber)) throw new InvalidOperationException("The unit cannot be deleted because it is currently occupied.");
             unitStore.Delete(unitNumber);
@@ -62,7 +62,7 @@ namespace HappyStorage.Core
         public void AddNewCustomer(NewCustomer newCustomer)
         {
             if (newCustomer == null) throw new ArgumentNullException(nameof(newCustomer));
-            if (String.IsNullOrWhiteSpace(newCustomer.CustomerNumber)) throw new ArgumentException(nameof(newCustomer.CustomerNumber));
+            if (string.IsNullOrWhiteSpace(newCustomer.CustomerNumber)) throw new ArgumentException(nameof(newCustomer.CustomerNumber));
             if (customerStore.CustomerExists(newCustomer.CustomerNumber)) throw new InvalidOperationException("The customer number already exists.");
             customerStore.Create(newCustomer);
         }
@@ -70,7 +70,7 @@ namespace HappyStorage.Core
         public void DeleteCustomer(string customerNumber)
         {
             if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
-            if (String.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException(nameof(customerNumber));
+            if (string.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException("Customer Number is empty.",nameof(customerNumber));
             if (!customerStore.CustomerExists(customerNumber)) throw new InvalidOperationException("The customer number does not exist.");
             if (tenancyStore.GetCustomerUnits(customerNumber).Any()) throw new InvalidOperationException("The customer has one or more units reserved and cannot be deleted until all units are released");
             customerStore.Delete(customerNumber);
@@ -87,8 +87,8 @@ namespace HappyStorage.Core
         {
             if (unitNumber == null) throw new ArgumentNullException(nameof(unitNumber));
             if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
-            if (String.IsNullOrWhiteSpace(unitNumber)) throw new ArgumentException(nameof(unitNumber));
-            if (String.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException(nameof(customerNumber));
+            if (string.IsNullOrWhiteSpace(unitNumber)) throw new ArgumentException("Unit Number is empty.",nameof(unitNumber));
+            if (string.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException("Customer Number is empty.",nameof(customerNumber));
             if (tenancyStore.IsUnitNumberOccupied(unitNumber)) throw new InvalidOperationException("The unit is already occupied.");
             tenancyStore.Create(unitNumber, customerNumber, dateService.GetCurrentDateTime(), 0m);
         }
@@ -97,8 +97,8 @@ namespace HappyStorage.Core
         {
             if (unitNumber == null) throw new ArgumentNullException(nameof(unitNumber));
             if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
-            if (String.IsNullOrWhiteSpace(unitNumber)) throw new ArgumentException(nameof(unitNumber));
-            if (String.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException(nameof(customerNumber));
+            if (string.IsNullOrWhiteSpace(unitNumber)) throw new ArgumentException("Unit Number is empty.", nameof(unitNumber));
+            if (string.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException("Customer Number is empty.", nameof(customerNumber));
             if (!tenancyStore.IsUnitNumberOccupied(unitNumber)) throw new InvalidOperationException("The unit is not occupied.");
             tenancyStore.Delete(unitNumber, customerNumber);
         }
@@ -106,13 +106,13 @@ namespace HappyStorage.Core
         public decimal CalculateAmountDue(string customerNumber)
         {
             if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
-            if (String.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException(nameof(customerNumber));
+            if (string.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException("Customer Number is empty.", nameof(customerNumber));
             var customerUnits = tenancyStore
                 .GetCustomerUnits(customerNumber)
                 .Select(u => new
                 {
-                    ReservationDate = u.ReservationDate,
-                    AmountPaid = u.AmountPaid,
+                    u.ReservationDate,
+                    u.AmountPaid,
                     PricePerMonth = unitStore.GetPricePerMonth(u.UnitNumber)
                 })
                 .ToArray();
@@ -126,17 +126,17 @@ namespace HappyStorage.Core
         public void Pay(string customerNumber, decimal amount)
         {
             if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
-            if (String.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException(nameof(customerNumber));
-            if (amount < 0) throw new ArgumentException(nameof(amount));
+            if (string.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException("Customer Number is empty.", nameof(customerNumber));
+            if (amount < 0) throw new ArgumentException("Amount to pay cannot be less than Zero (0).", nameof(amount));
             var currentDateTime = dateService.GetCurrentDateTime();
             var customerUnits = tenancyStore
                 .GetCustomerUnits(customerNumber)
                 .OrderBy(u => u.ReservationDate)
                 .Select(u => new
                 {
-                    UnitNumber = u.UnitNumber,
+                    u.UnitNumber,
                     TotalCost = GetDifferenceInMonths(u.ReservationDate, currentDateTime) * unitStore.GetPricePerMonth(u.UnitNumber),
-                    AmountPaid = u.AmountPaid
+                    u.AmountPaid
                 })
                 .ToArray();
             var amountRemaining = amount;
@@ -155,8 +155,6 @@ namespace HappyStorage.Core
             }
         }
 
-        private int GetDifferenceInMonths(DateTime start, DateTime end) => ((end.Year * 12) + end.Month) - ((start.Year * 12) + start.Month);
-
         public IEnumerable<CustomerLookup> ListCustomersAndTenants() 
         {
             var customers = customerStore.ListCustomers();
@@ -164,10 +162,8 @@ namespace HappyStorage.Core
 
             foreach (var customer in customers)
             {
-                customer.UnitsReservedCount = tenants.Where(t=>t.CustomerNumber == customer.CustomerNumber).Count();
+                yield return customer with { UnitsReservedCount = tenants.Where(t => t.CustomerNumber == customer.CustomerNumber).Count() };
             }
-
-            return customers;
         }
 
         public IEnumerable<TenantLookup> GetCustomerUnits(string customerNumber)
@@ -189,5 +185,7 @@ namespace HappyStorage.Core
             if (!customerStore.CustomerExists(newCustomerDetails.CustomerNumber)) throw new InvalidOperationException("The customer number does not exist.");
             customerStore.UpdateCustomer(newCustomerDetails);
         }
+
+        private static int GetDifferenceInMonths(DateTime start, DateTime end) => ((end.Year * 12) + end.Month) - ((start.Year * 12) + start.Month);
     }
 }

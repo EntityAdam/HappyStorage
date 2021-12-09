@@ -22,11 +22,11 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
 
             NextPageCommand = new DelegateCommand(
                 () => Next(),
-                () => (Pager != null) ? Pager.CanExecuteNext : false
+                () => (Pager != null) && Pager.CanExecuteNext
             );
             PrevPageCommand = new DelegateCommand(
                 () => Prev(),
-                () => (Pager != null) ? Pager.CanExecutePrev : false
+                () => (Pager != null) && Pager.CanExecutePrev
             );
         }
 
@@ -48,7 +48,7 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
         {
             var units = facade.SearchAvailableUnits(null, null, null);
             Pager = new Pager<AvailableUnit>(units, defaultPageSize);
-            UpdateList(Pager.FirstPage());
+            UpdateList(Pager.First());
         }
 
         public void Next()
@@ -61,7 +61,7 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
             UpdateList(Pager.Prev());
         }
 
-        private UnitListFilter filter = new UnitListFilter();
+        private UnitListFilter filter = new();
 
         public UnitListFilter Filter
         {
@@ -91,19 +91,19 @@ namespace HappyStorage.Common.Ui.Units.ViewModels
             this.Filter = filter;
         }
 
-        public bool CanExecuteNext() => (Pager != null) ? Pager.CanExecuteNext : false;
+        public bool CanExecuteNext() => (Pager != null) && Pager.CanExecuteNext;
 
-        public bool CanExecuteBack() => (Pager != null) ? Pager.CanExecutePrev : false;
+        public bool CanExecuteBack() => (Pager != null) && Pager.CanExecutePrev;
 
         public void JumpToPage(int? pageNum)
         {
             if (pageNum != null)
             {
-                UpdateList(Pager.TryJumpToPage((int)pageNum));
+                UpdateList(Pager.Page((int)pageNum));
             }
             else
             {
-                UpdateList(Pager.FirstPage());
+                UpdateList(Pager.First());
             }
         }
 

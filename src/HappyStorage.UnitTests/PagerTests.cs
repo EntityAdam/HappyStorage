@@ -65,21 +65,21 @@ namespace HappyStorage.UnitTests
             var big = PagerTestsHelper.GetList(23);
             var pager = new Pager<int>(big, 5);
 
-            Assert.Equal(5, pager.FirstPage().Count());
+            Assert.Equal(5, pager.First().Count());
             Assert.Equal(0, pager.CurrentPage);
 
-            Assert.Equal(3, pager.LastPage().Count());
+            Assert.Equal(3, pager.Last().Count());
             Assert.Equal(4, pager.CurrentPage);
 
-            var page = pager.TryJumpToPage(2);
+            var page = pager.Page(2);
             Assert.Equal(2, pager.CurrentPage);
             Assert.Equal(5, page.Count());
 
-            var page2 = pager.TryJumpToPage(4);
+            var page2 = pager.Page(4);
             Assert.Equal(4, pager.CurrentPage);
             Assert.Equal(3, page2.Count());
 
-            var page3 = pager.TryJumpToPage(int.MaxValue);
+            var page3 = pager.Page(int.MaxValue);
             Assert.Equal(-1, pager.CurrentPage);
             Assert.Empty(page3);
         }

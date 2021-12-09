@@ -4,12 +4,19 @@ using HappyStorage.Core.Models;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HappyStorage.SqlStorage
 {
     public class SqlUnitStore : IUnitStore
     {
+        public class AvailableUnitSql
+        {
+            public string UnitNumber { get; set; }
+            public decimal PricePerMonth { get; set; }
+        }
+
         private readonly ISqlUnitStoreSettings sqlUnitStoreSettings;
 
         public SqlUnitStore(ISqlUnitStoreSettings sqlUnitStoreSettings) =>
@@ -113,9 +120,10 @@ namespace HappyStorage.SqlStorage
                         sql.Append(" WHERE ");
                     whereStatementApplied = true;
                     sql.Append("(Length * Width * Height) >= ");
-                    sql.Append(minimumCubicFeet.Value.ToString());
+                    sql.Append(minimumCubicFeet.Value);
                 }
-                return con.Query<AvailableUnit>(sql.ToString());
+                var result = con.Query<AvailableUnitSql>(sql.ToString());
+                return result.Select(u => new AvailableUnit(u.UnitNumber, u.PricePerMonth));
             });
         }
 
@@ -135,22 +143,18 @@ namespace HappyStorage.SqlStorage
 
         private void UseConnection(Action<SqlConnection> action)
         {
-            using (var con = new SqlConnection(sqlUnitStoreSettings.GetConnectionString()))
-            {
-                con.Open();
-                action(con);
-            }
+            using var con = new SqlConnection(sqlUnitStoreSettings.GetConnectionString());
+            con.Open();
+            action(con);
         }
 
         private T UseConnection<T>(Func<SqlConnection, T> func)
         {
-            using (var con = new SqlConnection(sqlUnitStoreSettings.GetConnectionString()))
-            {
-                con.Open();
-                return func(con);
-            }
+            using var con = new SqlConnection(sqlUnitStoreSettings.GetConnectionString());
+            con.Open();
+            return func(con);
         }
 
-        private string GetBitString(bool value) => value ? "1" : "0";
+        private static string GetBitString(bool value) => value ? "1" : "0";
     }
 }

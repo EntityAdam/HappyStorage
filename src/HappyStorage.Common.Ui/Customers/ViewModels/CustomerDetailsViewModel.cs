@@ -6,7 +6,7 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
 {
     public class CustomerDetailsViewModel : BindableBase, ICustomerDetailsViewModel
     {
-        private IFacade facade;
+        private readonly IFacade facade;
 
         public NewCustomerModel NewCustomer { get; set; } = new NewCustomerModel();
 
@@ -22,12 +22,7 @@ namespace HappyStorage.Common.Ui.Customers.ViewModels
 
         public void Update(NewCustomerModel newCustomer)
         {
-            var newCustomerDetails = new NewCustomer()
-            {
-                CustomerNumber = newCustomer.CustomerNumber,
-                FullName = newCustomer.FullName,
-                Address = newCustomer.Address
-            };
+            var newCustomerDetails = new NewCustomer(newCustomer.CustomerNumber, newCustomer.FullName, newCustomer.Address);
             facade.UpdateCustomerDetails(newCustomerDetails);
         }
 
