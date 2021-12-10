@@ -27,6 +27,7 @@
                     <th scope="row">@customer.CustomerNumber</th>
                     <td>@customer.FullName</td>
                     <td>
+                        <a href="" @onclick="() => Details(customer.CustomerNumber)" class="btn btn-sm btn-primary">Details</a>
                         <a href="/Tenant/UnitList/@customer.CustomerNumber" class="btn btn-sm btn-primary">Manage Units</a>
                         <a asp-page="/Tenant/Payment" asp-route-customerNumber="@customer.CustomerNumber" class="btn btn-sm btn-info">Make a Payment</a>
                         <a href="/Customer/Delete/@customer.CustomerNumber" class="btn btn-sm btn-danger">Delete</a>
@@ -57,6 +58,10 @@
     protected void CreateCustomer()
     {
         UriHelper.NavigateTo("/customer/create");
+    }
+
+    protected void Details(string customerNumber) {
+        UriHelper.NavigateTo($"/customer/details/{customerNumber}");
     }
 
     protected void NextPage()

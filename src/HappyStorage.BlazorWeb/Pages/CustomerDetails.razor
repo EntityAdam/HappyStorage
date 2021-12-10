@@ -1,12 +1,13 @@
-﻿@page "/customer/create"
-@using HappyStorage.Common.Ui.Customers
+﻿@page "/customer/details/{customerNumber}"
 @using HappyStorage.BlazorWeb.Components
+@using HappyStorage.Common.Ui.Customers
+@using HappyStorage.Common.Ui.Customers.Models
+@inject HappyStorage.Common.Ui.Customers.ViewModels.ICustomerDetailsViewModel viewModel
 @inject NavigationManager UriHelper
-@inject HappyStorage.Common.Ui.Customers.ViewModels.ICustomerCreateViewModel viewModel
 
-<h1>Create Customer</h1>
+<h1>Customer Details</h1>
 
-<EditForm Model="@viewModel.NewCustomer" OnValidSubmit="@HandleValidSubmit">
+<EditForm Model="@viewModel.NewCustomer" OnValidSubmit="@Update">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="form-group">
@@ -33,18 +34,29 @@
         <InputText class="form-control" @bind-Value="@viewModel.NewCustomer.PostalCode" />
     </div>
     <br />
-    <button class="btn btn-primary" type="submit">Submit</button>
-    <button class="btn" type="button" @onclick="ReturnToList">Cancel</button>
+    <button class="btn btn-primary" type="submit">Update</button>
+    <button class="btn" type="button" @onclick="GoBack">Cancel</button>
 </EditForm>
 
 @code {
-    private void HandleValidSubmit()
+    [Parameter]
+    public string customerNumber { get; set; } = default!;
+
+    public NewCustomerModel Customer { get; set; } = default!;
+
+    protected override void OnInitialized()
     {
-        viewModel.Create();
-        ReturnToList();
+        viewModel.GetCustomer(customerNumber);
+        Customer = viewModel.NewCustomer;
     }
 
-    private void ReturnToList()
+    protected void Update()
+    {
+        viewModel.Update(Customer);
+        UriHelper.NavigateTo("/customers");
+    }
+
+    protected void GoBack()
     {
         UriHelper.NavigateTo("/customers");
     }
