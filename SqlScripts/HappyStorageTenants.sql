@@ -13,6 +13,8 @@ CREATE TABLE [dbo].[Tenants](
 	[CustomerNumber] [varchar](100) NOT NULL,
 	[UnitNumber] [varchar](100) NOT NULL,
 	[ReservationDate] [date] NOT NULL,
-	[AmountPaid] [money] NULL
+	[AmountPaid] [money] NULL,
+	[IsLocked] [bit] NOT NULL,
+	[LockedDateTime] [date] NULL
 ) ON [PRIMARY]
 GO

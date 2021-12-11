@@ -20,5 +20,11 @@ namespace HappyStorage.UnitTests
         public bool IsUnitNumberOccupied(string unitNumber) => throw new NotSupportedException();
 
         public void UpdateAmountPaid(string unitNumber, decimal amountToApply) => throw new NotSupportedException();
+
+        public void Lock(string unitNumber, string customerNumber, DateTime dateTime) => throw new NotSupportedException();
+
+        public void Unlock(string unitNumber) => throw new NotSupportedException();
+
+        public bool IsUnitLocked(string unitNumber) => throw new NotSupportedException();
     }
 }
