@@ -93,6 +93,24 @@ namespace HappyStorage.Core
             tenancyStore.Create(unitNumber, customerNumber, dateService.GetCurrentDateTime(), 0m);
         }
 
+        public void LockUnit(string unitNumber, string customerNumber)
+        {
+            if (unitNumber == null) throw new ArgumentNullException(nameof(unitNumber));
+            if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
+            if (string.IsNullOrWhiteSpace(unitNumber)) throw new ArgumentException("Unit Number is empty.", nameof(unitNumber));
+            if (string.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException("Customer Number is empty.", nameof(customerNumber));
+            if (!tenancyStore.IsUnitNumberOccupied(unitNumber)) throw new InvalidOperationException("The unit is not occupied.");
+            tenancyStore.Lock(unitNumber, customerNumber, dateService.GetCurrentDateTime());
+        }
+
+        public void UnlockUnit(string unitNumber)
+        {
+            if (unitNumber == null) throw new ArgumentNullException(nameof(unitNumber));
+            if (string.IsNullOrWhiteSpace(unitNumber)) throw new ArgumentException("Unit Number is empty.", nameof(unitNumber));
+            if (!tenancyStore.IsUnitNumberOccupied(unitNumber)) throw new InvalidOperationException("The unit is not occupied.");
+            tenancyStore.Unlock(unitNumber);
+        }
+
         public void ReleaseUnit(string unitNumber, string customerNumber)
         {
             if (unitNumber == null) throw new ArgumentNullException(nameof(unitNumber));
@@ -100,6 +118,7 @@ namespace HappyStorage.Core
             if (string.IsNullOrWhiteSpace(unitNumber)) throw new ArgumentException("Unit Number is empty.", nameof(unitNumber));
             if (string.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException("Customer Number is empty.", nameof(customerNumber));
             if (!tenancyStore.IsUnitNumberOccupied(unitNumber)) throw new InvalidOperationException("The unit is not occupied.");
+            if (tenancyStore.IsUnitLocked(unitNumber)) throw new InvalidOperationException("The unit is locked.");
             tenancyStore.Delete(unitNumber, customerNumber);
         }
 

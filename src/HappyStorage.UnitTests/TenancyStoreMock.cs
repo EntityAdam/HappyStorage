@@ -9,7 +9,7 @@ namespace HappyStorage.UnitTests
     internal class TenancyStoreMock : ITenancyStore
     {
 
-        internal record Tenant(string UnitNumber, string CustomerNumber, DateTime ReservationDate, decimal AmountPaid);
+        internal record Tenant(string UnitNumber, string CustomerNumber, DateTime ReservationDate, decimal AmountPaid, bool IsLocked = false, DateTime? LockedDateTime = null);
 
         internal readonly List<Tenant> Tenants = new();
 
@@ -35,5 +35,23 @@ namespace HappyStorage.UnitTests
             Tenants.Remove(tenant);
             Tenants.Add(update);
         }
+
+        public void Lock(string unitNumber, string customerNumber, DateTime dateTime)
+        {
+            var tenant = Tenants.Single(t => t.UnitNumber == unitNumber);
+            var update = tenant with { IsLocked = true, LockedDateTime = dateTime };
+            Tenants.Remove(tenant);
+            Tenants.Add(update);
+        }
+
+        public void Unlock(string unitNumber)
+        {
+            var tenant = Tenants.Single(t => t.UnitNumber == unitNumber);
+            var update = tenant with { IsLocked = false, LockedDateTime = null };
+            Tenants.Remove(tenant);
+            Tenants.Add(update);
+        }
+
+        public bool IsUnitLocked(string unitNumber) => Tenants.Single(t => t.UnitNumber == unitNumber).IsLocked;
     }
 }

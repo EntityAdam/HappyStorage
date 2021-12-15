@@ -16,6 +16,8 @@ namespace HappyStorage.SqlStorage
             public string CustomerNumber { get; set; }
             public DateTime ReservationDate { get; set; }
             public decimal AmountPaid { get; set; }
+            public bool IsLocked { get; set; } = false;
+            public DateTime? LockedDateTime { get; set; } = null;
         }
 
         private readonly ISqlTenancyStoreSettings sqlTenancyStoreSettings;
@@ -134,6 +136,53 @@ namespace HappyStorage.SqlStorage
                     UnitNumber = unitNumber
                 };
                 return con.ExecuteScalar<int>(sql, parameters) > 0;
+            });
+        }
+
+        public void Lock(string unitNumber, string customerNumber, DateTime lockedDateTime)
+        {
+            UseConnection(con =>
+            {
+                const string sql =
+                    @"UPDATE [Tenants] SET IsLocked = @IsLocked, LockedDateTime = @LockedDateTime WHERE UnitNumber = @UnitNumber";
+                var parameters = new
+                {
+                    IsLocked = true,
+                    LockedDateTime = lockedDateTime,
+                    UnitNumber = unitNumber
+                };
+                return con.ExecuteScalar<int>(sql, parameters) > 0;
+            });
+        }
+
+        public void Unlock(string unitNumber)
+        {
+            UseConnection(con =>
+            {
+                const string sql =
+                    @"UPDATE [Tenants] SET IsLocked = @IsLocked, LockedDateTime = @LockedDateTime WHERE UnitNumber = @UnitNumber";
+                var parameters = new
+                {
+                    IsLocked = false,
+                    LockedDateTime = DBNull.Value,
+                    UnitNumber = unitNumber
+                };
+                return con.ExecuteScalar<int>(sql, parameters) > 0;
+            });
+        }
+
+        public bool IsUnitLocked(string unitNumber)
+        {
+            return UseConnection(con =>
+            {
+                const string sql =
+                    @"SELECT [IsLocked] FROM [Tenants] WHERE UnitNumber = @UnitNumber";
+                var parameters = new
+                {
+                    UnitNumber = unitNumber
+                };
+                var result = con.Query<bool>(sql, parameters);
+                return result.Single();
             });
         }
 

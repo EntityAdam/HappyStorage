@@ -19,5 +19,11 @@ namespace HappyStorage.Core
         bool IsUnitNumberOccupied(string unitNumber);
 
         void UpdateAmountPaid(string unitNumber, decimal amountToApply);
+
+        void Lock(string unitNumber, string customerNumber, DateTime dateTime);
+
+        void Unlock(string unitNumber);
+        
+        bool IsUnitLocked(string unitNumber);
     }
 }

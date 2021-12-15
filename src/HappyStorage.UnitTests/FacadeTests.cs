@@ -398,5 +398,30 @@ namespace HappyStorage.UnitTests
             facade.Pay("Alpha", 900);
             Assert.Equal(0, facade.CalculateAmountDue("Alpha"));
         }
+
+        [Fact]
+        public void UnitCanLock()
+        {
+            var unitStoreMock = new UnitStoreMock();
+            var customerStoreMock = new CustomerStoreMock();
+            var tenancyStoreMock = new TenancyStoreMock();
+            var dateServiceMock = new DateServiceMock();
+            var facade = new Facade(unitStoreMock, customerStoreMock, tenancyStoreMock, dateServiceMock);
+            facade.CommissionNewUnit(new NewUnit("1A", 2, 2, 2, true, true, 20));
+            facade.CommissionNewUnit(new NewUnit("2B", 8, 8, 8, false, true, 80));
+            facade.AddNewCustomer(new NewCustomer("Alpha", "Alpha Name", "Alpha Address"));
+            facade.AddNewCustomer(new NewCustomer("Bravo", "Bravo Name", "Bravo Address"));
+            dateServiceMock.CurrentDateTime = new DateTime(2017, 01, 01);
+            facade.ReserveUnit("1A", "Alpha");
+
+            dateServiceMock.CurrentDateTime = new DateTime(2017, 02, 01);
+            facade.LockUnit("1A", "Alpha");
+            Assert.Throws<InvalidOperationException>(() => facade.ReleaseUnit("1A", "Alpha"));
+            Assert.True(tenancyStoreMock.IsUnitLocked("1A"));
+
+            facade.UnlockUnit("1A");
+            Assert.False(tenancyStoreMock.IsUnitLocked("1A"));
+            facade.ReleaseUnit("1A", "Alpha");
+        }
     }
 }

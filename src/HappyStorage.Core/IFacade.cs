@@ -27,10 +27,52 @@ namespace HappyStorage.Core
 
         void ReserveUnit(string unitNumber, string customerNumber);
 
+        void LockUnit(string unitNumber, string customerNumber);
+
         void ReleaseUnit(string unitNumber, string customerNumber);
 
         decimal CalculateAmountDue(string customerNumber);
 
         void Pay(string customerNumber, decimal amount);
+    }
+
+    public interface IBillingSystem
+    {
+        DateTime GetNextPaymentDue(string customerNumber);
+        IEnumerable<Payment> GetLatestPayments(string customerNumber);
+        IEnumerable<Payment> GetPaymentHistory(string customerNumber, DateTime startRange, DateTime endRange);
+
+        IEnumerable<InvoiceLookup> LookupInvoices(string customerNumber);
+        Invoice GetInvoice(DateTime period);
+        void ProrateAndMovePaymentDueDate();
+        void ApplyDiscountAmount(Invoice invoice);
+        void ApplyDiscountPercent(Invoice invoice);
+    }
+
+    public class Payment
+    {
+        public string CustomerNumber { get; set; }
+        public Invoice Invoice { get; set; }
+        public decimal PaymentAmount { get; set; }
+        public DateTime PaymentDateTime { get; set; }
+    }
+
+    public class InvoiceLookup
+    {
+        public string CustomerNumber { get; set; }
+    }
+
+    public class Invoice
+    {
+        public string CustomerNumber { get; set; }
+        public string Address { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public IEnumerable<CustomerUnit> CustomerUnits { get; set; }
+        public class CustomerUnit
+        {
+            public string CustomerNumber { get; set; }
+            public DateTime DateOccupied { get; set; }
+        }
     }
 }
