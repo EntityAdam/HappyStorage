@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyStorage.UnitTests", "H
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyStorage.Common.Ui", "HappyStorage.Common.Ui\HappyStorage.Common.Ui.csproj", "{419E17FD-FB8B-42A6-8D4D-EB3D1FB48A25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyStorage.SqlDatabase", "HappyStorage.SqlDatabase\HappyStorage.SqlDatabase.csproj", "{7ED5E793-5344-41FB-8FAA-30E51C6D879A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyStorage.SqlDatabase", "HappyStorage.SqlDatabase\HappyStorage.SqlDatabase.csproj", "{7ED5E793-5344-41FB-8FAA-30E51C6D879A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyStorage.SqlTestData", "HappyStorage.SqlTestData\HappyStorage.SqlTestData.csproj", "{A58A0000-2426-4AF4-883B-711D5888CD67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{7ED5E793-5344-41FB-8FAA-30E51C6D879A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7ED5E793-5344-41FB-8FAA-30E51C6D879A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7ED5E793-5344-41FB-8FAA-30E51C6D879A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A58A0000-2426-4AF4-883B-711D5888CD67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A58A0000-2426-4AF4-883B-711D5888CD67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A58A0000-2426-4AF4-883B-711D5888CD67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A58A0000-2426-4AF4-883B-711D5888CD67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
