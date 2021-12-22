@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Scripts\Customers.Script001 - Create Table.sql" />
+    <None Remove="Scripts\Tenants.Script001 - Create Table.sql" />
+    <None Remove="Scripts\Units.Script001 - Create Table.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\Customers.Script001 - Create Table.sql" />
+    <EmbeddedResource Include="Scripts\Tenants.Script001 - Create Table.sql" />
+    <EmbeddedResource Include="Scripts\Units.Script001 - Create Table.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dbup" Version="4.5.0" />
+  </ItemGroup>
+
+</Project>
