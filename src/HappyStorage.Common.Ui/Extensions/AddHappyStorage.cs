@@ -15,12 +15,13 @@ namespace HappyStorage.Common.Ui.Extensions
                 .AddTransient<ICustomerDeleteViewModel, CustomerDeleteViewModel>()
                 .AddTransient<ICustomerDetailsViewModel, CustomerDetailsViewModel>()
                 .AddTransient<ICustomerListViewModel, CustomerListViewModel>()
+                .AddTransient<ITenantLockViewModel, TenantLockViewModel>()
                 .AddTransient<ITenantReleaseViewModel, TenantReleaseViewModel>()
                 .AddTransient<ITenantUnitsViewModel, TenantUnitsViewModel>()
                 .AddTransient<IUnitCreateViewModel, UnitCreateViewModel>()
                 .AddTransient<IUnitDecommissionViewModel, UnitDecommissionViewModel>()
                 .AddTransient<IUnitListViewModel, UnitListViewModel>()
-                .AddTransient<IUnitReserveViewModel, UnitReserveViewModel>();
+                .AddTransient<IUnitReserveViewModel, UnitReserveViewModel>();       
         }
     }
 }

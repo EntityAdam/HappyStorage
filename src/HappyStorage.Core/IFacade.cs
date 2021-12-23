@@ -29,6 +29,8 @@ namespace HappyStorage.Core
 
         void LockUnit(string unitNumber, string customerNumber);
 
+        void UnlockUnit(string unitNumber, string customerNumber);
+
         void ReleaseUnit(string unitNumber, string customerNumber);
 
         decimal CalculateAmountDue(string customerNumber);
