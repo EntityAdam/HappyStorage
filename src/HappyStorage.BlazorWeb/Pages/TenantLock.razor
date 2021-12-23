@@ -1,0 +1,39 @@
+﻿@page "/tenant/lock/{customerNumber}/{unitNumber}"
+@using HappyStorage.BlazorWeb.Components
+@using HappyStorage.Common.Ui.Units.Models
+@inject NavigationManager UriHelper
+@inject HappyStorage.Common.Ui.Tenants.ViewModels.ITenantLockViewModel viewModel
+
+<h1>Are you sure you want to lock this Customer's Unit?</h1>
+
+<p>TODO: Locking a unit causes all units for that customer to be locked</p>
+<p>TODO: Cannot lock unit if the amount paid is equal or greater than amount owed</p>
+<p>TODO: Once locked, the unit cannot be unlocked until the customer pays all outstanding debt</p>
+
+<button type="button" class="btn btn-danger" @onclick="Lock">Lock</button>
+<button type="button" class="btn btn-light" @onclick="GoBack">Go Back</button>
+
+@code {
+    [Parameter]
+    public string unitNumber { get; set; }
+
+    [Parameter]
+    public string customerNumber { get; set; }
+
+    protected override void OnInitialized()
+    {
+        viewModel.UnitNumber = unitNumber;
+        viewModel.CustomerNumber = customerNumber;
+    }
+
+    protected void Lock()
+    {
+        viewModel.LockUnit();
+        UriHelper.NavigateTo($"/tenant/unitlist/{viewModel.CustomerNumber}");
+    }
+
+    protected void GoBack()
+    {
+        UriHelper.NavigateTo($"/tenant/unitlist/{viewModel.CustomerNumber}");
+    }
+}

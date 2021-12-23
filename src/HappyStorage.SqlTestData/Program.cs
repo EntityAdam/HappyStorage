@@ -3,7 +3,6 @@ using HappyStorage.Core;
 using HappyStorage.Core.Models;
 using HappyStorage.SqlStorage;
 
-var street = new[] { "Alpaca St", "Bear St", "Cougar Rd", "Deer Rd", "Elephant St", "Fox Cir", "Giraffe", "Hound Rd", "Iguana Way", "Jackal St", "Kangaroo St" };
 var unitDimensions = new[] { 5, 10, 15, 20 };
 var unitPrices = new[] { 50m, 100m, 150m, 200m };
 
@@ -46,14 +45,14 @@ for (int i = 0; i < 1000; i++)
 
 public class FakeCustomer
 {
-    public string CustomerNumber { get; set; }
-    public string FullName { get; set; }
-    public string Address { get; set; }
+    public string? CustomerNumber { get; set; }
+    public string? FullName { get; set; }
+    public string? Address { get; set; }
 }
 
 public class FakeUnit
 {
-    public string UnitNumber { get; set; }
+    public string? UnitNumber { get; set; }
     public int Length { get; set; }
     public int Width { get; set; }
     public int Height { get; set; }

@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace HappyStorage.Common.Ui.Units.Models
 {
     public class NewUnitModel
     {
         [Display(Name = "Unit Number")]
-        public string UnitNumber { get; set; }
+        public string? UnitNumber { get; set; }
 
         [Display(Name = "Length")]
         public int Length { get; set; }

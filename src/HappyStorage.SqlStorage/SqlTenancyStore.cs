@@ -12,11 +12,11 @@ namespace HappyStorage.SqlStorage
     {
         public class TenantLookupSql
         {
-            public string UnitNumber { get; set; }
-            public string CustomerNumber { get; set; }
+            public string? UnitNumber { get; set; }
+            public string? CustomerNumber { get; set; }
             public DateTime ReservationDate { get; set; }
             public decimal AmountPaid { get; set; }
-            public bool IsLocked { get; set; } = false;
+            public bool IsLocked { get; set; }
             public DateTime? LockedDateTime { get; set; } = null;
         }
 
@@ -34,17 +34,20 @@ namespace HappyStorage.SqlStorage
 						([UnitNumber]
 						,[CustomerNumber]
 						,[ReservationDate]
+                        ,[IsLocked]
 						,[AmountPaid])
 					VALUES
 						(@UnitNumber
 						,@CustomerNumber
 						,@ReservationDate
+                        ,@IsLocked
 						,@AmountPaid)";
                 var parameters = new
                 {
                     UnitNumber = unitNumber,
                     CustomerNumber = customerNumber,
                     ReservationDate = reservationDate,
+                    IsLocked = false,
                     AmountPaid = amountPaid
                 };
                 con.Execute(sql, parameters);
@@ -72,16 +75,18 @@ namespace HappyStorage.SqlStorage
             {
                 const string sql =
                         @"SELECT
-							[UnitNumber],
-							[ReservationDate],
-							[AmountPaid]
+							[UnitNumber]
+							,[ReservationDate]
+							,[AmountPaid]
+                            ,[IsLocked]
+                            ,[LockedDateTime]
 						FROM [Tenants] WHERE CustomerNumber = @CustomerNumber";
                 var parameters = new
                 {
                     CustomerNumber = customerNumber
                 };
                 var result = con.Query<TenantLookupSql>(sql, parameters);
-                return result.Select(t => new TenantLookup(t.UnitNumber, t.CustomerNumber, t.ReservationDate, t.AmountPaid));
+                return result.Select(t => new TenantLookup(t.UnitNumber, t.CustomerNumber, t.ReservationDate, t.AmountPaid, t.IsLocked, t.LockedDateTime));
             });
         }
 
@@ -100,13 +105,15 @@ namespace HappyStorage.SqlStorage
             {
                 const string sql =
                         @"SELECT 
-                            [UnitNumber],
-                            [CustomerNumber],
-                            [AmountPaid],
-                            [ReservationDate]
+                            [UnitNumber]
+                            ,[CustomerNumber]
+                            ,[AmountPaid]
+                            ,[ReservationDate]
+                            ,[IsLocked]
+                            ,[LockedDateTime]
                         FROM [Tenants]";
                 var result = con.Query<TenantLookupSql>(sql);
-                return result.Select(t => new TenantLookup(t.UnitNumber, t.CustomerNumber, t.ReservationDate, t.AmountPaid));
+                return result.Select(t => new TenantLookup(t.UnitNumber, t.CustomerNumber, t.ReservationDate, t.AmountPaid, t.IsLocked, t.LockedDateTime));
             });
         }
 

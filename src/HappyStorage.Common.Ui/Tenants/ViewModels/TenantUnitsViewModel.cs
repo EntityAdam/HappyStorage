@@ -26,7 +26,7 @@ namespace HappyStorage.Common.Ui.Tenants.ViewModels
         private List<TenantUnitModel> GetTenantUnits(string customerNumber)
         {
             return facade.GetCustomerUnits(customerNumber)
-                .Select(c => new TenantUnitModel(c.UnitNumber, c.ReservationDate, c.AmountPaid)).ToList();
+                .Select(c => new TenantUnitModel(c.UnitNumber, c.ReservationDate, c.AmountPaid, c.IsLocked, c.LockedDateTime)).ToList();
         }
     }
 }

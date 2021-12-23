@@ -103,10 +103,12 @@ namespace HappyStorage.Core
             tenancyStore.Lock(unitNumber, customerNumber, dateService.GetCurrentDateTime());
         }
 
-        public void UnlockUnit(string unitNumber)
+        public void UnlockUnit(string unitNumber, string customerNumber)
         {
             if (unitNumber == null) throw new ArgumentNullException(nameof(unitNumber));
+            if (customerNumber == null) throw new ArgumentNullException(nameof(customerNumber));
             if (string.IsNullOrWhiteSpace(unitNumber)) throw new ArgumentException("Unit Number is empty.", nameof(unitNumber));
+            if (string.IsNullOrWhiteSpace(customerNumber)) throw new ArgumentException("Customer Number is empty.", nameof(customerNumber));
             if (!tenancyStore.IsUnitNumberOccupied(unitNumber)) throw new InvalidOperationException("The unit is not occupied.");
             tenancyStore.Unlock(unitNumber);
         }

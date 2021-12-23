@@ -3,5 +3,5 @@
 namespace HappyStorage.Core.Models
 {
 
-    public record TenantLookup(string UnitNumber, string CustomerNumber, DateTime ReservationDate, decimal AmountPaid);
+    public record TenantLookup(string UnitNumber, string CustomerNumber, DateTime ReservationDate, decimal AmountPaid, bool IsLocked, DateTime? LockedDateTime);
 }

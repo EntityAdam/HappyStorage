@@ -15,13 +15,13 @@ namespace HappyStorage.MemoryStorage
         public void Create(string unitNumber, string customerNumber, DateTime reservationDate, decimal amountPaid) =>
             Tenants.Add(new Tenant(unitNumber, customerNumber, reservationDate, amountPaid));
 
-        public IEnumerable<TenantLookup> ListTenants() => Tenants.Select(t => new TenantLookup(t.CustomerNumber, t.UnitNumber, t.ReservationDate, t.AmountPaid));
+        public IEnumerable<TenantLookup> ListTenants() => Tenants.Select(t => new TenantLookup(t.CustomerNumber, t.UnitNumber, t.ReservationDate, t.AmountPaid, t.IsLocked, t.LockedDateTime));
 
         public void Delete(string unitNumber, string customerNumber) => Tenants.RemoveAll(t => t.UnitNumber == unitNumber && t.CustomerNumber == customerNumber);
 
         public IEnumerable<TenantLookup> GetCustomerUnits(string customerNumber) => Tenants
             .Where(t => t.CustomerNumber == customerNumber)
-            .Select(t => new TenantLookup(t.UnitNumber, t.CustomerNumber, t.ReservationDate, t.AmountPaid));
+            .Select(t => new TenantLookup(t.UnitNumber, t.CustomerNumber, t.ReservationDate, t.AmountPaid, t.IsLocked, t.LockedDateTime));
 
         public IEnumerable<string> ListOccupiedUnits() => Tenants.Select(t => t.UnitNumber);
 

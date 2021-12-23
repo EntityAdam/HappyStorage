@@ -3,6 +3,7 @@ using HappyStorage.Core.Models;
 using System;
 using System.Linq;
 using Xunit;
+using FluentAssertions;
 
 namespace HappyStorage.UnitTests
 {
@@ -82,35 +83,21 @@ namespace HappyStorage.UnitTests
             var unitStoreMock = new UnitStoreMock();
             var tenancyStoreMock = new TenancyStoreMock();
             var facade = new Facade(unitStoreMock, new CustomerStoreDummy(), tenancyStoreMock, new DateServiceDummy());
+
+
             facade.CommissionNewUnit(new NewUnit("1A", 10, 12, 14, true, true, 90));
-            facade.CommissionNewUnit(new NewUnit("2B", 0, 0, 0, false, false, 0));
-            facade.CommissionNewUnit(new NewUnit("3C", 0, 0, 0, true, false, 0));
-            facade.CommissionNewUnit(new NewUnit("4D", 0, 0, 0, false, true, 0));
-            facade.CommissionNewUnit(new NewUnit("5E", 0, 0, 0, false, false, 0));
-            facade.CommissionNewUnit(new NewUnit("6F", 0, 0, 0, false, false, 0));
-            facade.CommissionNewUnit(new NewUnit("7G", 0, 0, 0, false, false, 0));
-            facade.CommissionNewUnit(new NewUnit("9I", 0, 0, 0, false, false, 0));
+            unitStoreMock.Units.Count.Should().Be(1);
 
-            facade.DecommissionUnit("7G");
+            var unit = unitStoreMock.Units[0];
+            unit.UnitNumber.Should().Be("1A");
+            unit.Length.Should().Be(10);
+            unit.Width.Should().Be(12);
+            unit.Height.Should().Be(14);  
+            unit.IsClimateControlled.Should().BeTrue();
+            unit.IsVehicleAccessible.Should().BeTrue();
 
-            facade.CommissionNewUnit(new NewUnit("8H", 0, 0, 0, false, false, 0));
-
-            facade.DecommissionUnit("8H");
-            Assert.Equal(7, unitStoreMock.Units.Count);
-            var unit = unitStoreMock.Units.Single(u => u.UnitNumber == "1A");
-            Assert.Equal(10, unit.Length);
-            Assert.Equal(12, unit.Width);
-            Assert.Equal(14, unit.Height);
-            Assert.True(unit.IsClimateControlled);
-            Assert.True(unit.IsVehicleAccessible);
-            Assert.Equal(90, unit.PricePerMonth);
-            var unitNumbers = unitStoreMock.Units.Select(u => u.UnitNumber).ToArray();
-            Assert.Contains("2B", unitNumbers);
-            Assert.Contains("3C", unitNumbers);
-            Assert.Contains("4D", unitNumbers);
-            Assert.Contains("5E", unitNumbers);
-            Assert.Contains("6F", unitNumbers);
-            Assert.Contains("9I", unitNumbers);
+            facade.DecommissionUnit("1A");
+            unitStoreMock.Units.Count.Should().Be(0);
         }
 
         [Fact]
@@ -120,13 +107,10 @@ namespace HappyStorage.UnitTests
             var tenancyStoreMock = new TenancyStoreMock();
             var facade = new Facade(unitStoreMock, new CustomerStoreDummy(), tenancyStoreMock, new DateServiceDummy());
 
-            facade.CommissionNewUnit(new NewUnit("1A", 10, 12, 14, true, true, 90));
-
-            facade.CommissionNewUnit(new NewUnit("2B", 0, 0, 0, true, true, 90));
-
             var failUnit1 = new NewUnit("3C", int.MaxValue / 2, int.MaxValue / 2, 2, false, false, 90);
-            Assert.Throws<ArgumentOutOfRangeException>(() => facade.CommissionNewUnit(failUnit1));
 
+            facade.Invoking(f => f.CommissionNewUnit(failUnit1))
+                .Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Fact]
@@ -419,7 +403,7 @@ namespace HappyStorage.UnitTests
             Assert.Throws<InvalidOperationException>(() => facade.ReleaseUnit("1A", "Alpha"));
             Assert.True(tenancyStoreMock.IsUnitLocked("1A"));
 
-            facade.UnlockUnit("1A");
+            facade.UnlockUnit("1A", "Alpha");
             Assert.False(tenancyStoreMock.IsUnitLocked("1A"));
             facade.ReleaseUnit("1A", "Alpha");
         }

@@ -16,6 +16,8 @@ else
             <th scope="col"><LabelComponent labelFor="@(() => viewModel.TenantUnits[0].UnitNumber)"></LabelComponent></th>
             <th scope="col"><LabelComponent labelFor="@(() => viewModel.TenantUnits[0].ReservationDate)"></LabelComponent></th>
             <th scope="col"><LabelComponent labelFor="@(() => viewModel.TenantUnits[0].AmountPaid)"></LabelComponent></th>
+            <th scope="col"><LabelComponent labelFor="@(() => viewModel.TenantUnits[0].IsLocked)"></LabelComponent></th>
+            <th scope="col"><LabelComponent labelFor="@(() => viewModel.TenantUnits[0].LockedDateTime)"></LabelComponent></th>
             <th></th>
         </tr>
     </thead>
@@ -26,7 +28,10 @@ else
             <td>@unit.UnitNumber</td>
             <td>@unit.ReservationDate</td>
             <td>@unit.AmountPaid</td>
+            <td>@unit.IsLocked</td>
+            <td>@unit.LockedDateTime</td>
             <td><a href="/Tenant/Release/@viewModel.SelectedCustomerNumber/@unit.UnitNumber" class="btn btn-danger">Release</a></td>
+            <td><a href="/Tenant/Lock/@viewModel.SelectedCustomerNumber/@unit.UnitNumber" class="btn btn-danger">Lock</a></td>
         </tr>
             }
     </tbody>
